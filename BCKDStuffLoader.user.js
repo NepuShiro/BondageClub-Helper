@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         BCKD Stuff
+// @name         BCH
 // @namespace    http://tampermonkey.net/
 // @version      1.0
-// @description  Stuff
+// @description  BondageClub-Helper
 // @author       Nariko
 // @match        https://www.bondageprojects.elementfx.com/*
 // @match        https://ada18980.github.io/KinkyDungeonStandalone/*
@@ -16,7 +16,7 @@ setTimeout(
 			let n = document.createElement("script");
 			n.setAttribute("language", "JavaScript");
 			n.setAttribute("crossorigin", "anonymous");
-			n.setAttribute("src", "https://js.nepnepshiro.xyz/BCKDStuff.js?_=" + Date.now());
+			n.setAttribute("src", "***CHANGETHIS***?_=" + Date.now());
 			n.onload = () => n.remove();
 			document.head.appendChild(n);
 		}
