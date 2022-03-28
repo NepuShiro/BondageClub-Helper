@@ -9,7 +9,7 @@ https://narikonep.github.io/BondageClub-Helper/BCHLoader.user.js - Auto Update
 
 https://narikonep.github.io/BondageClub-Helper/BCH.user.js - No Auto Update
 
-For KinkyDungeon
+For KinkyDungeonStandalone
 
 https://narikonep.github.io/BondageClub-Helper/KDCheatsLoader.user.js - Auto Update
 
