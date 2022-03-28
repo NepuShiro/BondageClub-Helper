@@ -29,6 +29,7 @@ else if(event.key === "t"){
     KinkyDungeonRedKeys = 999;
     KinkyDungeonBlueKeys = 999;
     KinkyDungeonNormalBlades = 999;
+    KinkyDungeonEnchantedBlades = 999;
 }
 else if(event.key === "y"){
     KinkyDungeonChangeConsumable(KinkyDungeonConsumables.ScrollArms, 999);
