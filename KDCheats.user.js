@@ -11,12 +11,18 @@
 // ==/UserScript==
 
 (function() {
+
+window.addEventListener('load', function () {
+    console.log("Loaded KDCheats.");
+});
+
 addEventListener("keydown", (event) => {
 if(event.key === "f"){
-    KinkyDungeonChangeMana(99);
+
+    KinkyDungeonStatMana = 100;
 }
 else if(event.key === "v"){
-    KinkyDungeonChangeStamina(99);
+    KinkyDungeonStatStamina = 100;
 }
 else if(event.key === "t"){
     KinkyDungeonGold = 9999999;
