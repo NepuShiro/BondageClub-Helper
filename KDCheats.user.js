@@ -18,7 +18,6 @@ window.addEventListener('load', function () {
 
 addEventListener("keydown", (event) => {
 if(event.key === "f"){
-
     KinkyDungeonStatMana = 100;
 }
 else if(event.key === "v"){
