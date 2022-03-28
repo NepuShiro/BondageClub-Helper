@@ -1,6 +1,6 @@
 
 window.addEventListener('load', function () {
-    console.log("Loaded NepCheats.");
+    console.log("Loaded BCH.");
 })
 let keys = {
     backslash: false,
