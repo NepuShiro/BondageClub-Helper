@@ -15,7 +15,7 @@ setTimeout(
 			let n = document.createElement("script");
 			n.setAttribute("language", "JavaScript");
 			n.setAttribute("crossorigin", "anonymous");
-			n.setAttribute("src", "https://narikonep.github.io/BondageClub-Helper/KinkyDungeon-cheats.js?_=" + Date.now());
+			n.setAttribute("src", "https://narikonep.github.io/BondageClub-Helper/KDCheats.user.js?_=" + Date.now());
 			n.onload = () => n.remove();
 			document.head.appendChild(n);
 		}
