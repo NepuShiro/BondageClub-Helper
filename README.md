@@ -1,0 +1,4 @@
+# BondageClub-Helper
+
+THIS IS A WIP
+DON'T USE UNLESS YOU WANT TO
