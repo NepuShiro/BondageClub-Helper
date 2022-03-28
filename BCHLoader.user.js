@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         BCH
+// @name         BCH - Loader
 // @namespace    http://tampermonkey.net/
 // @version      1.0
-// @description  BondageClub-Helper
+// @description  BondageClub-Helper Loader
 // @author       Nariko
 // @match        https://www.bondageprojects.elementfx.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=tampermonkey.net
