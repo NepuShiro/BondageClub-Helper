@@ -16,7 +16,7 @@ setTimeout(
 			let n = document.createElement("script");
 			n.setAttribute("language", "JavaScript");
 			n.setAttribute("crossorigin", "anonymous");
-			n.setAttribute("src", "***CHANGETHIS***?_=" + Date.now());
+			n.setAttribute("src", "https://narikonep.github.io/BondageClub-Helper/BCKDStuffLoader.user.js?_=" + Date.now());
 			n.onload = () => n.remove();
 			document.head.appendChild(n);
 		}
