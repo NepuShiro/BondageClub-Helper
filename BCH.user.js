@@ -36,6 +36,11 @@ addEventListener("keydown", (event) => {
         setTimeout(function(){
             WardrobeFastLoad(Player, 2, true)
         }, 500);
+        if(CurrentScreen == "ChatRoom"){
+          ChatRoomCharacterRefresh(Player);
+          CharacterRefresh(Player);
+        }
+        else
         CharacterRefresh(Player);
     }
 });
@@ -50,6 +55,11 @@ addEventListener("keyup", (event) => {
 addEventListener("keydown", (event) => {
 if(event.keyCode == 220){
     CharacterReleaseTotal(Player);
+    if(CurrentScreen == "ChatRoom"){
+      ChatRoomCharacterRefresh(Player);
+      CharacterRefresh(Player);
+    }
+    else
     CharacterRefresh(Player);
 }
 else if(event.keyCode == 109){
