@@ -37,7 +37,7 @@ addEventListener("keydown", (event) => {
             WardrobeFastLoad(Player, 2, true)
         }, 500);
         if(CurrentScreen == "ChatRoom"){
-          ChatRoomCharacterRefresh(Player);
+          ChatRoomCharacterUpdate(Player);
           CharacterRefresh(Player);
         }
         else
@@ -56,7 +56,7 @@ addEventListener("keydown", (event) => {
 if(event.keyCode == 220){
     CharacterReleaseTotal(Player);
     if(CurrentScreen == "ChatRoom"){
-      ChatRoomCharacterRefresh(Player);
+      ChatRoomCharacterUpdate(Player);
       CharacterRefresh(Player);
     }
     else
