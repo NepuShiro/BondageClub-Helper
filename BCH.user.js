@@ -14,79 +14,76 @@
 // @grant        none
 // ==/UserScript==
 
-(function() {
+(function () {
   'use strict';
 
-window.addEventListener('load', function () {
+  window.addEventListener('load', function () {
     console.log("Loaded BCH.");
-})
-let keys = {
+  })
+  let keys = {
     backslash: false,
     delete: false,
   };
-addEventListener("keydown", (event) => {
+  addEventListener("keydown", (event) => {
     if (event.keyCode == 220) {
       keys.backslash = true;
     }
     if (event.key === "Delete") {
       keys.delete = true;
     }
-    if(keys.backslash && keys.delete){
-        CharacterReleaseTotal(Player);
-        setTimeout(function(){
-            WardrobeFastLoad(Player, 2, true)
-        }, 500);
-        if(CurrentScreen == "ChatRoom"){
-          ChatRoomCharacterUpdate(Player);
-          CharacterRefresh(Player);
-        }
-        else
+    if (keys.backslash && keys.delete) {
+      CharacterReleaseTotal(Player);
+      setTimeout(function () {
+        WardrobeFastLoad(Player, 2, true)
+      }, 500);
+      if (CurrentScreen == "ChatRoom") {
+        ChatRoomCharacterUpdate(Player);
+        CharacterRefresh(Player);
+      } else
         CharacterRefresh(Player);
     }
-});
-addEventListener("keyup", (event) => {
+  });
+  addEventListener("keyup", (event) => {
     if (event.keyCode == 220) {
       keys.backslash = false;
     }
     if (event.key === "Delete") {
       keys.delete = false;
     }
-});
-addEventListener("keydown", (event) => {
-if(event.keyCode == 220){
-    CharacterReleaseTotal(Player);
-    if(CurrentScreen == "ChatRoom"){
-      ChatRoomCharacterUpdate(Player);
-      CharacterRefresh(Player);
-    }
-    else
-    CharacterRefresh(Player);
-}
-else if(event.keyCode == 109){
-    if(CurrentScreen == "ChatRoom"){
+  });
+  addEventListener("keydown", (event) => {
+    if (event.keyCode == 220) {
+      if (C != Player) {
+        CharacterReleaseTotal(CurrentCharacter);
+        ChatRoomCharacterUpdate(CurrentCharacter);
+      } else
+        CharacterReleaseTotal(Player);
+      if (CurrentScreen == "ChatRoom") {
+        ChatRoomCharacterUpdate(Player);
+        CharacterRefresh(Player);
+      } else
+        CharacterRefresh(Player);
+    } else if (event.keyCode == 109) {
+      if (CurrentScreen == "ChatRoom") {
         DialogLentLockpicks = false;
         ChatRoomClearAllElements();
         ServerSend("ChatRoomLeave", "");
         ChatRoomSetLastChatRoom("");
-        // Clear leash since the player has escaped
         ChatRoomLeashPlayer = null;
         CommonSetScreen("Online", "ChatSearch");
         CharacterDeleteAllOnline();
         ChatSearchExit();
+      } else
+        MainHallWalk("MainHall");
+    } else if (event.key === "]") {
+      StruggleProgress = 125;
+    } else if (event.key === "[") {
+      document.getElementById("InputChat").style.display = "none";
+      document.getElementById("TextAreaChatLog").style.display = "none";
+      CharacterAppearanceReturnRoom = "ChatRoom";
+      CharacterAppearanceReturnModule = "Online";
+      ChatRoomStatusUpdate("Wardrobe");
+      CharacterAppearanceLoadCharacter(Player);
     }
-    else
-    MainHallWalk("MainHall");
-}
-else if(event.key === "]"){
-    StruggleProgress = 125;
-}
-else if(event.key === "["){
-  document.getElementById("InputChat").style.display = "none";
-	document.getElementById("TextAreaChatLog").style.display = "none";
-	CharacterAppearanceReturnRoom = "ChatRoom";
-	CharacterAppearanceReturnModule = "Online";
-	ChatRoomStatusUpdate("Wardrobe");
-	CharacterAppearanceLoadCharacter(Player);
-}
-})
+  })
 })();
