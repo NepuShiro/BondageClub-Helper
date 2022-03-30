@@ -57,7 +57,7 @@
         if (ChatRoomCharacter[C].MemberNumber == CurrentCharacter.MemberNumber) {
           CharacterReleaseTotal(CurrentCharacter);
           ChatRoomCharacterUpdate(CurrentCharacter);
-        } else if (ChatRoomCharacter[C].MemberNumber == Player.MemberNumber) {
+        } else if (CurrentCharater.MemberNumber == null) {
         CharacterReleaseTotal(Player);
       }
       if (CurrentScreen == "ChatRoom") {
