@@ -53,12 +53,12 @@
   });
   addEventListener("keydown", (event) => {
     if (event.keyCode == 220) {
-      var C = Player
+      var C = null
       if (C != Player) {
         var C = CurrentCharacter
         CharacterReleaseTotal(CurrentCharacter);
         ChatRoomCharacterUpdate(CurrentCharacter);
-      } else
+      } else if (C = Player)
         CharacterReleaseTotal(Player);
       if (CurrentScreen == "ChatRoom") {
         ChatRoomCharacterUpdate(Player);
