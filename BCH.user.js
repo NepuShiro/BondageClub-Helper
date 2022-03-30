@@ -52,7 +52,7 @@
     }
   });
   addEventListener("keydown", (event) => {
-    if (event.keyCode == 220) {
+    if (event.keyCode == 220 && keys.delete == false) {
       if (CurrentCharacter == null) {
         CharacterReleaseTotal(Player)
       } else {
