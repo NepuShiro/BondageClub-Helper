@@ -53,12 +53,14 @@
   });
   addEventListener("keydown", (event) => {
     if (event.keyCode == 220) {
-      for (let C = 0; C < ChatRoomCharacter.length; C++)
-        if (ChatRoomCharacter[C].MemberNumber == CurrentCharacter.MemberNumber) {
-          CharacterReleaseTotal(CurrentCharacter);
-          ChatRoomCharacterUpdate(CurrentCharacter);
-        } else if (CurrentCharater.MemberNumber == null) {
-        CharacterReleaseTotal(Player);
+      if (CurrentCharacter.MemberNumber == null) {
+        CharacterReleaseTotal(Player)
+      } else {
+        for (let C = 0; C < ChatRoomCharacter.length; C++)
+          if (ChatRoomCharacter[C].MemberNumber == CurrentCharacter.MemberNumber) {
+            CharacterReleaseTotal(CurrentCharacter);
+            ChatRoomCharacterUpdate(CurrentCharacter);
+          }
       }
       if (CurrentScreen == "ChatRoom") {
         ChatRoomCharacterUpdate(Player);
