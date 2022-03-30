@@ -53,7 +53,7 @@
   });
   addEventListener("keydown", (event) => {
     if (event.keyCode == 220) {
-      if (CurrentCharacter.MemberNumber == null) {
+      if (CurrentCharacter == null) {
         CharacterReleaseTotal(Player)
       } else {
         for (let C = 0; C < ChatRoomCharacter.length; C++)
