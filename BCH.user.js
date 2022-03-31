@@ -56,14 +56,26 @@
       if (CurrentCharacter == null) {
         CharacterReleaseTotal(Player)
         ServerSend("ChatRoomChat", {
-          Content: "Boop",
+          Content: "Beep",
           Type: "Action",
+          Target: null,
           Dictionary: [{
-            Tag: "Boop",
-            Text: Player.Name + " snaps her fingers and all restraints on herself disappear with a 'pop!' ",
-            Target: Player.MemberNumber,
-            Sender: Player.Name
-          }]
+              Tag: "Beep",
+              Text: "msg"
+            },
+            {
+              Tag: "Biep",
+              Text: "msg"
+            },
+            {
+              Tag: "Sonner",
+              Text: "msg"
+            },
+            {
+              Tag: "msg",
+              Text: Player.Name + ' snaps her fingers and all restraints on herself disappear with a "pop!"'
+            }
+          ]
         });
       } else {
         for (let C = 0; C < ChatRoomCharacter.length; C++)
@@ -75,7 +87,7 @@
               Type: "Action",
               Dictionary: [{
                 Tag: "Beep",
-                Text: Player.Name + " snaps her fingers and all restraints on " + CurrentCharacter.Name + " disappear with a 'pop!'",
+                Text: Player.Name + ' snaps her fingers and all restraints on ' + CurrentCharacter.Name + ' disappear with a "pop!"',
                 Target: CurrentCharacter.MemberNumber,
                 Sender: Player.Name
               }]
