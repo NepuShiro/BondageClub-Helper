@@ -55,6 +55,16 @@
     if (event.keyCode == 220 && keys.delete == false) {
       if (CurrentCharacter == null) {
         CharacterReleaseTotal(Player)
+        ServerSend("ChatRoomChat", {
+          Content: "Boop",
+          Type: "Action",
+          Dictionary: [{
+            Tag: "Boop",
+            Text: Player.Name + " snaps her fingers and all restraints on herself disappear with a 'pop!' ",
+            Target: Player.MemberNumber,
+            Sender: Player.Name
+          }]
+        });
       } else {
         for (let C = 0; C < ChatRoomCharacter.length; C++)
           if (ChatRoomCharacter[C].MemberNumber == CurrentCharacter.MemberNumber) {
@@ -65,7 +75,7 @@
               Type: "Action",
               Dictionary: [{
                 Tag: "Beep",
-                Text: Player.Name + " snaps her fingers and removes all restraints on " + CurrentCharacter.Name + "",
+                Text: Player.Name + " snaps her fingers and all restraints on " + CurrentCharacter.Name + " disappear with a 'pop!' ",
                 Target: CurrentCharacter.MemberNumber,
                 Sender: Player.Name
               }]
