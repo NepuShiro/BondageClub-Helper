@@ -81,7 +81,7 @@
               }]
             });
           }
-      }
+      };
       if (CurrentScreen == "ChatRoom") {
         ChatRoomCharacterUpdate(Player);
         CharacterRefresh(Player);
