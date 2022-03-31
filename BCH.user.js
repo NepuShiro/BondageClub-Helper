@@ -60,6 +60,16 @@
           if (ChatRoomCharacter[C].MemberNumber == CurrentCharacter.MemberNumber) {
             CharacterReleaseTotal(CurrentCharacter);
             ChatRoomCharacterUpdate(CurrentCharacter);
+            ServerSend("ChatRoomChat", {
+              Content: "Beep",
+              Type: "Action",
+              Dictionary: [{
+                Tag: "Beep",
+                Text: Player.Name + " snaps her fingers and removes all restraints on " + CurrentCharacter.Name + "",
+                Target: CurrentCharacter.MemberNumber,
+                Sender: Player.Name
+              }]
+            });
           }
       }
       if (CurrentScreen == "ChatRoom") {
