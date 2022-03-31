@@ -75,7 +75,7 @@
               Type: "Action",
               Dictionary: [{
                 Tag: "Beep",
-                Text: Player.Name + " snaps her fingers and all restraints on " + CurrentCharacter.Name + " disappear with a 'pop!' ",
+                Text: Player.Name + " snaps her fingers and all restraints on " + CurrentCharacter.Name + " disappear with a 'pop!'",
                 Target: CurrentCharacter.MemberNumber,
                 Sender: Player.Name
               }]
