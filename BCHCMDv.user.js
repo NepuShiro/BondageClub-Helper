@@ -41,8 +41,31 @@ async function BondageClubHelper() {
 
 	commands();
 
-	const bchLog = (...args) => {
-		console.log("BCH", `1.0:`, ...args);
+
+	const bceChatNotify = (node) => {
+		const div = document.createElement("div");
+		div.setAttribute("class", "ChatMessage bce-notification");
+		div.setAttribute("data-time", ChatRoomCurrentTime());
+		div.setAttribute("data-sender", Player.MemberNumber.toString());
+		if (typeof node === "string") {
+			div.appendChild(document.createTextNode(node));
+		} else if (Array.isArray(node)) {
+			div.append(...node);
+		} else {
+			div.appendChild(node);
+		}
+
+		const ShouldScrollDown = ElementIsScrolledToEnd("TextAreaChatLog");
+		if (document.getElementById("TextAreaChatLog") !== null) {
+			document.getElementById("TextAreaChatLog").appendChild(div);
+			if (ShouldScrollDown) {
+				ElementScrollToEnd("TextAreaChatLog");
+			}
+		}
+	};
+
+	const bceLog = (...args) => {
+		console.log("BCE", `${w.BCE_VERSION}:`, ...args);
 	};
 
     async function commands() {
@@ -50,10 +73,12 @@ async function BondageClubHelper() {
         const cmds = [
             {
                 Tag: "cum",
-                Description: "cum",
+                Description: ": cum",
                 Action: async () => {
                     ActivityOrgasmStart(Player);
                 },
+			},
+			{
 				Tag: "leave",
 				Description: "Leave the room, and go back to the MainHall",
 				Action: async () => {
@@ -66,6 +91,8 @@ async function BondageClubHelper() {
 					CharacterDeleteAllOnline();
 					ChatSearchExit();
 				},
+			},
+			{
 				Tag: "unbind",
                 Description: "Release all bindings on yourself",
                 Action: async () => {
@@ -76,19 +103,25 @@ async function BondageClubHelper() {
 					  Target: null,
 					  Dictionary: [{Tag: "Beep", Text: "msg"},{Tag: "Biep",Text: "msg"},{Tag: "Sonner",Text: "msg"},{Tag: "msg",Text: Player.Name + ' snaps her fingers and all restraints on herself disappear with a "pop!"'}]});
                 },
+			},
+			{
 				Tag: "unrestrain",
-				Description: "Release all bindings on someone in the room",
-				Action: async (_, _command) => {
+				Description: "[membernumber]: Release all bindings on someone in the room",
+				Action: async (_, _command, args) => {
+					const [target] = args;
+					/** @type {Character} */
 					let targetMember = null;
 					if (!target) {
-						targetMember = Player;
+						bceChatNotify(
+							`Use /unbind for youself. or specify a member number` 
+						);
 					} else {
 						targetMember = Character.find(
 							(c) => c.MemberNumber === parseInt(target)
 						);
 					}
 					if (!targetMember) {
-						bchLog("Could not find member", target);
+						bceLog("Could not find member", target);
 						return;
 					}
 					CharacterReleaseTotal(targetMember)
@@ -97,8 +130,11 @@ async function BondageClubHelper() {
 					  Type: "Action",
 					  Target: null,
 					  Dictionary: [{Tag: "Beep", Text: "msg"},{Tag: "Biep",Text: "msg"},{Tag: "Sonner",Text: "msg"},{Tag: "msg",Text: Player.Name + ' snaps her fingers and all restraints on ' + targetMember.Name + ' disappear with a "pop!"'}]});
+					  bceChatNotify(
+						`Comepletely unbinded ` + TargetName + ``
+						);
 				},
-				}
+			},
         ];
     
         // Skip history patch for /w
