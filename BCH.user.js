@@ -28,14 +28,24 @@
     if (event.keyCode == 220) {
       keys.backslash = true;
     }
+    if (event.key === "Insert") {
+      keys.insert = true;
+    }
     if (event.key === "Delete") {
       keys.delete = true;
     }
-    if (keys.backslash && keys.delete) {
+    if (keys.backslash && keys.insert) {
       CharacterReleaseTotal(Player);
       setTimeout(function () {
         WardrobeFastLoad(Player, 2, true)
       }, 500);
+      if (CurrentScreen == "ChatRoom") {
+        ChatRoomCharacterUpdate(Player);
+        CharacterRefresh(Player);
+      } else
+        CharacterRefresh(Player);
+    } else if (keys.backslash && keys.delete) {
+      CharacterReleaseTotal(Player);
       if (CurrentScreen == "ChatRoom") {
         ChatRoomCharacterUpdate(Player);
         CharacterRefresh(Player);
@@ -46,6 +56,9 @@
   addEventListener("keyup", (event) => {
     if (event.keyCode == 220) {
       keys.backslash = false;
+    }
+    if (event.key === "Insert") {
+      keys.insert = false;
     }
     if (event.key === "Delete") {
       keys.delete = false;
