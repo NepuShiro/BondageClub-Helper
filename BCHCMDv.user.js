@@ -93,18 +93,6 @@ async function BondageClubHelper() {
 				},
 			},
 			{
-				Tag: "unbind",
-                Description: "Release all bindings on yourself",
-                Action: async () => {
-					CharacterReleaseTotal(Player)
-					ServerSend("ChatRoomChat", {
-					  Content: "Beep",
-					  Type: "Action",
-					  Target: null,
-					  Dictionary: [{Tag: "Beep", Text: "msg"},{Tag: "Biep",Text: "msg"},{Tag: "Sonner",Text: "msg"},{Tag: "msg",Text: Player.Name + ' snaps her fingers and all restraints on herself disappear with a "pop!"'}]});
-                },
-			},
-			{
 				Tag: "unrestrain",
 				Description: "[membernumber]: Release all bindings on someone in the room",
 				Action: async (_, _command, args) => {
@@ -112,9 +100,27 @@ async function BondageClubHelper() {
 					/** @type {Character} */
 					let targetMember = null;
 					if (!target) {
-						bceChatNotify(
-							`Use /unbind for youself. or specify a member number` 
-						);
+						CharacterReleaseTotal(Player)
+						ServerSend("ChatRoomChat", {
+							Content: "Beep",
+							Type: "Action",
+							Target: null,
+							Dictionary: [{
+								Tag: "Beep",
+								Text: "msg"
+							}, {
+								Tag: "Biep",
+								Text: "msg"
+							}, {
+								Tag: "Sonner",
+								Text: "msg"
+							}, {
+								Tag: "msg",
+								Text: Player.Name + ' snaps her fingers and all restraints on herself disappear with a "pop!"'
+							}]
+						});
+						ChatRoomCharacterUpdate(Player);
+        				CharacterRefresh(Player);
 					} else {
 						targetMember = Character.find(
 							(c) => c.MemberNumber === parseInt(target)
@@ -126,14 +132,31 @@ async function BondageClubHelper() {
 					}
 					CharacterReleaseTotal(targetMember)
 					ServerSend("ChatRoomChat", {
-					  Content: "Beep",
-					  Type: "Action",
-					  Target: null,
-					  Dictionary: [{Tag: "Beep", Text: "msg"},{Tag: "Biep",Text: "msg"},{Tag: "Sonner",Text: "msg"},{Tag: "msg",Text: Player.Name + ' snaps her fingers and all restraints on ' + targetMember.Name + ' disappear with a "pop!"'}]});
-					  bceChatNotify(
+						Content: "Beep",
+						Type: "Action",
+						Target: null,
+						Dictionary: [{
+							Tag: "Beep",
+							Text: Player.Name + ' snaps her fingers and all restraints on ' + targetMember.Name + ' disappear with a "pop!"'
+						}]
+					});
+					ChatRoomCharacterUpdate(targetMember);
+					bceChatNotify(
 						`Comepletely unbinded ` + TargetName + ``
-						);
+					);
 				},
+			},
+			{
+				Tag: "wardrobe",
+				Description: "Opens the wardrobe",
+				Action: async () => {
+					document.getElementById("InputChat").style.display = "none";
+					document.getElementById("TextAreaChatLog").style.display = "none";
+					CharacterAppearanceReturnRoom = "ChatRoom";
+					CharacterAppearanceReturnModule = "Online";
+					ChatRoomStatusUpdate("Wardrobe");
+					CharacterAppearanceLoadCharacter(Player);
+				}
 			},
         ];
     
