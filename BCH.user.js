@@ -65,7 +65,7 @@
     }
   });
   addEventListener("keydown", (event) => {
-    if (event.keyCode == 220 && keys.delete == false) {
+    if (event.keyCode == 220 && keys.delete == false && keys.insert == false) {
       if (CurrentCharacter == null) {
         CharacterReleaseTotal(Player)
         ServerSend("ChatRoomChat", {
