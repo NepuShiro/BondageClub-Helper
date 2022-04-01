@@ -41,102 +41,53 @@ async function BondageClubHelper() {
 
 	commands();
 
-    function displayText(original, replacements = {}) {
-		/** @type {Readonly<Record<string, Record<string, string>>>} */
-		const translations = Object.freeze({
-			CN: {
-				"Automatic Arousal Expressions (Replaces Vanilla)":
-					"自动欲望表情 (替换原版)",
-				"Activity Expressions": "活动表示",
-				"Alternate Arousal (Replaces Vanilla, requires hybrid/locked arousal meter)":
-					"另一种欲望 (替换原版, 需要混合或锁定欲望条)",
-				"Alternative speech stutter": "另一种言语不清",
-				"Enable layering menus": "开启服装分层选项",
-				"Extended wardrobe slots (96)": "扩展衣柜保存槽 (96个)",
-				"Replace wardrobe list with character previews":
-					"使用角色预览替换衣柜保存列表",
-				"Clear Drawing Cache Hourly": "每小时清除绘图缓存",
-				"Instant messenger (BcUtil compatible)": "即时通讯 (与BcUtil 兼容)",
-				"Chat Links and Embeds": "聊天链接和嵌入",
-				"Use Ctrl+Enter to OOC": "使用Ctrl+Enter进行OOC发言",
-				"Use italics for input when whispering": "悄悄话使用斜体字",
-				"Improve colors for readability": "改善颜色以提高可读性",
-				"Show friend presence notifications": "显示好友在线通知",
-				"Show friends going offline too (requires friend presence)":
-					"显示朋友离线通知 (需要启用好友在线通知)",
-				"Understand All Gagged and when Deafened":
-					"在被堵住嘴和被堵住耳朵时可以听懂所有发言",
-				"Reveal Lockpicking Order Based on Skill": "根据技能显示撬锁/开锁顺序",
-				"Allow layering menus while bound": "允许在捆绑时用分层菜单",
-				"Load BCX by Jomshir98 (requires refresh - no auto-update)":
-					"加载 BCX by Jomshir98 (需要刷新 - 无自动更新)",
-				"Load BCX beta (requires refresh - auto-updates, compatibility not guaranteed)":
-					"加载 BCX beta 测试版 (需要刷新 - 自动升级, 不保证兼容性)",
-				"Limited gag anti-cheat: cloth-gag equivalent garbling":
-					"有限的堵嘴反作弊: 和布堵嘴相同的乱码",
-				"Full gag anti-cheat: use equipped gags to determine garbling":
-					"完整的堵嘴反作弊: 使用当前装备的堵嘴来确定乱码",
-				"Extra gag anti-cheat: even more garbling for the most extreme gags":
-					"扩展的堵嘴反作弊: 对于使用最极端的堵嘴更加混乱",
-				"Require glasses to see": "需要眼镜才能看清",
-				"Check for updates": "检查更新",
-				"Automatic Relogin on Disconnect": "断线后自动重连",
-				"Show gag cheat and anti-cheat options in chat":
-					"在聊天室里显示堵嘴作弊和反作弊选项",
-				"Automatically ghost+blocklist unnaturally new users":
-					"自动对不自然的用户无视并添加黑名单",
-				"Use accurate timer inputs": "使用准确的计时器输入",
-				"Confirm leaving the game": "离开游戏前需要确认",
-				"Discreet mode (disable drawing)": "谨慎模式 (禁用绘图)",
-				"Keep tab active (requires refresh)":
-					"保持标签页处于活动状态 (需要刷新)",
-				"Show FPS counter": "显示 FPS 计数器",
-				"Limit FPS in background": "在后台时限制FPS",
-				"Limit FPS to ~15": "限制 FPS 最高为 ~15",
-				"Limit FPS to ~30": "限制 FPS 最高为 ~30",
-				"Limit FPS to ~60": "限制 FPS 最高为 ~60",
-				"Make automatic progress while struggling": "在挣扎时自动增加进度",
-				"Allow leashing without wearing a leashable item (requires leasher to have BCE too)":
-					"允许在不佩戴牵引绳的情况下也可以进行牵引（需要牵引者也安装有BCE）",
-				"Enable buttplug.io (requires refresh)":
-					"启用buttplug.io（需要刷新网页)",
-				"This page allows configuration of the synchronization of bluetooth connected toys.":
-					"此页面允许配置将BC震动器状态同步到蓝牙连接的玩具",
-				"Chat & Social": "聊天 & 社交",
-				"Activities & Arousal": "活动 & 欲望",
-				"Appearance & Wardrobe": "外观 & 衣柜",
-				"Immersion & Anti-Cheat": "沉浸体验 & 反作弊",
-				Performance: "表现",
-				Misc: "杂项",
-				Cheats: "作弊",
-				"Other Addons": "其他插件",
-				"Show nicknames": "修改你的昵称",
-				"Change your nickname": "修改你的昵称",
-			},
-		});
-
-		let text =
-			TranslationLanguage in translations &&
-			original in translations[TranslationLanguage]
-				? translations[TranslationLanguage][original]
-				: original;
-		for (const [key, val] of Object.entries(replacements)) {
-			while (text.includes(key)) {
-				text = text.replace(key, val);
-			}
-		}
-		return text;
-	}
-
     async function commands() {
         /** @type {Command[]} */
         const cmds = [
             {
                 Tag: "cum",
-                Description: displayText("cum"),
+                Description: "cum",
                 Action: async () => {
-                    ActivityOrgasmStart(Player)
+                    ActivityOrgasmStart(Player);
                 },
+				Tag: "leave",
+				Description: "Leave the room, and go back to the MainHall",
+				Action: async () => {
+					DialogLentLockpicks = false;
+					ChatRoomClearAllElements();
+					ServerSend("ChatRoomLeave", "");
+					ChatRoomSetLastChatRoom("");
+					ChatRoomLeashPlayer = null;
+					CommonSetScreen("Online", "ChatSearch");
+					CharacterDeleteAllOnline();
+					ChatSearchExit();
+				},
+				Tag: "unbind",
+                Description: "Release all bindings on yourself",
+                Action: async () => {
+					CharacterReleaseTotal(Player)
+					ServerSend("ChatRoomChat", {
+					  Content: "Beep",
+					  Type: "Action",
+					  Target: null,
+					  Dictionary: [{Tag: "Beep", Text: "msg"},{Tag: "Biep",Text: "msg"},{Tag: "Sonner",Text: "msg"},{Tag: "msg",Text: Player.Name + ' snaps her fingers and all restraints on herself disappear with a "pop!"'}]});
+                },
+				Tag: "unrestrain",
+				Description: "Release all bindings on someone in the room",
+				Action: async (_, _command) => {
+					let targetMember = null;
+					if (!target) {
+						targetMember = Player;
+					} else {
+						targetMember = Character.find(
+							(c) => c.MemberNumber === parseInt(target)
+						);
+					}
+					if (!targetMember) {
+						bceLog("Could not find member", target);
+						return;
+					}
+				}
             }
         ];
     
