@@ -41,6 +41,10 @@ async function BondageClubHelper() {
 
 	commands();
 
+	const bchLog = (...args) => {
+		console.log("BCH", `1.0:`, ...args);
+	};
+
     async function commands() {
         /** @type {Command[]} */
         const cmds = [
@@ -84,11 +88,17 @@ async function BondageClubHelper() {
 						);
 					}
 					if (!targetMember) {
-						bceLog("Could not find member", target);
+						bchLog("Could not find member", target);
 						return;
 					}
+					CharacterReleaseTotal(targetMember)
+					ServerSend("ChatRoomChat", {
+					  Content: "Beep",
+					  Type: "Action",
+					  Target: null,
+					  Dictionary: [{Tag: "Beep", Text: "msg"},{Tag: "Biep",Text: "msg"},{Tag: "Sonner",Text: "msg"},{Tag: "msg",Text: Player.Name + ' snaps her fingers and all restraints on ' + targetMember.Name + ' disappear with a "pop!"'}]});
+				},
 				}
-            }
         ];
     
         // Skip history patch for /w
@@ -114,7 +124,7 @@ async function BondageClubHelper() {
     
         for (const c of cmds) {
             if (Commands.some((a) => a.Tag === c.Tag)) {
-                bceLog("already registered", c);
+                bchLog("already registered", c);
                 continue;
             }
             Commands.push(c);
