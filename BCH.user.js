@@ -58,6 +58,13 @@ async function BondageClubHelper() {
     const SUPPORTED_GAME_VERSIONS = ["R78"];
     const w = window;
 
+	const BCX_DEVEL_SOURCE =
+			"https://jomshir98.github.io/bondage-club-extended/devel/bcx.js",
+		BCX_SOURCE =
+			"https://raw.githubusercontent.com/Jomshir98/bondage-club-extended/fe83ac4068413ce0fd03c298dddb2b22dad04fb8/bcx.js";
+
+	let bcxType = "";
+
     if (typeof ChatRoomCharacter === "undefined") {
 		console.warn("Bondage Club not detected. Skipping BCH initialization.");
 		return;
@@ -124,11 +131,25 @@ async function BondageClubHelper() {
 		};
 	};
 
-
+	const bcxLoad = loadBCX();
 	commands();
+
+	await bcxLoad;
 
 	await bchNotify(`Bondage Club Helper v1.0 Loaded`);
 	bchLog("Bondage Club Helper v1.0 Loaded");
+
+		// Load BCX
+	async function loadBCX() {
+		await waitFor(settingsLoaded);
+	
+		if (w.BCX_Loaded) {
+			bcxType = "external";
+			bceLog("BCX already loaded, skipping loadBCX()");
+			return;
+		}
+		bceLog("Loaded BCX");
+	};
 
     async function commands() {
 		await waitFor(() => !!Commands);
