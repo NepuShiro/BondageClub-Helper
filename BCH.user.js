@@ -189,9 +189,7 @@ async function BondageClubHelper() {
 						}]
 					});
 					ChatRoomCharacterUpdate(targetMember);
-					bchChatNotify(
-						`Comepletely unbinded ` + TargetName
-					);
+					bchChatNotify("Comepletely unbinded " + TargetName);
 				},
 			},
 			{
