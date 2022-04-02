@@ -59,6 +59,18 @@ async function BondageClubHelper() {
     const w = window;
 	let bcxType = "none";
 
+
+	const HOOK_PRIORITIES = {
+		Top: 11,
+		OverrideBehaviour: 10,
+		ModifyBehaviourHigh: 6,
+		ModifyBehaviourMedium: 5,
+		ModifyBehaviourLow: 4,
+		AddBehaviour: 3,
+		Observe: 0,
+	};
+
+	
     if (typeof ChatRoomCharacter === "undefined") {
 		console.warn("Bondage Club not detected. Skipping BCH initialization.");
 		return;
@@ -350,6 +362,17 @@ async function BondageClubHelper() {
 		// 5 minutes
 		createTimer(sendHeartbeat, 1000 * 60 * 5);
 	})();
+
+	function createTimer(cb, intval) {
+		let lastTime = Date.now();
+		SDK.hookFunction("MainRun", HOOK_PRIORITIES.Top, (args, next) => {
+			if (Date.now() - lastTime > intval) {
+				lastTime = Date.now();
+				cb();
+			}
+			return next(args);
+		});
+	}
 
 	function sleep(ms) {
 		// eslint-disable-next-line no-promise-executor-return
