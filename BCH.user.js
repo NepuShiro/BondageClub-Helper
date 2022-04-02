@@ -64,12 +64,6 @@ async function BondageClubHelper() {
 		return;
 	}
 
-	function settingsLoaded() {
-		setTimeout(function(){
-			bceLog('"Settings Loaded"');
-		}, 2000); 
-	}
-
     const patchFunction = (functionName, patches, affectedFunctionality) => {
 		// Guard against patching a function that has been modified by another addon not using the shared SDK on supported versions.
 		if (
@@ -85,6 +79,12 @@ async function BondageClubHelper() {
 	const bchLog = (...args) => {
 		console.log("BCH:", ...args);
 	};
+
+	function settingsLoaded() {
+		setTimeout(function(){
+			bceLog('"Settings Loaded"');
+		}, 2000); 
+	}
 
 	async function waitFor(func, cancelFunc = () => false) {
 		while (!func()) {
