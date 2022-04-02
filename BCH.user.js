@@ -13,7 +13,7 @@
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
-/// <reference path="./bcH.d.ts" />
+/// <reference path="./bch.d.ts" />
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable no-undef */
 /* eslint-disable no-implicit-globals */
