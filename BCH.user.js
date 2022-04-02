@@ -169,9 +169,13 @@ async function BondageClubHelper() {
 						});
 						ChatRoomCharacterUpdate(Player);
         				CharacterRefresh(Player);
-					} else {
+					} else if (target === NaN) {
 						targetMember = Character.find(
 							(c) => c.MemberNumber === parseInt(target)
+						);
+					} else {
+						targetMember = Character.find(
+							(c) => c.Name === target
 						);
 					}
 					if (!targetMember) {
