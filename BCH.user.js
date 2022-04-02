@@ -254,9 +254,10 @@ async function BondageClubHelper() {
 							break;
 						};
 						Str1 += Str2
-						bchChatNotify(Str1);
 						console.log(Str1);
-						if (whisper) {
+						if (!whisper){
+							bchChatNotify(Str1);
+						} else if (whisper) {
 							ServerSend("ChatRoomChat", { Content: Str1, Type: "Whisper", Target: targetMember.MemberNumber })
 						};
 					};
