@@ -79,7 +79,7 @@ async function BondageClubHelper() {
 		div.setAttribute("class", "ChatMessage bch-notification");
 		div.setAttribute("data-time", ChatRoomCurrentTime());
 		div.setAttribute("data-sender", Player.MemberNumber.toString());
-		div.setAttribute("Color", "Violet");
+		div.setAttribute("style", "background-color:rgba(159,90,253,0.5);");
 		if (typeof node === "string") {
 			div.appendChild(document.createTextNode(node));
 		} else if (Array.isArray(node)) {
