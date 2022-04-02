@@ -207,11 +207,11 @@ async function BondageClubHelper() {
 			},
 			{
 				Tag: "showlocks",
-				Description: "[membernumber]: Show locks on character including the pass/combo [BCH]",
+				Description: "[membernumber] [T/F]: Show locks on character including the pass/combo [BCH]",
 				Action: async (_, _command, args) => {
 					var Str1 = "";
 					var Str2 = "";
-					const [target] = args;
+					const [target, whisperarg] = args;
 					let targetMember = null;
 					if (!target) {
 						targetMember = Player;
@@ -225,6 +225,7 @@ async function BondageClubHelper() {
 						bchLog("Could not find member", target);
 						return;
 					}
+					const whisper = whisperarg === "true";
 					Str1 = "Passwords for " + targetMember.Name + "'s Locks:";
 					bchChatNotify(Str1);
 				 
@@ -254,6 +255,9 @@ async function BondageClubHelper() {
 						Str1 += Str2
 						bchChatNotify(Str1);
 						console.log(Str1);
+						if (whisper) {
+							ServerSend("ChatRoomChat", { Content: Str1, Type: "Whisper", Target: targetMember.MemberNumber })
+						};
 					};
 				},
 			},
