@@ -233,7 +233,7 @@ async function BondageClubHelper() {
 					} else if (whisper) {
 						ServerSend("ChatRoomChat", { Content: Str1, Type: "Whisper", Target: targetMember.MemberNumber })
 					};
-					
+
 					for (var j=0; j<targetMember.Appearance.length; j++) {
 
 						Str1 = targetMember.Appearance[j].Asset.Name;
@@ -262,7 +262,7 @@ async function BondageClubHelper() {
 						if (!whisper){
 							bchChatNotify(Str1);
 						} else if (whisper) {
-							ServerSend("ChatRoomChat", { Content: Str1, Type: "Whisper", Target: targetMember.MemberNumber })
+							ServerSend("ChatRoomChat", { Content: Str1, Type: "Whisper", Target: targetMember.MemberNumber, Sender: Player.MemberNumber })
 						};
 					};
 				},
