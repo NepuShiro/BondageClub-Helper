@@ -190,7 +190,7 @@ async function BondageClubHelper() {
 				Action: async (_, _command, args) => {
 					var Str1 = "";
 					var Str2 = "";
-					const [target, whisperarg] = args;
+					const [target] = args;
 					let targetMember = null;
 					if (!target) {
 						targetMember = Player;
@@ -203,7 +203,6 @@ async function BondageClubHelper() {
 						bchLog("Could not find member", target);
 						return;
 					}
-					const whisper = whisperarg === "false";
 					Str1 = "Passwords for " + targetMember.Name + "'s Locks";
 					bchChatNotify(Str1);
 				 
