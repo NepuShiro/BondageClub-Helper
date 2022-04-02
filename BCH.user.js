@@ -79,6 +79,7 @@ async function BondageClubHelper() {
 		div.setAttribute("class", "ChatMessage bch-notification");
 		div.setAttribute("data-time", ChatRoomCurrentTime());
 		div.setAttribute("data-sender", Player.MemberNumber.toString());
+		div.setAttribute("Color", "Violet");
 		if (typeof node === "string") {
 			div.appendChild(document.createTextNode(node));
 		} else if (Array.isArray(node)) {
@@ -190,7 +191,7 @@ async function BondageClubHelper() {
 						}]
 					});
 					ChatRoomCharacterUpdate(targetMember);
-					bchChatNotify("Comepletely unbinded " + TargetName);
+					bchChatNotify("Comepletely unbinded " + targetMember.Name);
 				},
 			},
 			{
