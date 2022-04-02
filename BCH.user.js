@@ -82,7 +82,7 @@ async function BondageClubHelper() {
 
 	function settingsLoaded() {
 		setTimeout(function(){
-			bceLog('"Settings Loaded"');
+			bchLog('"Settings Loaded"');
 		}, 2000); 
 	}
 
