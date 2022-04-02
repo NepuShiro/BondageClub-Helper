@@ -324,7 +324,7 @@ async function BondageClubHelper() {
 			if (w.BCX_Loaded && bcxType === "none") {
 				bcxType = "external";
 			}
-			SDK.callOriginal("ServerSend", [
+			modApi.callOriginal("ServerSend", [
 				"AccountBeep",
 				{
 					BeepType: "Leash",
