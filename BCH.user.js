@@ -218,7 +218,8 @@ async function BondageClubHelper() {
 					} else if(!target == NaN) {
 						targetMember = Character.find((c) => c.MemberNumber === parseInt(target));
 					} else {
-						targetMember = Character.find((c) => c.Name === target);
+						target.toLowerCase();
+						targetMember = Character.find((c) => c.Name.toLowerCase() === target);
 					}
 					if (!targetMember) {
 						bchLog("Could not find member", target);
