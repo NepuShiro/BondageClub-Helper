@@ -207,7 +207,7 @@ async function BondageClubHelper() {
 			},
 			{
 				Tag: "showlocks",
-				Description: "[membernumber] [T/F]: Show locks on character",
+				Description: "[membernumber]: Show locks on character including the pass/combo",
 				Action: async (_, _command, args) => {
 					var Str1 = "";
 					var Str2 = "";
@@ -292,7 +292,7 @@ async function BondageClubHelper() {
 		// eslint-disable-next-line no-promise-executor-return
 		return new Promise((resolve) => setTimeout(resolve, ms));
 	}
-	
+
 	//OLD KEYBINDS FOR COMPATABILITY
 	let keys = {
 		insert: false,
