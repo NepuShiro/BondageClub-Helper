@@ -293,6 +293,35 @@ async function BondageClubHelper() {
 		return new Promise((resolve) => setTimeout(resolve, ms));
 	}
 	
+	//OLD KEYBINDS FOR COMPATABILITY
+	let keys = {
+		insert: false,
+		delete: false,
+	};
+	  addEventListener("keydown", (event) => {
+		if (event.key === "Insert") {
+		  keys.insert = true;
+		}
+		if (event.key === "Delete") {
+		  keys.delete = true;
+		}
+		if (keys.insert && keys.delete) {
+		  CharacterReleaseTotal(Player);
+		if (CurrentScreen == "ChatRoom") {
+			ChatRoomCharacterUpdate(Player);
+			CharacterRefresh(Player);
+		} else
+			CharacterRefresh(Player);
+		}
+	  });
+	  addEventListener("keyup", (event) => {
+		if (event.key === "Insert") {
+		  keys.insert = false;
+		}
+		if (event.key === "Delete") {
+		  keys.delete = false;
+		}
+	  });
 	addEventListener("keydown", (event) => {
 		if (event.keyCode == 109) {
 		   if (CurrentScreen == "ChatRoom") {
