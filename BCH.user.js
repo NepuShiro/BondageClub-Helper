@@ -292,16 +292,15 @@ async function BondageClubHelper() {
             },
             "You may be unable to /importlooks due to the chat input being limited in length."
         );
-    
-        for (const c of cmds) {
-            if (Commands.some((a) => a.Tag === c.Tag)) {
-                bchLog("already registered", c);
-                continue;
-            }
-			setTimeout(function(){
+		setTimeout(function(){
+			for (const c of cmds) {
+				if (Commands.some((a) => a.Tag === c.Tag)) {
+					bchLog("already registered", c);
+					continue;
+				}
 				Commands.push(c);
-			}, 5000)
-        }
+			}
+		}, 5000)
     }
 
 
