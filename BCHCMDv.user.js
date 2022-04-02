@@ -39,12 +39,24 @@ async function BondageClubHelper() {
 		modApi.patchFunction(functionName, patches);
 	};
 
-	commands();
+	const bchLog = (...args) => {
+		console.log("BCH:", ...args);
+	};
 
+	async function waitFor(func, cancelFunc = () => false) {
+		while (!func()) {
+			if (cancelFunc()) {
+				return false;
+			}
+			// eslint-disable-next-line no-await-in-loop
+			await sleep(10);
+		}
+		return true;
+	}
 
-	const bceChatNotify = (node) => {
+	const bchChatNotify = (node) => {
 		const div = document.createElement("div");
-		div.setAttribute("class", "ChatMessage bce-notification");
+		div.setAttribute("class", "ChatMessage bch-notification");
 		div.setAttribute("data-time", ChatRoomCurrentTime());
 		div.setAttribute("data-sender", Player.MemberNumber.toString());
 		if (typeof node === "string") {
@@ -64,9 +76,23 @@ async function BondageClubHelper() {
 		}
 	};
 
-	const bceLog = (...args) => {
-		console.log("BCE", `${w.BCE_VERSION}:`, ...args);
+	const bchNotify = async (text, duration = 5000, properties = {}) => {
+		await waitFor(
+			() => !!Player && new Date(ServerBeep?.Timer || 0) < new Date()
+		);
+
+		ServerBeep = {
+			Timer: Date.now() + duration,
+			Message: text,
+			...properties,
+		};
 	};
+
+
+	commands();
+
+	await bchNotify(`Bondage Club Helper v1.0 Loaded`);
+	bchLog("Bondage Club Helper v1.0 Loaded");
 
     async function commands() {
         /** @type {Command[]} */
@@ -127,7 +153,7 @@ async function BondageClubHelper() {
 						);
 					}
 					if (!targetMember) {
-						bceLog("Could not find member", target);
+						bchLog("Could not find member", target);
 						return;
 					}
 					CharacterReleaseTotal(targetMember)
@@ -141,8 +167,8 @@ async function BondageClubHelper() {
 						}]
 					});
 					ChatRoomCharacterUpdate(targetMember);
-					bceChatNotify(
-						`Comepletely unbinded ` + TargetName + ``
+					bchChatNotify(
+						`Comepletely unbinded ` + TargetName
 					);
 				},
 			},
@@ -157,6 +183,58 @@ async function BondageClubHelper() {
 					ChatRoomStatusUpdate("Wardrobe");
 					CharacterAppearanceLoadCharacter(Player);
 				}
+			},
+			{
+				Tag: "showlocks",
+				Description: "[membernumber] [T/F]: Show locks on character",
+				Action: async (_, _command, args) => {
+					var Str1 = "";
+					var Str2 = "";
+					const [target, whisperarg] = args;
+					let targetMember = null;
+					if (!target) {
+						targetMember = Player;
+					} else {
+						targetMember = Character.find(
+							(c) => c.MemberNumber === parseInt(target)
+						);
+					}
+					if (!targetMember) {
+						bchLog("Could not find member", target);
+						return;
+					}
+					const whisper = whisperarg === "false";
+					Str1 = "Passwords for " + targetMember.Name + "'s Locks";
+					bchChatNotify(Str1);
+				 
+					for (var j=0; j<targetMember.Appearance.length; j++) {
+
+						Str1 = targetMember.Appearance[j].Asset.Name;
+
+						// Ignore items which do not have a Property item. 
+						if (typeof targetMember.Appearance[j].Property === "undefined") continue;
+						// Ignore items which do not have item "Property.LockedBy"
+						if (typeof targetMember.Appearance[j].Property.LockedBy === "undefined") continue;
+
+						switch  (targetMember.Appearance[j].Property.LockedBy) {
+						  case "CombinationPadlock":
+							Str2 = " - Combo: "+ targetMember.Appearance[j].Property.CombinationNumber;
+							break;
+						  case "PasswordPadlock":
+							Str2 = " - Pass: " + targetMember.Appearance[j].Property.Password;
+							break;
+						  case "TimerPasswordPadlock":
+							Str2 = " - TimePass: " + targetMember.Appearance[j].Property.Password;
+							break;
+						  case "SafewordPadlock":
+							Str2 = " - Safe " + targetMember.Appearance[j].Property.Password;
+							break;
+						};
+						Str1 += Str2
+						bchChatNotify(Str1);
+						console.log(Str1);
+					};
+				},
 			},
         ];
     
@@ -190,6 +268,10 @@ async function BondageClubHelper() {
         }
     }
 
+	function sleep(ms) {
+		// eslint-disable-next-line no-promise-executor-return
+		return new Promise((resolve) => setTimeout(resolve, ms));
+	}
     
 }
 
