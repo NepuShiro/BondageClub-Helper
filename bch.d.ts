@@ -3,5 +3,7 @@ export {};
 
 
 declare global {
-var Commands: Command[];
+    var BCX_Loaded: boolean;
+    var BCX_SOURCE: string;
+    var Commands: Command[];
 }
