@@ -70,7 +70,7 @@ async function BondageClubHelper() {
 		Observe: 0,
 	};
 
-	
+
     if (typeof ChatRoomCharacter === "undefined") {
 		console.warn("Bondage Club not detected. Skipping BCH initialization.");
 		return;
@@ -365,7 +365,7 @@ async function BondageClubHelper() {
 
 	function createTimer(cb, intval) {
 		let lastTime = Date.now();
-		SDK.hookFunction("MainRun", HOOK_PRIORITIES.Top, (args, next) => {
+		modApi.hookFunction("MainRun", HOOK_PRIORITIES.Top, (args, next) => {
 			if (Date.now() - lastTime > intval) {
 				lastTime = Date.now();
 				cb();
