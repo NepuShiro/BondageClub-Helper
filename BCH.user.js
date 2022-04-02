@@ -62,7 +62,7 @@ async function BondageClubHelper() {
 		}
 		modApi.patchFunction(functionName, patches);
 	};
-	
+
 	const characterStates = new Map();
 
 	const HOOK_PRIORITIES = {
@@ -338,14 +338,14 @@ async function BondageClubHelper() {
 				) {
 					DrawImageResize(
 						ICONS.USER,
-						CharX + 275 * Zoom,
+						CharX + 250 * Zoom,
 						CharY,
 						50 * Zoom,
 						50 * Zoom
 					);
 					DrawTextFit(
 						C.BCH,
-						CharX + 300 * Zoom,
+						CharX + 275 * Zoom,
 						CharY + 40 * Zoom,
 						50 * Zoom,
 						DEVS.includes(C.MemberNumber) ? "#b33cfa" : "White",
