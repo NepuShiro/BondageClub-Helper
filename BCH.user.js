@@ -79,7 +79,7 @@ async function BondageClubHelper() {
 		div.setAttribute("class", "ChatMessage bch-notification");
 		div.setAttribute("data-time", ChatRoomCurrentTime());
 		div.setAttribute("data-sender", Player.MemberNumber.toString());
-		div.setAttribute("style", "background-color:rgba(159,90,253,0.5);");
+		div.setAttribute("style", "background-color:rgba(106,61,204,0.35);");
 		if (typeof node === "string") {
 			div.appendChild(document.createTextNode(node));
 		} else if (Array.isArray(node)) {
@@ -263,7 +263,7 @@ async function BondageClubHelper() {
 							bchChatNotify(Str1);
 						} else if (whisper) {
 							ServerSend("ChatRoomChat", { Content: Str1, Type: "Whisper", Target: targetMember.MemberNumber, Sender: Player.MemberNumber })
-							Str1 += "Whispered to " + targetMember.Name;
+							Str1 += " == Whispered to " + targetMember.Name;
 							bchChatNotify(Str1);
 						};
 					};
