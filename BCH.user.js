@@ -298,7 +298,9 @@ async function BondageClubHelper() {
                 bchLog("already registered", c);
                 continue;
             }
-            Commands.push(c);
+			setTimeout(function(){
+				Commands.push(c);
+			}, 5000)
         }
     }
 
