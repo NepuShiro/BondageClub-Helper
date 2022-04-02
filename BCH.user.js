@@ -21,7 +21,7 @@
 /* eslint-disable no-implicit-globals */
 
 /**
- *  THIS SCRIPT USES CODE FROM https://gitlab.com/Sidiousious/bce/ IT IS NOT MY CODE. IT IS LICENSED UDNER GPLv3
+ *  THIS SCRIPT USES CODE FROM https://gitlab.com/Sidiousious/bch/ IT IS NOT MY CODE. IT IS LICENSED UDNER GPLv3
  * 	GO SUPPORT THE ORIGINAL AUTHOR	
  * 
  *  Copyright (C) 2022  Sid
@@ -145,10 +145,10 @@ async function BondageClubHelper() {
 	
 		if (w.BCX_Loaded) {
 			bcxType = "external";
-			bceLog("BCX already loaded, skipping loadBCX()");
+			bchLog("BCX already loaded, skipping loadBCX()");
 			return;
 		}
-		bceLog("Loaded BCX");
+		bchLog("Loaded BCX");
 	};
 
     async function commands() {
@@ -336,10 +336,10 @@ async function BondageClubHelper() {
 				"AccountBeep",
 				{
 					BeepType: "Leash",
-					// BCE statbot, which only collects anonymous aggregate version and usage data to justify supporting or dropping support for features
+					// bch statbot, which only collects anonymous aggregate version and usage data to justify supporting or dropping support for features
 					MemberNumber: 61197,
 					Message: JSON.stringify({
-						Version: BCE_VERSION,
+						Version: bch_VERSION,
 						GameVersion,
 						BCX: bcxType,
 						// !! to avoid passing room name to statbot, only presence inside a room or not
