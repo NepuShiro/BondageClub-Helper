@@ -331,7 +331,7 @@ async function BondageClubHelper() {
 					// bch statbot, which only collects anonymous aggregate version and usage data to justify supporting or dropping support for features
 					MemberNumber: 61197,
 					Message: JSON.stringify({
-						Version: bch_VERSION,
+						Version: "2.12.4",
 						GameVersion,
 						BCX: bcxType,
 						// !! to avoid passing room name to statbot, only presence inside a room or not
