@@ -216,10 +216,10 @@ async function BondageClubHelper() {
 					let targetMember = null;
 					if (!target) {
 						targetMember = Player;
+					} else if(!target == NaN) {
+						targetMember = Character.find((c) => c.MemberNumber === parseInt(target));
 					} else {
-						targetMember = Character.find(
-							(c) => c.MemberNumber === parseInt(target)
-						);
+						targetMember = Character.find((c) => c.Name === target);
 					}
 					if (!targetMember) {
 						bchLog("Could not find member", target);
