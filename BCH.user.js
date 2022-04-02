@@ -321,6 +321,11 @@ async function BondageClubHelper() {
 		return new Promise((resolve) => setTimeout(resolve, ms));
 	}
 
+	function isCharacter(c) {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+		return isNonNullObject(c) && typeof c.IsPlayer === "function";
+	}
+
 	function chatRoomOverlay() {
 		modApi.hookFunction(
 			"ChatRoomDrawCharacterOverlay",
@@ -368,8 +373,6 @@ async function BondageClubHelper() {
 			}
 		);
 	}
-
-
 	//OLD KEYBINDS FOR COMPATABILITY
 	let keys = {
 		insert: false,
