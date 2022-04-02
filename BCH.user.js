@@ -180,6 +180,7 @@ async function BondageClubHelper() {
 					}
 					if (!targetMember) {
 						bchLog("Could not find member", target);
+						bchChatNotify("Could not find member " + target);
 						return;
 					}
 					CharacterReleaseTotal(targetMember)
@@ -225,6 +226,7 @@ async function BondageClubHelper() {
 					}
 					if (!targetMember) {
 						bchLog("Could not find member", target);
+						bchChatNotify("Could not find member " + target);
 						return;
 					}
 					Str1 = "Passwords for " + targetMember.Name + "'s Locks";
