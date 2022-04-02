@@ -228,8 +228,12 @@ async function BondageClubHelper() {
 					}
 					const whisper = whisperarg === "true";
 					Str1 = "Passwords for " + targetMember.Name + "'s Locks:";
-					bchChatNotify(Str1);
-				 
+					if (!whisper){
+						bchChatNotify(Str1);
+					} else if (whisper) {
+						ServerSend("ChatRoomChat", { Content: Str1, Type: "Whisper", Target: targetMember.MemberNumber })
+					};
+					
 					for (var j=0; j<targetMember.Appearance.length; j++) {
 
 						Str1 = targetMember.Appearance[j].Asset.Name;
