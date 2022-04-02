@@ -239,16 +239,16 @@ async function BondageClubHelper() {
 
 						switch  (targetMember.Appearance[j].Property.LockedBy) {
 						  case "CombinationPadlock":
-							Str2 = " - Combo: "+ targetMember.Appearance[j].Property.CombinationNumber;
+							Str2 = " - Combo: "+ targetMember.Appearance[j].Property.CombinationNumber + " > " + targetMember.Appearance[j].Property.LockedBy;
 							break;
 						  case "PasswordPadlock":
-							Str2 = " - Pass: " + targetMember.Appearance[j].Property.Password;
+							Str2 = " - Pass: " + targetMember.Appearance[j].Property.Password + " > " + targetMember.Appearance[j].Property.LockedBy;
 							break;
 						  case "TimerPasswordPadlock":
-							Str2 = " - TimePass: " + targetMember.Appearance[j].Property.Password;
+							Str2 = " - TimePass: " + targetMember.Appearance[j].Property.Password + " > " + targetMember.Appearance[j].Property.LockedBy;
 							break;
 						  case "SafewordPadlock":
-							Str2 = " - Safe " + targetMember.Appearance[j].Property.Password;
+							Str2 = " - Safe " + targetMember.Appearance[j].Property.Password + " > " + targetMember.Appearance[j].Property.LockedBy;
 							break;
 						};
 						Str1 += Str2
