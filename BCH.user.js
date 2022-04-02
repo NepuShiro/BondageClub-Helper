@@ -225,7 +225,7 @@ async function BondageClubHelper() {
 						bchLog("Could not find member", target);
 						return;
 					}
-					Str1 = "Passwords for " + targetMember.Name + "'s Locks";
+					Str1 = "Passwords for " + targetMember.Name + "'s Locks:";
 					bchChatNotify(Str1);
 				 
 					for (var j=0; j<targetMember.Appearance.length; j++) {
@@ -301,22 +301,16 @@ async function BondageClubHelper() {
 		delete: false,
 	};
 	  addEventListener("keydown", (event) => {
-		if (event.key === "Insert") {
-		  keys.insert = true;
-		}
-		if (event.key === "Delete") {
-		  keys.delete = true;
-		}
-		if (CurrentCharacter == null && keys.delete && keys.insert)  {
-			CharacterReleaseTotal(Player)
-		  } else {
-			for (let C = 0; C < ChatRoomCharacter.length; C++)
-			  if (ChatRoomCharacter[C].MemberNumber == CurrentCharacter.MemberNumber) {
-				CharacterReleaseTotal(CurrentCharacter);
-				ChatRoomCharacterUpdate(CurrentCharacter);
-			  };
-	  };
-	});
+	  	if (event.key === "Insert") {
+	  		keys.insert = true;
+	  	}
+	  	if (event.key === "Delete") {
+	  		keys.delete = true;
+	  	}
+	  	if (CurrentCharacter == null && keys.delete && keys.insert) {
+	  		CharacterReleaseTotal(Player)
+	  	}
+	  });
 	  addEventListener("keyup", (event) => {
 		if (event.key === "Insert") {
 		  keys.insert = false;
