@@ -80,12 +80,6 @@ async function BondageClubHelper() {
 		console.log("BCH:", ...args);
 	};
 
-	function settingsLoaded() {
-		setTimeout(function(){
-			bchLog('"Settings Loaded"');
-		}, 2000); 
-	}
-
 	async function waitFor(func, cancelFunc = () => false) {
 		while (!func()) {
 			if (cancelFunc()) {
@@ -141,8 +135,6 @@ async function BondageClubHelper() {
 
 		// Load BCX
 	async function loadBCX() {
-		await waitFor(settingsLoaded);
-	
 		if (w.BCX_Loaded) {
 			bcxType = "external";
 			bchLog("BCX already loaded, skipping loadBCX()");
