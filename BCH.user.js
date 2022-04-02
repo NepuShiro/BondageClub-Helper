@@ -244,19 +244,49 @@ async function BondageClubHelper() {
 						// Ignore items which do not have item "Property.LockedBy"
 						if (typeof targetMember.Appearance[j].Property.LockedBy === "undefined") continue;
 
-						switch  (targetMember.Appearance[j].Property.LockedBy) {
-						  case "CombinationPadlock":
-							Str2 = " - Combo: "+ targetMember.Appearance[j].Property.CombinationNumber + " > " + targetMember.Appearance[j].Property.LockedBy;
-							break;
-						  case "PasswordPadlock":
-							Str2 = " - Pass: " + targetMember.Appearance[j].Property.Password + " > " + targetMember.Appearance[j].Property.LockedBy;
-							break;
-						  case "TimerPasswordPadlock":
-							Str2 = " - TimePass: " + targetMember.Appearance[j].Property.Password + " > " + targetMember.Appearance[j].Property.LockedBy;
-							break;
-						  case "SafewordPadlock":
-							Str2 = " - Safe " + targetMember.Appearance[j].Property.Password + " > " + targetMember.Appearance[j].Property.LockedBy;
-							break;
+						switch (targetMember.Appearance[j].Property.LockedBy) {
+							case "MetalPadlock":
+								Str2 = " - Metal";
+								break;
+							case "ExclusivePadlock":
+								Str2 = " - Exclusive";
+								break;
+							case "CombinationPadlock":
+								Str2 = " - Combo: " + targetMember.Appearance[j].Property.CombinationNumber + " > " + targetMember.Appearance[j].Property.LockedBy;
+								break;
+							case "IntricatePadlock":
+								Str2 = " - Intric ";
+								break;
+							case "HighSecurityPadlock":
+								Str2 = " - High ";
+								break;
+							case "LoversPadlock":
+								Str2 = " - Love ";
+								break;
+							case "LoversTimerPadlock":
+								Str2 = " - LoveTime";
+								break;
+							case "OwnerPadlock":
+								Str2 = " - Owner";
+								break;
+							case "OwnerTimerPadlock":
+								Str2 = " - OwnTime";
+								break;
+							case "PasswordPadlock":
+								Str2 = " - Pass: " + targetMember.Appearance[j].Property.Password + " > " + targetMember.Appearance[j].Property.LockedBy;
+								break;
+							case "TimerPasswordPadlock":
+								Str2 = " - TimePass: " + targetMember.Appearance[j].Property.Password + " > " + targetMember.Appearance[j].Property.LockedBy;
+								break;
+							case "SafewordPadlock":
+								Str2 = " - Safe " + targetMember.Appearance[j].Property.Password + " > " + targetMember.Appearance[j].Property.LockedBy;
+								break;
+							case "MistressPadlock":
+								Str2 = " - Misstress";
+								break;
+							case "MistressTimerPadlock":
+								Str2 = " - MissTime";
+								break;
 						};
 						Str1 += Str2
 						console.log(Str1);
