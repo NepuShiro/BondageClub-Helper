@@ -314,18 +314,7 @@ async function BondageClubHelper() {
             Commands.push(c);
         }
     }
-
-
-	function sleep(ms) {
-		// eslint-disable-next-line no-promise-executor-return
-		return new Promise((resolve) => setTimeout(resolve, ms));
-	}
-
-	function isCharacter(c) {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-		return isNonNullObject(c) && typeof c.IsPlayer === "function";
-	}
-
+	
 	function chatRoomOverlay() {
 		modApi.hookFunction(
 			"ChatRoomDrawCharacterOverlay",
@@ -372,6 +361,20 @@ async function BondageClubHelper() {
 				return ret;
 			}
 		);
+	}
+
+	function sleep(ms) {
+		// eslint-disable-next-line no-promise-executor-return
+		return new Promise((resolve) => setTimeout(resolve, ms));
+	}
+
+	function isCharacter(c) {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+		return isNonNullObject(c) && typeof c.IsPlayer === "function";
+	}
+
+	function isNonNullObject(o) {
+		return o && typeof o === "object" && !Array.isArray(o);
 	}
 	//OLD KEYBINDS FOR COMPATABILITY
 	let keys = {
