@@ -57,17 +57,17 @@ async function BondageClubHelper() {
     const modApi = bcModSdk.registerMod('BondageClubHelper', '1.0');
     const SUPPORTED_GAME_VERSIONS = ["R78"];
     const w = window;
-
-	const BCX_DEVEL_SOURCE =
-			"https://jomshir98.github.io/bondage-club-extended/devel/bcx.js",
-		BCX_SOURCE =
-			"https://raw.githubusercontent.com/Jomshir98/bondage-club-extended/fe83ac4068413ce0fd03c298dddb2b22dad04fb8/bcx.js";
-
-	let bcxType = "";
+	let bcxType = "none";
 
     if (typeof ChatRoomCharacter === "undefined") {
 		console.warn("Bondage Club not detected. Skipping BCH initialization.");
 		return;
+	}
+
+	function settingsLoaded() {
+		setTimeout(function(){
+			bceLog('"Settings Loaded"');
+		}, 2000); 
 	}
 
     const patchFunction = (functionName, patches, affectedFunctionality) => {
@@ -326,6 +326,38 @@ async function BondageClubHelper() {
             Commands.push(c);
         }
     }
+
+	(function () {
+		const sendHeartbeat = () => {
+			if (w.BCX_Loaded && bcxType === "none") {
+				bcxType = "external";
+			}
+			SDK.callOriginal("ServerSend", [
+				"AccountBeep",
+				{
+					BeepType: "Leash",
+					// BCE statbot, which only collects anonymous aggregate version and usage data to justify supporting or dropping support for features
+					MemberNumber: 61197,
+					Message: JSON.stringify({
+						Version: BCE_VERSION,
+						GameVersion,
+						BCX: bcxType,
+						// !! to avoid passing room name to statbot, only presence inside a room or not
+						InRoom: !!Player.LastChatRoom,
+						InPrivate: !!Player.LastChatRoomPrivate,
+						// @ts-ignore
+						// eslint-disable-next-line camelcase
+						InTampermonkey: typeof GM_info !== "undefined",
+					}),
+					// IsSecret: true to avoid passing room name to statbot
+					IsSecret: true,
+				},
+			]);
+		};
+		sendHeartbeat();
+		// 5 minutes
+		createTimer(sendHeartbeat, 1000 * 60 * 5);
+	})();
 
 	function sleep(ms) {
 		// eslint-disable-next-line no-promise-executor-return
