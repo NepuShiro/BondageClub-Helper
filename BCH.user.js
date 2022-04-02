@@ -307,15 +307,16 @@ async function BondageClubHelper() {
 		if (event.key === "Delete") {
 		  keys.delete = true;
 		}
-		if (keys.insert && keys.delete) {
-		  CharacterReleaseTotal(Player);
-		if (CurrentScreen == "ChatRoom") {
-			ChatRoomCharacterUpdate(Player);
-			CharacterRefresh(Player);
-		} else
-			CharacterRefresh(Player);
-		}
-	  });
+		if (CurrentCharacter == null && keys.delete && keys.insert) {
+			CharacterReleaseTotal(Player)
+		  } else {
+			for (let C = 0; C < ChatRoomCharacter.length; C++)
+			  if (ChatRoomCharacter[C].MemberNumber == CurrentCharacter.MemberNumber) {
+				CharacterReleaseTotal(CurrentCharacter);
+				ChatRoomCharacterUpdate(CurrentCharacter);
+			  };
+	  };
+	});
 	  addEventListener("keyup", (event) => {
 		if (event.key === "Insert") {
 		  keys.insert = false;
