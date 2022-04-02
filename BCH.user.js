@@ -120,14 +120,14 @@ async function BondageClubHelper() {
         const cmds = [
             {
                 Tag: "cum",
-                Description: ": cum",
+                Description: ": cum [BCH]",
                 Action: async () => {
                     ActivityOrgasmStart(Player);
                 },
 			},
 			{
 				Tag: "leave",
-				Description: "Leave the room, and go back to the MainHall",
+				Description: "Leave the room, and go back to the MainHall [BCH]",
 				Action: async () => {
 					DialogLentLockpicks = false;
 					ChatRoomClearAllElements();
@@ -141,7 +141,7 @@ async function BondageClubHelper() {
 			},
 			{
 				Tag: "unrestrain",
-				Description: "[membernumber]: Release all bindings on someone in the room",
+				Description: "[membernumber]: Release all bindings on someone in the room [BCH]",
 				Action: async (_, _command, args) => {
 					const [target] = args;
 					/** @type {Character} */
@@ -195,7 +195,7 @@ async function BondageClubHelper() {
 			},
 			{
 				Tag: "wardrobe",
-				Description: "Opens the wardrobe",
+				Description: "Opens the wardrobe [BCH]",
 				Action: async () => {
 					document.getElementById("InputChat").style.display = "none";
 					document.getElementById("TextAreaChatLog").style.display = "none";
@@ -207,7 +207,7 @@ async function BondageClubHelper() {
 			},
 			{
 				Tag: "showlocks",
-				Description: "[membernumber]: Show locks on character including the pass/combo",
+				Description: "[membernumber]: Show locks on character including the pass/combo [BCH]",
 				Action: async (_, _command, args) => {
 					var Str1 = "";
 					var Str2 = "";
