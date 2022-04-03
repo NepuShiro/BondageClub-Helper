@@ -170,7 +170,7 @@ async function BondageClubHelper() {
 						});
 						ChatRoomCharacterUpdate(Player);
         				CharacterRefresh(Player);
-						bchChatNotify("Comepletely unbinded yourself");
+						bchChatNotify("Completely unbinded yourself");
 					} else if(!target == NaN) {
 						targetMember = Character.find((c) => c.MemberNumber === parseInt(target));
 					} else {
@@ -192,7 +192,7 @@ async function BondageClubHelper() {
 						}]
 					});
 					ChatRoomCharacterUpdate(targetMember);
-					bchChatNotify("Comepletely unbinded " + targetMember.Name);
+					bchChatNotify("Completely unbinded " + targetMember.Name);
 				},
 			},
 			{
