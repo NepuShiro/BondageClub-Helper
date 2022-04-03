@@ -170,6 +170,7 @@ async function BondageClubHelper() {
 						});
 						ChatRoomCharacterUpdate(Player);
         				CharacterRefresh(Player);
+						bchChatNotify("Comepletely unbinded yourself");
 					} else if(!target == NaN) {
 						targetMember = Character.find((c) => c.MemberNumber === parseInt(target));
 					} else {
