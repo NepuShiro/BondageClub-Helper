@@ -283,10 +283,10 @@ async function BondageClubHelper() {
 								Str2 = " - Safe " + targetMember.Appearance[j].Property.Password + " > " + targetMember.Appearance[j].Property.LockedBy;
 								break;
 							case "MistressPadlock":
-								Str2 = " - Misstress";
+								Str2 = " - Mistress";
 								break;
 							case "MistressTimerPadlock":
-								Str2 = " - MissTime";
+								Str2 = " - MisTime";
 								break;
 						};
 						Str1 += Str2
