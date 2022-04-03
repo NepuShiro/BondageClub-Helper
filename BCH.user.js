@@ -301,6 +301,69 @@ async function BondageClubHelper() {
 					};
 				},
 			},
+			{
+				Tag: "exportlook",
+				Description: "[target member number] [includeBinds: true/false] [total: true/false]: Copy your or another player's appearance in a format that can be imported with BCX [BCH]",
+				Action: async (_, _command, args) => {
+					const [target, includeBindsArg, total] = args;
+					/** @type {Character} */
+					let targetMember = null;
+					if (!target) {
+						targetMember = Player;
+					} else if(!target == NaN) {
+						targetMember = Character.find((c) => c.MemberNumber === parseInt(target));
+					} else {
+						target.toLowerCase();
+						targetMember = Character.find((c) => c.Name.toLowerCase() === target);
+					}
+					if (!targetMember) {
+						bchLog("Could not find member", target);
+						return;
+					}
+					const includeBinds = includeBindsArg === "true";
+					// LockMemberNumber
+
+					const clothes = targetMember.Appearance.filter(
+						(a) =>
+							a.Asset.Group.Category === "Appearance" &&
+							a.Asset.Group.AllowNone &&
+							a.Asset.Group.Clothing
+					);
+
+					const appearance = [...clothes];
+					if (includeBinds) {
+						appearance.push(
+							...targetMember.Appearance.filter(
+								(a) =>
+									a.Asset.Group.Category === "Item" &&
+									!["ItemNeck", "ItemNeckAccessories"].includes(
+										a.Asset.Group.Name
+									) &&
+									!a.Asset.Group.BodyCosplay
+							)
+						);
+					}
+
+					/** @type {ItemBundle[]} */
+					const looks = (
+						total === "true" ? targetMember.Appearance : appearance
+					).map((i) => {
+						const property = i.Property ? { ...i.Property } : {};
+						if (property?.LockMemberNumber) {
+							property.LockMemberNumber = Player.MemberNumber;
+						}
+						return {
+							Group: i.Asset.Group.Name,
+							Name: i.Asset.Name,
+							Color: i.Color,
+							Difficulty: i.Difficulty,
+							Property: property,
+						};
+					});
+					await navigator.clipboard.writeText(JSON.stringify(looks));
+					bchChatNotify(`Exported looks for ` + targetMember.Name +` copied to clipboard`);
+				},
+			},
         ];
     
         // Skip history patch for /w
@@ -328,7 +391,10 @@ async function BondageClubHelper() {
 				bchLog("already registered", c);
 				continue;
 			}
-			Commands.push(c);
+			//register commands when the screen is ChatRoom
+			setTimeout(function() {
+				Commands.push(c);
+			}, 5000);
 		}
     }
 
@@ -381,6 +447,5 @@ async function BondageClubHelper() {
 	   })
 }
 
-setTimeout(function(){
-	BondageClubHelper();
-}, 6000)
+
+BondageClubHelper();
