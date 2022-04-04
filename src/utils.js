@@ -1,4 +1,4 @@
-import { BCH_VERSION } from "./BCH.user.js";
+//import { BCH_VERSION } from "./BCH.user.js";
 
 // Console logging cmd
 const bchLog = (...args) => {
@@ -47,4 +47,4 @@ const bchChatNotify = (node) => {
     }
 };
 
-//export { bchLog, bchNotify, bchChatNotify, sleep };
+export { bchLog, bchNotify, bchChatNotify, sleep };
