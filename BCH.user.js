@@ -37,7 +37,7 @@ var bcModSdk=function(){"use strict";const o="1.0.2";function e(o){alert("Mod ER
 
 var BCH_VERSION = "1.0";
 
-
+import util from "./utils/utils.js";
 
 async function BondageClubHelper() {
     "use strict";
@@ -61,6 +61,10 @@ async function BondageClubHelper() {
 			return;
 		}
 		modApi.patchFunction(functionName, patches);
+	};
+
+	const bchLog = (...args) => {
+		console.log("BCH:", ...args);
 	};
 
 	async function waitFor(func, cancelFunc = () => false) {
@@ -97,10 +101,22 @@ async function BondageClubHelper() {
 		}
 	};
 
+	const bchNotify = async (text, duration = 5000, properties = {}) => {
+		await waitFor(
+			() => !!Player && new Date(ServerBeep?.Timer || 0) < new Date()
+		);
+
+		ServerBeep = {
+			Timer: Date.now() + duration,
+			Message: text,
+			...properties,
+		};
+	};
+
 	commands();
 
 	await bchNotify(`Bondage Club Helper v1.0 Loaded`);
-	bchLog("SYS", "Bondage Club Helper v1.0 Loaded");
+	bchLog("Bondage Club Helper v1.0 Loaded");
 
     async function commands() {
 		await waitFor(() => !!Commands);
