@@ -37,7 +37,7 @@ var bcModSdk=function(){"use strict";const o="1.0.2";function e(o){alert("Mod ER
 
 var BCH_VERSION = "1.0";
 
-let util = require("./src/utils.js");
+import util from "./src/utils.js";
 
 async function BondageClubHelper() {
     "use strict";
