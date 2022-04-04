@@ -97,18 +97,6 @@ async function BondageClubHelper() {
 		}
 	};
 
-	const bchNotify = async (text, duration = 5000, properties = {}) => {
-		await waitFor(
-			() => !!Player && new Date(ServerBeep?.Timer || 0) < new Date()
-		);
-
-		ServerBeep = {
-			Timer: Date.now() + duration,
-			Message: text,
-			...properties,
-		};
-	};
-
 	commands();
 
 	await bchNotify(`Bondage Club Helper v1.0 Loaded`);
