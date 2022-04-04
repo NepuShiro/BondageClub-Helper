@@ -37,7 +37,7 @@ var bcModSdk=function(){"use strict";const o="1.0.2";function e(o){alert("Mod ER
 
 var BCH_VERSION = "1.0";
 
-// FUCK JAVASCRIPT
+// FUCK JAVASCRIPT :(
 import("./src/utils.js");
 
 async function BondageClubHelper() {
