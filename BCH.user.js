@@ -51,6 +51,9 @@ async function BondageClubHelper() {
 		return;
 	}
 
+	/** @type {string[]} */
+	const skippedFunctionality = [];
+
     const patchFunction = (functionName, patches, affectedFunctionality) => {
 		// Guard against patching a function that has been modified by another addon not using the shared SDK on supported versions.
 		if (
