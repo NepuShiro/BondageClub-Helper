@@ -37,6 +37,8 @@ var bcModSdk=function(){"use strict";const o="1.0.2";function e(o){alert("Mod ER
 
 var BCH_VERSION = "1.0";
 
+import * as util from './bch/utils.js';
+
 async function BondageClubHelper() {
     "use strict";
 
@@ -59,10 +61,6 @@ async function BondageClubHelper() {
 			return;
 		}
 		modApi.patchFunction(functionName, patches);
-	};
-
-	const bchLog = (...args) => {
-		console.log("BCH:", ...args);
 	};
 
 	async function waitFor(func, cancelFunc = () => false) {
