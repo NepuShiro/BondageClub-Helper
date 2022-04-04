@@ -1,6 +1,5 @@
 import { BCH_VERSION } from "../BCH.user.js";
 
-
 // Console logging cmd
 const bchLog = (...args) => {
     console.log("BCH", `${w.BCH_VERSION}:`, ...args);
