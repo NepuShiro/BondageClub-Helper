@@ -46,3 +46,5 @@ const bchChatNotify = (node) => {
         }
     }
 };
+
+export { bchLog, bchNotify, bchChatNotify, sleep };
