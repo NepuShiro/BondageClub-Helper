@@ -74,33 +74,10 @@ async function BondageClubHelper() {
 		return true;
 	}
 
-	const bchChatNotify = (node) => {
-		const div = document.createElement("div");
-		div.setAttribute("class", "ChatMessage bch-notification");
-		div.setAttribute("data-time", ChatRoomCurrentTime());
-		div.setAttribute("data-sender", Player.MemberNumber.toString());
-		div.setAttribute("style", "background-color:rgba(106,61,204,0.35);");
-		if (typeof node === "string") {
-			div.appendChild(document.createTextNode(node));
-		} else if (Array.isArray(node)) {
-			div.append(...node);
-		} else {
-			div.appendChild(node);
-		}
-
-		const ShouldScrollDown = ElementIsScrolledToEnd("TextAreaChatLog");
-		if (document.getElementById("TextAreaChatLog") !== null) {
-			document.getElementById("TextAreaChatLog").appendChild(div);
-			if (ShouldScrollDown) {
-				ElementScrollToEnd("TextAreaChatLog");
-			}
-		}
-	};
-
 	commands();
 
 	await bchNotify(`Bondage Club Helper v1.0 Loaded`);
-	bchLog("Bondage Club Helper v1.0 Loaded");
+	bchLog("SYS", "Bondage Club Helper v1.0 Loaded");
 
     async function commands() {
 		await waitFor(() => !!Commands);
@@ -385,12 +362,6 @@ async function BondageClubHelper() {
 			}, 5000);
 		}
     }
-
-
-	function sleep(ms) {
-		// eslint-disable-next-line no-promise-executor-return
-		return new Promise((resolve) => setTimeout(resolve, ms));
-	}
 
 	//OLD KEYBINDS FOR COMPATABILITY
 	let keys = {
