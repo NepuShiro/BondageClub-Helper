@@ -37,7 +37,7 @@ var bcModSdk=function(){"use strict";const o="1.0.2";function e(o){alert("Mod ER
 
 var BCH_VERSION = "1.0";
 
-import { bchLog, bchNotify, bchChatNotify, sleep } from "../utils/utils.js";
+import util from "./src/utils.js";
 
 async function BondageClubHelper() {
     "use strict";
@@ -69,19 +69,19 @@ async function BondageClubHelper() {
 				return false;
 			}
 			// eslint-disable-next-line no-await-in-loop
-			await sleep(10);
+			await util.sleep(10);
 		}
 		return true;
 	}
 
 	commands();
 
-	await bchNotify(`Bondage Club Helper v1.0 Loaded`);
-	bchLog("Bondage Club Helper v1.0 Loaded");
+	await util.bchNotify(`Bondage Club Helper v1.0 Loaded`);
+	util.bchLog("Bondage Club Helper v1.0 Loaded");
 
     async function commands() {
 		await waitFor(() => !!Commands);
-		bchLog("registering additional commands");
+		util.bchLog("registering additional commands");
 
         /** @type {Command[]} */
         const cmds = [
@@ -135,7 +135,7 @@ async function BondageClubHelper() {
 						});
 						ChatRoomCharacterUpdate(Player);
         				CharacterRefresh(Player);
-						bchChatNotify("Completely unbinded yourself");
+						util.bchChatNotify("Completely unbinded yourself");
 					} else if(!target == NaN) {
 						targetMember = Character.find((c) => c.MemberNumber === parseInt(target));
 					} else {
@@ -143,7 +143,7 @@ async function BondageClubHelper() {
 						targetMember = Character.find((c) => c.Name.toLowerCase() == target);
 					}
 					if (!targetMember) {
-						bchLog("Could not find member", target);
+						util.bchLog("Could not find member", target);
 						return;
 					}
 					CharacterReleaseTotal(targetMember)
@@ -157,7 +157,7 @@ async function BondageClubHelper() {
 						}]
 					});
 					ChatRoomCharacterUpdate(targetMember);
-					bchChatNotify("Completely unbinded " + targetMember.Name);
+					util.bchChatNotify("Completely unbinded " + targetMember.Name);
 				},
 			},
 			{
@@ -189,16 +189,16 @@ async function BondageClubHelper() {
 						targetMember = Character.find((c) => c.Name.toLowerCase() === target);
 					}
 					if (!targetMember) {
-						bchLog("Could not find member", target);
+						util.bchLog("Could not find member", target);
 						return;
 					}
 					const whisper = whisperarg === "true";
 					Str1 = "Passwords for " + targetMember.Name + "'s Locks:";
 					if (!whisper){
-						bchChatNotify(Str1);
+						util.bchChatNotify(Str1);
 					} else if (whisper) {
 						ServerSend("ChatRoomChat", { Content: Str1, Type: "Whisper", Target: targetMember.MemberNumber })
-						bchChatNotify(Str1);
+						util.bchChatNotify(Str1);
 					};
 
 					for (var j=0; j<targetMember.Appearance.length; j++) {
@@ -257,11 +257,11 @@ async function BondageClubHelper() {
 						Str1 += Str2
 						console.log(Str1);
 						if (!whisper){
-							bchChatNotify(Str1);
+							util.bchChatNotify(Str1);
 						} else if (whisper) {
 							ServerSend("ChatRoomChat", { Content: Str1, Type: "Whisper", Target: targetMember.MemberNumber, Sender: Player.MemberNumber })
 							Str1 += " == Whispered to " + targetMember.Name;
-							bchChatNotify(Str1);
+							util.bchChatNotify(Str1);
 						};
 					};
 				},
@@ -282,7 +282,7 @@ async function BondageClubHelper() {
 						targetMember = Character.find((c) => c.Name.toLowerCase() === target);
 					}
 					if (!targetMember) {
-						bchLog("Could not find member", target);
+						util.bchLog("Could not find member", target);
 						return;
 					}
 					const includeBinds = includeBindsArg === "true";
@@ -326,7 +326,7 @@ async function BondageClubHelper() {
 						};
 					});
 					await navigator.clipboard.writeText(JSON.stringify(looks));
-					bchChatNotify(`Exported looks for ` + targetMember.Name +` copied to clipboard`);
+					util.bchChatNotify(`Exported looks for ` + targetMember.Name +` copied to clipboard`);
 				},
 			},
         ];
@@ -353,7 +353,7 @@ async function BondageClubHelper() {
         );
 		for (const c of cmds) {
 			if (Commands.some((a) => a.Tag === c.Tag)) {
-				bchLog("already registered", c);
+				util.bchLog("already registered", c);
 				continue;
 			}
 			//register commands when the screen is ChatRoom
