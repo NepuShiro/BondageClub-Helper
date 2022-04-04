@@ -37,61 +37,7 @@ var bcModSdk=function(){"use strict";const o="1.0.2";function e(o){alert("Mod ER
 
 var BCH_VERSION = "1.0";
 
-// FUCK JAVASCRIPT :(
-//import { bchLog, bchNotify, bchChatNotify, sleep } from './utils.js';
-
-
-
-const bchLog = (...args) => {
-    console.log("BCH", `${w.BCH_VERSION}:`, ...args);
-};
-
-// Popup Notification
-const bchNotify = async (text, duration = 5000, properties = {}) => {
-    await waitFor(
-        () => !!Player && new Date(ServerBeep?.Timer || 0) < new Date()
-    );
-
-    ServerBeep = {
-        Timer: Date.now() + duration,
-        Message: text,
-        ...properties,
-    };
-};
-
-function sleep(ms) {
-    // eslint-disable-next-line no-promise-executor-return
-    return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-// Notify chat
-const bchChatNotify = (node) => {
-    const div = document.createElement("div");
-    div.setAttribute("class", "ChatMessage bch-notification");
-    div.setAttribute("data-time", ChatRoomCurrentTime());
-    div.setAttribute("data-sender", Player.MemberNumber.toString());
-    div.setAttribute("style", "background-color:rgba(106,61,204,0.35);");
-    if (typeof node === "string") {
-        div.appendChild(document.createTextNode(node));
-    } else if (Array.isArray(node)) {
-        div.append(...node);
-    } else {
-        div.appendChild(node);
-    }
-
-    const ShouldScrollDown = ElementIsScrolledToEnd("TextAreaChatLog");
-    if (document.getElementById("TextAreaChatLog") !== null) {
-        document.getElementById("TextAreaChatLog").appendChild(div);
-        if (ShouldScrollDown) {
-            ElementScrollToEnd("TextAreaChatLog");
-        }
-    }
-};
-
-
-
-
-
+import { bchLog } from "../src/utils.js";
 
 async function BondageClubHelper() {
     "use strict";
@@ -127,6 +73,41 @@ async function BondageClubHelper() {
 		}
 		return true;
 	}
+
+	const bchChatNotify = (node) => {
+		const div = document.createElement("div");
+		div.setAttribute("class", "ChatMessage bch-notification");
+		div.setAttribute("data-time", ChatRoomCurrentTime());
+		div.setAttribute("data-sender", Player.MemberNumber.toString());
+		div.setAttribute("style", "background-color:rgba(106,61,204,0.35);");
+		if (typeof node === "string") {
+			div.appendChild(document.createTextNode(node));
+		} else if (Array.isArray(node)) {
+			div.append(...node);
+		} else {
+			div.appendChild(node);
+		}
+
+		const ShouldScrollDown = ElementIsScrolledToEnd("TextAreaChatLog");
+		if (document.getElementById("TextAreaChatLog") !== null) {
+			document.getElementById("TextAreaChatLog").appendChild(div);
+			if (ShouldScrollDown) {
+				ElementScrollToEnd("TextAreaChatLog");
+			}
+		}
+	};
+
+	const bchNotify = async (text, duration = 5000, properties = {}) => {
+		await waitFor(
+			() => !!Player && new Date(ServerBeep?.Timer || 0) < new Date()
+		);
+
+		ServerBeep = {
+			Timer: Date.now() + duration,
+			Message: text,
+			...properties,
+		};
+	};
 
 	commands();
 
@@ -416,6 +397,12 @@ async function BondageClubHelper() {
 			}, 5000);
 		}
     }
+
+
+	function sleep(ms) {
+		// eslint-disable-next-line no-promise-executor-return
+		return new Promise((resolve) => setTimeout(resolve, ms));
+	}
 
 	//OLD KEYBINDS FOR COMPATABILITY
 	let keys = {
