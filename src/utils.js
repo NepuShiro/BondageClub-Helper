@@ -46,3 +46,10 @@ const bchChatNotify = (node) => {
         }
     }
 };
+
+module.exports = {
+    bchLog,
+    bchNotify,
+    bchChatNotify,
+    sleep,
+}
