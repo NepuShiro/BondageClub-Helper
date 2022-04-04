@@ -48,9 +48,4 @@ const bchChatNotify = (node) => {
     }
 };
 
-module.export = {
-    bchLog,
-    bchNotify,
-    bchChatNotify,
-    sleep,
-};
+export { bchLog, bchNotify, bchChatNotify, sleep };
