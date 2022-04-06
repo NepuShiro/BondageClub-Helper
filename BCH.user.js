@@ -429,25 +429,26 @@ async function BondageClubHelper() {
 	}
 
 	async function CheckForEmoticon() {
-		const AntiBindMember = ["66905", "66585"]
+		const AntiBindMember = ["66905", "66585", "67114"]
 		const AntiBind = Player.MemberNumber
 		//Loop through all AntiBindMember
-		if (CurrentScreen == "ChatRoom") {
-			for (let i = 0; i < AntiBindMember.length; i++) {
-				if (CurrentScreen == "ChatRoom" && AntiBindMember[i] == AntiBind) {
-					let Emoticon = Player.Appearance.find(A => A.Asset.Group.Name == "Emoticon");
-					if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep" && AntiBindMember[i] == AntiBind) {
-						Player.ItemPermission = 3;
-						ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-					} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming" && AntiBindMember[i] == AntiBind) {
-						Player.ItemPermission = 5;
-						ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-					} else if (Player.ItemPermission == 3 || Player.ItemPermission == 5 && Emoticon && Emoticon.Property && Emoticon.Property.Expression != "Sleep" || Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression == undefined && AntiBindMember[i] == AntiBind) {
-						Player.ItemPermission = 1;
-						ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-					} else if (Player.ItemPermission == 1 && Emoticon && Emoticon.Property && Emoticon.Property.Expression == undefined && AntiBindMember[i] == AntiBind) {
-						return;
-					}
+		for (let i = 0; i < AntiBindMember.length; i++) {
+			if (CurrentScreen == "ChatRoom" && AntiBindMember[i] == AntiBind) {
+				let Emoticon = Player.Appearance.find(A => A.Asset.Group.Name == "Emoticon");
+				if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep" && AntiBindMember[i] == AntiBind) {
+					Player.ItemPermission = 3;
+					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
+					bchLog("ItemsPerms have been updated to 3");
+				} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming" && AntiBindMember[i] == AntiBind) {
+					Player.ItemPermission = 5;
+					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
+					bchLog("ItemsPerms have been updated to 5");
+				} else if (Player.ItemPermission == 3 || Player.ItemPermission == 5 && Emoticon && Emoticon.Property && Emoticon.Property.Expression != undefined && AntiBindMember[i] == AntiBind) {
+					Player.ItemPermission = 1;
+					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
+					bchLog("ItemsPerms have been updated to 1");
+				} else if (Player.ItemPermission == 1 || Player.ItemPermission == 3 || Player.ItemPermission == 5 && Emoticon && Emoticon.Property && Emoticon.Property.Expression == undefined && AntiBindMember[i] == AntiBind) {
+					return;
 				}
 			}
 		}
