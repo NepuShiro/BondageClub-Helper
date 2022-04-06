@@ -416,7 +416,7 @@ async function CheckForEmoticon() {
 	if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming" && Player.MemberNumber == "66905") {
 		Player.ItemPermission = 3;
 		ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
-	} else if (Player.ItemPermission == 3) {
+	} else if (Player.ItemPermission == 3 && Emoticon && Emoticon.Property && Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression == undefined || Player.MemberNumber == "66905") {
 		Player.ItemPermission = 1;
 		ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
 	}
