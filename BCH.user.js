@@ -124,7 +124,7 @@ async function BondageClubHelper() {
 	bchLog("Bondage Club Helper v1.0 Loaded");
 
     async function commands() {
-		await waitFor(WaitForChatRoom());
+		await waitFor(WaitForChatRoom);
 		bchLog("registering additional commands");
 
         /** @type {Command[]} */
