@@ -425,12 +425,6 @@ addEventListener("keydown", (event) => {
 	if (CurrentCharacter == null && keys.delete && keys.insert && Player.MemberNumber != "66905") {
 		CharacterReleaseTotal(Player);
 		ChatRoomCharacterUpdate(Player);
-	} else {
-		CharacterReleaseTotal(Player);
-		setTimeout(function () {
-			WardrobeFastLoad(Player, 2, true)
-		}, 500);
-		ChatRoomCharacterUpdate(Player);
 	}
 });
 addEventListener("keyup", (event) => {
