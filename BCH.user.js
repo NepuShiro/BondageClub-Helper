@@ -13,6 +13,7 @@
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
+// @ts-check
 // eslint-disable-next-line
 /// <reference path="./bch.d.ts" />
 /* eslint-disable @typescript-eslint/no-floating-promises */
