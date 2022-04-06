@@ -124,7 +124,7 @@ async function BondageClubHelper() {
 	bchLog("Bondage Club Helper v1.0 Loaded");
 
     async function commands() {
-		await waitFor(WaitForChatRoom);
+		await WaitForChatRoom();
 		bchLog("registering additional commands");
 
         /** @type {Command[]} */
@@ -400,10 +400,7 @@ async function BondageClubHelper() {
 				bchLog("already registered", c);
 				continue;
 			}
-			//register commands when the screen is ChatRoom
-			setTimeout(function() {
-				Commands.push(c);
-			}, 5000);
+			Commands.push(c);
 		}
     }
 
@@ -425,7 +422,10 @@ async function BondageClubHelper() {
 			} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming" && AntiBindMember[i] == AntiBind) {
 				Player.ItemPermission = 5;
 				ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
-			} else if (Player.ItemPermission == 3 || Player.ItemPermission == 5 && Emoticon && Emoticon.Property && Emoticon.Property.Expression == undefined || Emoticon.Property.Expression != "Sleep" || Emoticon.Property.Expression != "Gaming"  && AntiBindMember[i] == AntiBind) {
+			} else if (Player.ItemPermission == 3 || Player.ItemPermission == 5 && Emoticon && Emoticon.Property && Emoticon.Property.Expression == undefined && AntiBindMember[i] == AntiBind) {
+				Player.ItemPermission = 1;
+				ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
+			} else if (Player.ItemPermission == 3 || Player.ItemPermission == 5 && Emoticon && Emoticon.Property && Emoticon.Property.Expression != "Sleep" || Emoticon.Property.Expression != "Gaming"  && AntiBindMember[i] == AntiBind) {
 				Player.ItemPermission = 1;
 				ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
 			}
