@@ -115,14 +115,16 @@ async function BondageClubHelper() {
 			...properties,
 		};
 	};
+	
 
+	startTimeout(15000);
 	commands();
 
 	await bchNotify(`Bondage Club Helper v1.0 Loaded`);
 	bchLog("Bondage Club Helper v1.0 Loaded");
 
     async function commands() {
-		await waitFor(() => !!Commands);
+		await waitFor(WaitForChatRoom());
 		bchLog("registering additional commands");
 
         /** @type {Command[]} */
@@ -411,32 +413,37 @@ async function BondageClubHelper() {
 		return new Promise((resolve) => setTimeout(resolve, ms));
 	}
 
-async function CheckForEmoticon() {
-	const AntiBindMember = ["66905","66585"]
-	const AntiBind = Player.MemberNumber
-	//Loop through all AntiBindMember
-	for (let i = 0; i < AntiBindMember.length; i++) {
-		let Emoticon = Player.Appearance.find(A => A.Asset.Group.Name == "Emoticon");
-		if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep" && AntiBindMember[i] == AntiBind) {
-			Player.ItemPermission = 3;
-			ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
-		} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming" && AntiBindMember[i] == AntiBind) {
-			Player.ItemPermission = 5;
-			ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
-		} else if (Player.ItemPermission == 3 || Player.ItemPermission == 5 && Emoticon && Emoticon.Property && Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression != "Sleep" || Emoticon.Property.Expression == undefined && AntiBindMember[i] == AntiBind) {
-			Player.ItemPermission = 1;
-			ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
+	async function CheckForEmoticon() {
+		const AntiBindMember = ["66905","66585"]
+		const AntiBind = Player.MemberNumber
+		//Loop through all AntiBindMember
+		for (let i = 0; i < AntiBindMember.length; i++) {
+			let Emoticon = Player.Appearance.find(A => A.Asset.Group.Name == "Emoticon");
+			if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep" && AntiBindMember[i] == AntiBind) {
+				Player.ItemPermission = 3;
+				ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
+			} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming" && AntiBindMember[i] == AntiBind) {
+				Player.ItemPermission = 5;
+				ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
+			} else if (Player.ItemPermission == 3 || Player.ItemPermission == 5 && Emoticon && Emoticon.Property && Emoticon.Property.Expression == undefined || Emoticon.Property.Expression != "Sleep" || Emoticon.Property.Expression != "Gaming"  && AntiBindMember[i] == AntiBind) {
+				Player.ItemPermission = 1;
+				ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
+			}
 		}
 	}
-}
-
-	startTimeout(15000);
 
 	function startTimeout(time){ 
 		setTimeout(function(){
 			CheckForEmoticon(); 
 			startTimeout(time) 
 		}, time) 
+	}
+
+	async function WaitForChatRoom() {
+		//wait for the CurrentScreen to be "ChatRoom"
+		while (CurrentScreen !== "ChatRoom") {
+			await sleep(5000);
+		}
 	}
 
 
