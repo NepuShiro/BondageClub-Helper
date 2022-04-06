@@ -413,10 +413,13 @@ async function BondageClubHelper() {
 
 async function CheckForEmoticon() {
 	let Emoticon = Player.Appearance.find(A => A.Asset.Group.Name == "Emoticon");
-	if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming" && Player.MemberNumber == "66905") {
+	if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep" && Player.MemberNumber == "66905") {
 		Player.ItemPermission = 3;
 		ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
-	} else if (Player.ItemPermission == 3 && Emoticon && Emoticon.Property && Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression == undefined && Player.MemberNumber == "66905") {
+	} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression != "Gaming" && Player.MemberNumber == "66905") {
+		Player.ItemPermission = 5;
+		ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
+	} else if (Player.ItemPermission == 3 || Player.ItemPermission == 5 && Emoticon && Emoticon.Property && Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression != "Sleep" || Emoticon.Property.Expression == undefined && Player.MemberNumber == "66905") {
 		Player.ItemPermission = 1;
 		ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
 	}
