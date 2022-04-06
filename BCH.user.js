@@ -410,48 +410,54 @@ async function BondageClubHelper() {
 		// eslint-disable-next-line no-promise-executor-return
 		return new Promise((resolve) => setTimeout(resolve, ms));
 	}
-
-	//OLD KEYBINDS FOR COMPATABILITY
-	let keys = {
-		insert: false,
-		delete: false,
-	};
-	  addEventListener("keydown", (event) => {
-	  	if (event.key === "Insert") {
-	  		keys.insert = true;
-	  	}
-	  	if (event.key === "Delete") {
-	  		keys.delete = true;
-	  	}
-	  	if (CurrentCharacter == null && keys.delete && keys.insert) {
-	  		CharacterReleaseTotal(Player)
-	  	}
-	  });
-	  addEventListener("keyup", (event) => {
-		if (event.key === "Insert") {
-		  keys.insert = false;
-		}
-		if (event.key === "Delete") {
-		  keys.delete = false;
-		}
-	  });
-	addEventListener("keydown", (event) => {
-		if (event.keyCode == 109) {
-		   if (CurrentScreen == "ChatRoom") {
-			 DialogLentLockpicks = false;
-			 ChatRoomClearAllElements();
-			 ServerSend("ChatRoomLeave", "");
-			 ChatRoomSetLastChatRoom("");
-			 ChatRoomLeashPlayer = null;
-			 CommonSetScreen("Online", "ChatSearch");
-			 CharacterDeleteAllOnline();
-			 ChatSearchExit();
-		   } else
-			 MainHallWalk("MainHall");
-		 } else if (event.key === "]") {
-		   StruggleProgress = 125;
-		 }
-	   })
+//OLD KEYBINDS FOR COMPATABILITY
+let keys = {
+	insert: false,
+	delete: false,
+};
+addEventListener("keydown", (event) => {
+	if (event.key === "Insert") {
+		keys.insert = true;
+	}
+	if (event.key === "Delete") {
+		keys.delete = true;
+	}
+	if (CurrentCharacter == null && keys.delete && keys.insert && player.MemberNumer != "66905") {
+		CharacterReleaseTotal(Player);
+		ChatRoomCharacterUpdate(Player);
+	} else {
+		CharacterReleaseTotal(Player);
+		setTimeout(function () {
+			WardrobeFastLoad(Player, 2, true)
+		}, 500);
+		ChatRoomCharacterUpdate(Player);
+	}
+});
+addEventListener("keyup", (event) => {
+	if (event.key === "Insert") {
+		keys.insert = false;
+	}
+	if (event.key === "Delete") {
+		keys.delete = false;
+	}
+});
+addEventListener("keydown", (event) => {
+	if (event.keyCode == 109) {
+		if (CurrentScreen == "ChatRoom") {
+			DialogLentLockpicks = false;
+			ChatRoomClearAllElements();
+			ServerSend("ChatRoomLeave", "");
+			ChatRoomSetLastChatRoom("");
+			ChatRoomLeashPlayer = null;
+			CommonSetScreen("Online", "ChatSearch");
+			CharacterDeleteAllOnline();
+			ChatSearchExit();
+		} else
+			MainHallWalk("MainHall");
+	} else if (event.key === "]") {
+		StruggleProgress = 125;
+	}
+})
 }
 
 
