@@ -447,7 +447,7 @@ async function BondageClubHelper() {
 					Player.ItemPermission = 1;
 					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
 					bchLog("ItemsPerms have been updated to 1");
-				} else if (Player.ItemPermission == 1 || Player.ItemPermission == 3 || Player.ItemPermission == 5 && Emoticon && Emoticon.Property && Emoticon.Property.Expression == undefined && AntiBindMember[i] == AntiBind) {
+				} else if (Player.ItemPermission == 1 && Emoticon && Emoticon.Property && Emoticon.Property.Expression == undefined && AntiBindMember[i] == AntiBind) {
 					return;
 				}
 			}
