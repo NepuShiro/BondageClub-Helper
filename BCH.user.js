@@ -442,7 +442,7 @@ async function BondageClubHelper() {
 					} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming" && AntiBindMember[i] == AntiBind) {
 						Player.ItemPermission = 5;
 						ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-					} else if (Player.ItemPermission == 3 || Player.ItemPermission == 5 && Emoticon && Emoticon.Property && Emoticon.Property.Expression != "Sleep" || Emoticon.Property.Expression != "Gaming" && AntiBindMember[i] == AntiBind) {
+					} else if (Player.ItemPermission == 3 || Player.ItemPermission == 5 && Emoticon && Emoticon.Property && Emoticon.Property.Expression != "Sleep" || Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression == undefined && AntiBindMember[i] == AntiBind) {
 						Player.ItemPermission = 1;
 						ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
 					} else if (Player.ItemPermission == 1 && Emoticon && Emoticon.Property && Emoticon.Property.Expression == undefined && AntiBindMember[i] == AntiBind) {
