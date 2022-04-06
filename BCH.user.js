@@ -420,7 +420,7 @@ async function CheckForEmoticon() {
 		if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep" && AntiBindMember[i] == AntiBind) {
 			Player.ItemPermission = 3;
 			ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
-		} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression != "Gaming" && AntiBindMember[i] == AntiBind) {
+		} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming" && AntiBindMember[i] == AntiBind) {
 			Player.ItemPermission = 5;
 			ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
 		} else if (Player.ItemPermission == 3 || Player.ItemPermission == 5 && Emoticon && Emoticon.Property && Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression != "Sleep" || Emoticon.Property.Expression == undefined && AntiBindMember[i] == AntiBind) {
