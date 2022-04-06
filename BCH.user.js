@@ -442,7 +442,7 @@ async function BondageClubHelper() {
 	async function WaitForChatRoom() {
 		//wait for the CurrentScreen to be "ChatRoom"
 		while (CurrentScreen !== "ChatRoom") {
-			await sleep(5000);
+			await sleep(500);
 		}
 	}
 
