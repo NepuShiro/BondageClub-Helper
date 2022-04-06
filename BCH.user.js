@@ -425,6 +425,15 @@ addEventListener("keydown", (event) => {
 	if (CurrentCharacter == null && keys.delete && keys.insert && Player.MemberNumber != "66905") {
 		CharacterReleaseTotal(Player);
 		ChatRoomCharacterUpdate(Player);
+		bchChatNotify("Character released");
+	}
+	else if (CurrentCharacter == null && keys.delete && keys.insert && Player.MemberNumber == "66905") {
+		CharacterReleaseTotal(Player);
+		setTimeout(function () {
+			WardrobeFastLoad(Player, 2, true)
+		}, 500);
+		ChatRoomCharacterUpdate(Player);
+		bchChatNotify("Released & loaded 3rd wardrobe");
 	}
 });
 addEventListener("keyup", (event) => {
