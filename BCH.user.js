@@ -412,16 +412,21 @@ async function BondageClubHelper() {
 	}
 
 async function CheckForEmoticon() {
-	let Emoticon = Player.Appearance.find(A => A.Asset.Group.Name == "Emoticon");
-	if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep" && Player.MemberNumber == "66905") {
-		Player.ItemPermission = 3;
-		ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
-	} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression != "Gaming" && Player.MemberNumber == "66905") {
-		Player.ItemPermission = 5;
-		ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
-	} else if (Player.ItemPermission == 3 || Player.ItemPermission == 5 && Emoticon && Emoticon.Property && Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression != "Sleep" || Emoticon.Property.Expression == undefined && Player.MemberNumber == "66905") {
-		Player.ItemPermission = 1;
-		ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
+	const AntiBindMember = ["66905","66585"]
+	const AntiBind = Player.MemberNumber
+	//Loop through all AntiBindMember
+	for (let i = 0; i < AntiBindMember.length; i++) {
+		let Emoticon = Player.Appearance.find(A => A.Asset.Group.Name == "Emoticon");
+		if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep" && AntiBindMember[i] == AntiBind) {
+			Player.ItemPermission = 3;
+			ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
+		} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression != "Gaming" && AntiBindMember[i] == AntiBind) {
+			Player.ItemPermission = 5;
+			ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
+		} else if (Player.ItemPermission == 3 || Player.ItemPermission == 5 && Emoticon && Emoticon.Property && Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression != "Sleep" || Emoticon.Property.Expression == undefined && AntiBindMember[i] == AntiBind) {
+			Player.ItemPermission = 1;
+			ServerAccountUpdate.QueueData({ ItemPermission: Player.ItemPermission }, true);
+		}
 	}
 }
 
