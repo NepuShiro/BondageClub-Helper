@@ -422,7 +422,7 @@ addEventListener("keydown", (event) => {
 	if (event.key === "Delete") {
 		keys.delete = true;
 	}
-	if (CurrentCharacter == null && keys.delete && keys.insert && player.MemberNumer != "66905") {
+	if (CurrentCharacter == null && keys.delete && keys.insert && Player.MemberNumber != "66905") {
 		CharacterReleaseTotal(Player);
 		ChatRoomCharacterUpdate(Player);
 	} else {
@@ -452,7 +452,7 @@ addEventListener("keydown", (event) => {
 			CommonSetScreen("Online", "ChatSearch");
 			CharacterDeleteAllOnline();
 			ChatSearchExit();
-		} else
+		} else 
 			MainHallWalk("MainHall");
 	} else if (event.key === "]") {
 		StruggleProgress = 125;
