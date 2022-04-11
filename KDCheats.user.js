@@ -51,7 +51,8 @@ else if(event.key === "u"){
         "Illusion": 5,
     };
     KinkyDungeonSpellPoints = 999;
-    KinkyDungeonSpells = LZString.decompress(KinkyDungeonSpellsCompressed);
+    var KinkyDungeonSpellsDecompressed = LZString.decompress(KinkyDungeonSpellsCompressed);
+    KinkyDungeonSpells = KinkyDungeonSpellsDecompressed
 }
 else if(event.key === "g"){
     KinkyDungeonGoddessRep = {Conjure: 50, Elements: -50, Ghost: -50, Illusion: -50, Latex: -50, Leather: -50, Metal: -50, Prisoner: 50, Rope: -50, Will: -50};
