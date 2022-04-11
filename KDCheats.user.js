@@ -55,13 +55,13 @@ else if(event.key === "u"){
 else if(event.key === "G"){
     KinkyDungeonGoddessRep = {Conjure: 50, Elements: -50, Ghost: -50, Illusion: -50, Latex: -50, Leather: -50, Metal: -50, Prisoner: 50, Rope: -50, Will: -50};
 }
-else if(event.key === "r"){
+else if(event.key === "R"){
     KinkyDungeonPlayerEntity.x = KinkyDungeonEndPosition.x
     KinkyDungeonPlayerEntity.y = KinkyDungeonEndPosition.y
     KinkyDungeonStatStamina = 100;
     KinkyDungeonStatMana = 100;
 }
-else if(event.key === "R"){
+else if(event.key === "r"){
     for(let i = 0; i < KinkyDungeonRestraints.length; i++){
         KinkyDungeonRemoveRestraint(KinkyDungeonRestraints[i].Group)
     }
