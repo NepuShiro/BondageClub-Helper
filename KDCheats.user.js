@@ -15,7 +15,12 @@
 window.addEventListener('load', function () {
     console.log("Loaded KDCheats.");
 });
-
+//timeout for 5 seconds
+setTimeout(function(){
+    for (let prop in KinkyDungeonStatsPresets) {
+        KinkyDungeonStatsPresets[prop].cost = 0
+    }
+} , 5000);
 addEventListener("keydown", (event) => {
 if(event.key === "f"){
     KinkyDungeonStatMana = 100;
@@ -27,6 +32,7 @@ else if(event.key === "t"){
     KinkyDungeonGold = 9999999;
     KinkyDungeonLockpicks = 999;
     KinkyDungeonRedKeys = 999;
+    KinkyDungeonGreenKeys = 999;
     KinkyDungeonBlueKeys = 999;
     KinkyDungeonNormalBlades = 999;
     KinkyDungeonEnchantedBlades = 999;
