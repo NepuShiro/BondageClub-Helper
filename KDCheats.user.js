@@ -51,7 +51,7 @@ else if(event.key === "u"){
         "Illusion": 5,
     };
     KinkyDungeonSpellPoints = 999;
-    var KinkyDungeonSpellsDecompressed = LZString.decompress(KinkyDungeonSpellsCompressed);
+    var KinkyDungeonSpellsDecompressed = LZString.decompressFromBase64(KinkyDungeonSpellsCompressed);
     KinkyDungeonSpells = KinkyDungeonSpellsDecompressed
 }
 else if(event.key === "g"){
