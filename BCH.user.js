@@ -139,6 +139,39 @@ async function BondageClubHelper() {
 	await bchNotify(`Bondage Club Helper v1.0 Loaded`);
 	bchLog("Bondage Club Helper v1.0 Loaded");
 
+	// Drawing menu buttons
+	/*
+	SDK.hookFunction(
+		"DrawButton",
+		HOOK_PRIORITIES.ModifyBehaviourMedium,
+		(args, next) => {
+			// 7th argument is image URL
+			switch (args[6]) {
+				case "Icons/BCHSettings.png":
+					args[6] = ICONS.LOGO;
+					break;
+				default:
+					break;
+			}
+			return next(args);
+		}
+	);
+
+	SDK.hookFunction(
+		"TextGet",
+		HOOK_PRIORITIES.ModifyBehaviourHigh,
+		(args, next) => {
+			switch (args[0]) {
+				case "HomepageBCHSettings":
+					return displayText("BCH Settings");
+				default:
+					return next(args);
+			}
+		}
+	);
+	PreferenceSubscreenList.push("BCHSettings");
+	*/
+
     async function commands() {
 		await WaitForChatRoom();
 		bchLog("registering additional commands");
