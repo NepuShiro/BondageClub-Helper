@@ -25,9 +25,11 @@ setTimeout(function(){
 addEventListener("keydown", (event) => {
 if(event.key === "f"){
     KinkyDungeonStatMana = 100;
+    KinkyDungeonStatDistraction = 0;
 }
 else if(event.key === "v"){
     KinkyDungeonStatStamina = 100;
+    KinkyDungeonStatDistraction = 0;
 }
 else if(event.key === "t"){
     KinkyDungeonGold = 9999999;
@@ -60,6 +62,7 @@ else if(event.key === "R"){
     KinkyDungeonPlayerEntity.y = KinkyDungeonEndPosition.y
     KinkyDungeonStatStamina = 100;
     KinkyDungeonStatMana = 100;
+    KinkyDungeonStatDistraction = 0;
 }
 else if(event.key === "r"){
     for(let i = 0; i < KinkyDungeonRestraints.length; i++){
