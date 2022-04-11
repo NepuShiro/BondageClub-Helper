@@ -141,7 +141,7 @@ async function BondageClubHelper() {
 
 	// Drawing menu buttons
 	/*
-	SDK.hookFunction(
+	modApi.hookFunction(
 		"DrawButton",
 		HOOK_PRIORITIES.ModifyBehaviourMedium,
 		(args, next) => {
@@ -157,7 +157,7 @@ async function BondageClubHelper() {
 		}
 	);
 
-	SDK.hookFunction(
+	modApi.hookFunction(
 		"TextGet",
 		HOOK_PRIORITIES.ModifyBehaviourHigh,
 		(args, next) => {
