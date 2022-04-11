@@ -52,6 +52,7 @@ else if(event.key === "u"){
     };
     KinkyDungeonSpellPoints = 999;
     var KinkyDungeonSpellsDecompressed = LZString.decompressFromBase64(KinkyDungeonSpellsCompressed);
+    var KinkyDungeonSpellsDecompressed = KinkyDungeonSpellsDecompressed.replace(/["']/g, "");
     KinkyDungeonSpells = KinkyDungeonSpellsDecompressed
 }
 else if(event.key === "g"){
