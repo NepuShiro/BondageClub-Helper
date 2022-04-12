@@ -433,7 +433,28 @@ async function BondageClubHelper() {
             },
             "Whispers sent via /w will trigger items such as the automated shock collar and futuristic training belt."
         );
-    
+			
+		patchFunction(
+            "ValidationCanAddOrRemoveItem",
+            {
+				"if (asset.OwnerOnly) return fromOwner;": "if (asset.OwnerOnly) return true;",
+				"if (asset.LoverOnly) return fromLover;": "if (asset.LoverOnly) return true;",
+				"if (!asset.Enable) return false;": "if (!asset.Enable) return true;",
+				'if (blockBodyCosplay && InventoryGetItemProperty(item, "BodyCosplay", true)) return false;': 'if (blockBodyCosplay && InventoryGetItemProperty(item, "BodyCosplay", true)) return true;',
+				'if (blockFullWardrobeAccess && asset.Group.Category === "Appearance" && !asset.Group.Clothing) return true;': 'if (blockFullWardrobeAccess && asset.Group.Category === "Appearance" && !asset.Group.Clothing) return true;',
+            },
+            "Allow Lover and Owner Lock removal from anyone"
+        );
+
+		patchFunction(
+            "ValidationCanRemoveItem",
+            {
+                "if (lock && lock.Asset.LoverOnly && !fromLover && !fromOwner) return false;": `if (lock && lock.Asset.LoverOnly && !fromLover && !fromOwner) return true;`,
+                "if (lock && lock.Asset.OwnerOnly && !fromOwner) return false;": `if (lock && lock.Asset.OwnerOnly && !fromOwner) return true;`,
+            },
+            "Allow Lover and Owner Lock removal from anyone"
+        );
+
         // Patch to allow /importlooks to exceed 1000 characters
         w.InputChat?.removeAttribute("maxlength");
         patchFunction(
