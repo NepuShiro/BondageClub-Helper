@@ -41,7 +41,6 @@ async function BondageClubHelper() {
     "use strict";
 
     const modApi = bcModSdk.registerMod('BondageClubHelper', BCH_VERSION);
-    const w = window;
 
     if (typeof ChatRoomCharacter === "undefined") {
 		console.warn("Bondage Club not detected. Skipping BCH initialization.");
@@ -192,7 +191,6 @@ async function BondageClubHelper() {
 				Description: "[membernumber]: Release all bindings on someone in the room [BCH]",
 				Action: async (_, _command, args) => {
 					const [target] = args;
-					/** @type {Character} */
 					let targetMember = null;
 					if (!target) {
 						CharacterReleaseTotal(Player)
@@ -352,7 +350,6 @@ async function BondageClubHelper() {
 				Description: "[target member number] [includeBinds: true/false] [total: true/false]: Copy your or another player's appearance in a format that can be imported with BCX [BCH]",
 				Action: async (_, _command, args) => {
 					const [target, includeBindsArg, total] = args;
-					/** @type {Character} */
 					let targetMember = null;
 					if (!target) {
 						targetMember = Player;
@@ -366,8 +363,8 @@ async function BondageClubHelper() {
 						bchLog("Could not find member", target);
 						return;
 					}
+
 					const includeBinds = includeBindsArg === "true";
-					// LockMemberNumber
 
 					const clothes = targetMember.Appearance.filter(
 						(a) =>
@@ -390,7 +387,6 @@ async function BondageClubHelper() {
 						);
 					}
 
-					/** @type {ItemBundle[]} */
 					const looks = (
 						total === "true" ? targetMember.Appearance : appearance
 					).map((i) => {
@@ -429,24 +425,24 @@ async function BondageClubHelper() {
 	async function CheckForEmoticon() {
 		const AntiBindMember = ["66905", "66585", "67114"]
 		const AntiBind = Player.MemberNumber
-		//Loop through all AntiBindMember
 		for (let i = 0; i < AntiBindMember.length; i++) {
 			if (CurrentScreen == "ChatRoom" && AntiBindMember[i] == AntiBind) {
 				let Emoticon = Player.Appearance.find(A => A.Asset.Group.Name == "Emoticon");
-				if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep" && AntiBindMember[i] == AntiBind) {
+				if (Player.ItemPermission > 1 && Emoticon && Emoticon.Property == null || Emoticon.Property == undefined) {
+					Player.ItemPermission = 1;
+					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
+				} else if (Player.ItemPermission > 1 && Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression != "Sleep") {
+					Player.ItemPermission = 1;
+					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
+				}
+				if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep") {
 					Player.ItemPermission = 3;
 					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
 					bchLog("ItemsPerms have been updated to 3");
-				} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming" && AntiBindMember[i] == AntiBind) {
+				} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming") {
 					Player.ItemPermission = 5;
 					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
 					bchLog("ItemsPerms have been updated to 5");
-				} else if (Player.ItemPermission > 1 && Emoticon && Emoticon.Property == null || Emoticon.Property == undefined && AntiBindMember[i] == AntiBind) {
-					Player.ItemPermission = 1;
-					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-				} else if (Player.ItemPermission > 1 && Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression != "Sleep" && AntiBindMember[i] == AntiBind) {
-					Player.ItemPermission = 1;
-					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
 				}
 			}
 		}
