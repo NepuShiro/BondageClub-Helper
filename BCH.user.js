@@ -46,27 +46,27 @@ async function BondageClubHelper() {
 		console.warn("Bondage Club not detected. Skipping BCH initialization.");
 		return;
 	}
+	/*
+	const HOOK_PRIORITIES = {
+		Top: 11,
+		OverrideBehaviour: 10,
+		ModifyBehaviourHigh: 6,
+		ModifyBehaviourMedium: 5,
+		ModifyBehaviourLow: 4,
+		AddBehaviour: 3,
+		Observe: 0,
+	};
 
-	// const HOOK_PRIORITIES = {
-	// 	Top: 11,
-	// 	OverrideBehaviour: 10,
-	// 	ModifyBehaviourHigh: 6,
-	// 	ModifyBehaviourMedium: 5,
-	// 	ModifyBehaviourLow: 4,
-	// 	AddBehaviour: 3,
-	// 	Observe: 0,
-	// };
+	const ICONS = Object.freeze({
+		USER: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyEAYAAABOr1TyAAAACXBIWXMAAC4jAAAuIwF4pT92AAABeWlDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjaldA9a1MBGMXx302UVo10MIJIhztU6dBCVSiOEsEu0SGNkESX5DZvkKTh3gQproKLQ8FBdLHq4DfQVXBVEARFEHHxC/i2SLkOKaQIHTzTn3M4Dw+HTLEX9ZNDK/QHo7i0Vggr1Vo4803OESeds1iPkuHV9StlB+r3BwG8X+5F/cT/6dhGM4kIZrEaDeMRwSUUb42GI4J7yEed+gbBDpbiSrVG8Ab5xoS/It+e8E/k43LpMplZhO193NjHUSfuk1nEQr83jvb+CZBrDq6v4zTmJUrWFIQaxrp6RpZ1DTigt4J512wKRTYNbYl1tXWMLAmNJZpCLbGmpp6tSrUW/rtn0rpwfnI9V+DwlzT9cYaZ++xup+mfJ2m6+5TsZ14Npv3NHS7+Irs99RYeM3eHF6+nXuMBL+9y6tOwHtdBFplWi+/POV7lxDuO3phstZd79pHybYpvefiIsy3mbv4FQr9oKb+MK8cAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAAAYpJREFUeNrsmtGRgjAQhsWhALWDowS1BCzBK8EWxAq8GrxSsAS9Eizhjg5yD3Ef0AQwkCD6/S87TgaW8P2bTRwipZRSaoSeRGNeAUAQQACCAAIQ5EFx9fA26ybN36+Oh0O7+7g+z6P5k0TH9afb/dJUx8XSPH4+6Xg83g3JOcQcu1KeV+dpGkPlT9N299tm1dfL+P31sZvjLperQ74tDvvQcbMpO04c3tSxtooIlb8HuTmyziFtHdZ3/v4qhKbOLgu12GUNVecfHVcryy6pAEhQSdM2bCtfs0IWcx3z3Dw+nZj33dnu2R3azfxlVxcMyHRWPgDVOrYYqmO7mb/3pi6OlzX6Nkol2Bz1tR94j6qZv/v5xrFCHnW8P0f11KNq5m/7y+Rtm7q8EFsl3vY0dlm+1/jJUCuSgyFAkIclS5aCph8QSfOznZxtiqLyb8kXKj8V8vaK+FCOCkEAAQgCCEAQQACCAAIQBBAEEIAggAAEAQQgCCAAQQBBAAEIAghAEEBeWf8AAAD//wMAOcMcbwwSh6AAAAAASUVORK5CYII=",
+	});
 
-	// const ICONS = Object.freeze({
-	// 	USER: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyEAYAAABOr1TyAAAACXBIWXMAAC4jAAAuIwF4pT92AAABeWlDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjaldA9a1MBGMXx302UVo10MIJIhztU6dBCVSiOEsEu0SGNkESX5DZvkKTh3gQproKLQ8FBdLHq4DfQVXBVEARFEHHxC/i2SLkOKaQIHTzTn3M4Dw+HTLEX9ZNDK/QHo7i0Vggr1Vo4803OESeds1iPkuHV9StlB+r3BwG8X+5F/cT/6dhGM4kIZrEaDeMRwSUUb42GI4J7yEed+gbBDpbiSrVG8Ab5xoS/It+e8E/k43LpMplZhO193NjHUSfuk1nEQr83jvb+CZBrDq6v4zTmJUrWFIQaxrp6RpZ1DTigt4J512wKRTYNbYl1tXWMLAmNJZpCLbGmpp6tSrUW/rtn0rpwfnI9V+DwlzT9cYaZ++xup+mfJ2m6+5TsZ14Npv3NHS7+Irs99RYeM3eHF6+nXuMBL+9y6tOwHtdBFplWi+/POV7lxDuO3phstZd79pHybYpvefiIsy3mbv4FQr9oKb+MK8cAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAAAYpJREFUeNrsmtGRgjAQhsWhALWDowS1BCzBK8EWxAq8GrxSsAS9Eizhjg5yD3Ef0AQwkCD6/S87TgaW8P2bTRwipZRSaoSeRGNeAUAQQACCAAIQ5EFx9fA26ybN36+Oh0O7+7g+z6P5k0TH9afb/dJUx8XSPH4+6Xg83g3JOcQcu1KeV+dpGkPlT9N299tm1dfL+P31sZvjLperQ74tDvvQcbMpO04c3tSxtooIlb8HuTmyziFtHdZ3/v4qhKbOLgu12GUNVecfHVcryy6pAEhQSdM2bCtfs0IWcx3z3Dw+nZj33dnu2R3azfxlVxcMyHRWPgDVOrYYqmO7mb/3pi6OlzX6Nkol2Bz1tR94j6qZv/v5xrFCHnW8P0f11KNq5m/7y+Rtm7q8EFsl3vY0dlm+1/jJUCuSgyFAkIclS5aCph8QSfOznZxtiqLyb8kXKj8V8vaK+FCOCkEAAQgCCEAQQACCAAIQBBAEEIAggAAEAQQgCCAAQQBBAAEIAghAEEBeWf8AAAD//wMAOcMcbwwSh6AAAAAASUVORK5CYII=",
-	// });
-
-	// const DEVS = [66905,66585];
-
+	const DEVS = [66905,66585];
+	
     const patchFunction = (functionName, patches) => {
 		modApi.patchFunction(functionName, patches);
 	};
-
+	*/
 	const bchLog = (...args) => {
 		console.log("BCH:", ...args);
 	};
@@ -461,42 +461,43 @@ async function BondageClubHelper() {
 			await sleep(500);
 		}
 	}
-
-	// function chatRoomOverlay() {
-	// 	modApi.hookFunction(
-	// 		"ChatRoomDrawCharacterOverlay",
-	// 		HOOK_PRIORITIES.AddBehaviour,
-	// 		(args, next) => {
-	// 			const ret = next(args);
-	// 			const [C, CharX, CharY, Zoom] = args;
-	// 			if (
-	// 				isCharacter(C) &&
-	// 				typeof CharX === "number" &&
-	// 				typeof CharY === "number" &&
-	// 				typeof Zoom === "number" &&
-	// 				C.BCH &&
-	// 				ChatRoomHideIconState === 0
-	// 			) {
-	// 				DrawImageResize(
-	// 					ICONS.USER,
-	// 					CharX + 250 * Zoom,
-	// 					CharY,
-	// 					50 * Zoom,
-	// 					50 * Zoom
-	// 				);
-	// 				DrawTextFit(
-	// 					C.BCH,
-	// 					CharX + 300 * Zoom,
-	// 					CharY + 40 * Zoom,
-	// 					50 * Zoom,
-	// 					DEVS.includes(C.MemberNumber) ? "#b33cfa" : "White",
-	// 					"Black"
-	// 				);
-	// 			}
-	// 			return ret;
-	// 		}
-	// 	);
-	// }
+	/*
+	function chatRoomOverlay() {
+		modApi.hookFunction(
+			"ChatRoomDrawCharacterOverlay",
+			HOOK_PRIORITIES.AddBehaviour,
+			(args, next) => {
+				const ret = next(args);
+				const [C, CharX, CharY, Zoom] = args;
+				if (
+					isCharacter(C) &&
+					typeof CharX === "number" &&
+					typeof CharY === "number" &&
+					typeof Zoom === "number" &&
+					C.BCH &&
+					ChatRoomHideIconState === 0
+				) {
+					DrawImageResize(
+						ICONS.USER,
+						CharX + 250 * Zoom,
+						CharY,
+						50 * Zoom,
+						50 * Zoom
+					);
+					DrawTextFit(
+						C.BCH,
+						CharX + 300 * Zoom,
+						CharY + 40 * Zoom,
+						50 * Zoom,
+						DEVS.includes(C.MemberNumber) ? "#b33cfa" : "White",
+						"Black"
+					);
+				}
+				return ret;
+			}
+		);
+	}
+	*/
 
 
 //OLD KEYBINDS FOR COMPATABILITY
