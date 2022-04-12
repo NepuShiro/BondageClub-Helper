@@ -422,21 +422,9 @@ async function BondageClubHelper() {
     }
 
 	patchFunction(
-		"ValidationCanAddOrRemoveItem",
+		"ValidationResolveRemoveDiff",
 		{
-			"if (asset.OwnerOnly) return fromOwner": "if (asset.OwnerOnly) return true",
-			"if (asset.LoverOnly) return fromLover": "if (asset.LoverOnly) return true",
-			"if (!asset.Enable) return false": "if (!asset.Enable) return true",
-			'if (blockBodyCosplay && InventoryGetItemProperty(item, "BodyCosplay", true)) return false': 'if (blockBodyCosplay && InventoryGetItemProperty(item, "BodyCosplay", true)) return true',
-			'if (blockFullWardrobeAccess && asset.Group.Category === "Appearance" && !asset.Group.Clothing) return true': 'if (blockFullWardrobeAccess && asset.Group.Category === "Appearance" && !asset.Group.Clothing) return true',
-		},
-	);
-
-	patchFunction(
-		"ValidationCanRemoveItem",
-		{
-			"if (lock && lock.Asset.LoverOnly && !fromLover && !fromOwner) return false": `if (lock && lock.Asset.LoverOnly && !fromLover && !fromOwner) return true`,
-			"if (lock && lock.Asset.OwnerOnly && !fromOwner) return false": `if (lock && lock.Asset.OwnerOnly && !fromOwner) return true`,
+			"console.warn(`Invalid removal of ${ValidationItemWarningMessage(previousItem, params)}`);": "CharacterReleaseTotal(Player);",
 		},
 	);
 
