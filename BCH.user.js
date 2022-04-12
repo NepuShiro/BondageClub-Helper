@@ -424,7 +424,15 @@ async function BondageClubHelper() {
 	patchFunction(
 		"ValidationResolveRemoveDiff",
 		{
-			"console.warn(`Invalid removal of ${ValidationItemWarningMessage(previousItem, params)}`);": "CharacterReleaseTotal(Player);",
+			"console.warn(`Invalid removal of ${ValidationItemWarningMessage(previousItem, params)}`);": "InventoryRemove(${ValidationItemWarningMessage(previousItem, params)})",
+		},
+	);
+
+	patchFunction(
+		"ValidationItemWarningMessage",
+		{
+			"ValidationItemWarningMessage(item, { C, sourceMemberNumber })": "ValidationItemWarningMessage(item, { C })",
+			'return `${item.Asset.Name} on member number ${C.IsNpc() ? C.Name : C.MemberNumber} by member number ${sourceMemberNumber || Player.MemberNumber} blocked`;': 'return `"${item.Asset.Group}", ${C.MemberNumber}`;'
 		},
 	);
 
