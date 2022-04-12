@@ -41,7 +41,7 @@ async function BondageClubHelper() {
     "use strict";
 
     const modApi = bcModSdk.registerMod('BondageClubHelper', BCH_VERSION);
-    const SUPPORTED_GAME_VERSIONS = ["R78"];
+    const SUPPORTED_GAME_VERSIONS = ["R78", "R79", "R79Beta1", "R79Beta2"];
     const w = window;
 
     if (typeof ChatRoomCharacter === "undefined") {
