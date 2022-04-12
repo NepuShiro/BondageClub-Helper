@@ -515,7 +515,7 @@ addEventListener("keydown", (event) => {
 	if (CurrentCharacter == null && keys.delete && keys.insert && Player.MemberNumber != "66905") {
 		CharacterReleaseTotal(Player);
 		ChatRoomCharacterUpdate(Player);
-		bchChatNotify("Character released");
+		bchChatNotify(Player.Name +  " released");
 	}
 	else if (CurrentCharacter == null && keys.delete && keys.insert && Player.MemberNumber == "66905") {
 		CharacterReleaseTotal(Player);
