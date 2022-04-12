@@ -73,7 +73,7 @@ async function BondageClubHelper() {
 		if (
 			SUPPORTED_GAME_VERSIONS.includes(GameVersion)
 		) {
-
+			console.log("Patching " + functionName + "... Error?");
 			skippedFunctionality.push(affectedFunctionality);
 			return;
 		}
