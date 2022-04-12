@@ -41,7 +41,6 @@ async function BondageClubHelper() {
     "use strict";
 
     const modApi = bcModSdk.registerMod('BondageClubHelper', BCH_VERSION);
-    const SUPPORTED_GAME_VERSIONS = ["R78", "R79", "R79Beta1", "R79Beta2"];
     const w = window;
 
     if (typeof ChatRoomCharacter === "undefined") {
@@ -413,26 +412,6 @@ async function BondageClubHelper() {
 			},
         ];
     
-        // Skip history patch for /w
-        patchFunction(
-            "ChatRoomSendChat",
-            {
-                "ChatRoomSendChat()": `ChatRoomSendChat(skipHistory)`,
-                "ChatRoomLastMessage.push(msg);": `if (!skipHistory) ChatRoomLastMessage.push(msg);`,
-            },
-            "Whispers sent via /w will trigger items such as the automated shock collar and futuristic training belt."
-        );
-
-        // Patch to allow /importlooks to exceed 1000 characters
-        w.InputChat?.removeAttribute("maxlength");
-        patchFunction(
-            "ChatRoomCreateElement",
-            {
-                'document.getElementById("InputChat").setAttribute("maxLength", 1000);':
-                    "",
-            },
-            "You may be unable to /importlooks due to the chat input being limited in length."
-        );
 		for (const c of cmds) {
 			if (Commands.some((a) => a.Tag === c.Tag)) {
 				bchLog("already registered", c);
