@@ -428,7 +428,7 @@ async function BondageClubHelper() {
 		for (let i = 0; i < AntiBindMember.length; i++) {
 			if (CurrentScreen == "ChatRoom" && AntiBindMember[i] == AntiBind) {
 				let Emoticon = Player.Appearance.find(A => A.Asset.Group.Name == "Emoticon");
-				if (Player.ItemPermission > 1 && Emoticon && Emoticon.Property == null || Emoticon.Property == undefined) {
+				if (Player.ItemPermission > 1 && Emoticon && Emoticon.Property && Emoticon.Property.Expression == null) {
 					Player.ItemPermission = 1;
 					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
 				} else if (Player.ItemPermission > 1 && Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression != "Sleep") {
