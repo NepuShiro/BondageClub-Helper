@@ -310,7 +310,7 @@ async function BondageClubHelper() {
 								if (typeof targetMember.Appearance[j].Property.LockPickSeed !== "undefined") {
 									Str2 += `- Lockpicking order: ${targetMember.Appearance[j].Property.LockPickSeed}`;
 								}
-									break;
+								break;
 							case "HighSecurityPadlock":
 								Str2 = " - High ";
 								if (typeof targetMember.Appearance[j].Property.LockPickSeed !== "undefined") {
