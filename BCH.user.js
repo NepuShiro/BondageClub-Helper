@@ -301,14 +301,14 @@ async function BondageClubHelper() {
 								break;
 							case "IntricatePadlock":
 								Str2 = " - Intric ";
-								if (typeof prop.LockPickSeed !== "undefined") {
-									str2 += prop.LockPickSeed;
+								if (typeof Item.Property.LockPickSeed !== "undefined") {
+									str2 += Item.Property.LockPickSeed;
 								}
 								break;
 							case "HighSecurityPadlock":
 								Str2 = " - High ";
-								if (typeof prop.LockPickSeed !== "undefined") {
-									str2 += prop.LockPickSeed;
+								if (typeof Item.Property.LockPickSeed !== "undefined") {
+									str2 += Item.Property.LockPickSeed;
 								}
 								break;
 							case "LoversPadlock":
