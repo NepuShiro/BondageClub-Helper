@@ -41,45 +41,32 @@ async function BondageClubHelper() {
     "use strict";
 
     const modApi = bcModSdk.registerMod('BondageClubHelper', BCH_VERSION);
-    const SUPPORTED_GAME_VERSIONS = ["R78"];
-    const w = window;
 
     if (typeof ChatRoomCharacter === "undefined") {
 		console.warn("Bondage Club not detected. Skipping BCH initialization.");
 		return;
 	}
-
-	// const HOOK_PRIORITIES = {
-	// 	Top: 11,
-	// 	OverrideBehaviour: 10,
-	// 	ModifyBehaviourHigh: 6,
-	// 	ModifyBehaviourMedium: 5,
-	// 	ModifyBehaviourLow: 4,
-	// 	AddBehaviour: 3,
-	// 	Observe: 0,
-	// };
-
-	// const ICONS = Object.freeze({
-	// 	USER: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyEAYAAABOr1TyAAAACXBIWXMAAC4jAAAuIwF4pT92AAABeWlDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjaldA9a1MBGMXx302UVo10MIJIhztU6dBCVSiOEsEu0SGNkESX5DZvkKTh3gQproKLQ8FBdLHq4DfQVXBVEARFEHHxC/i2SLkOKaQIHTzTn3M4Dw+HTLEX9ZNDK/QHo7i0Vggr1Vo4803OESeds1iPkuHV9StlB+r3BwG8X+5F/cT/6dhGM4kIZrEaDeMRwSUUb42GI4J7yEed+gbBDpbiSrVG8Ab5xoS/It+e8E/k43LpMplZhO193NjHUSfuk1nEQr83jvb+CZBrDq6v4zTmJUrWFIQaxrp6RpZ1DTigt4J512wKRTYNbYl1tXWMLAmNJZpCLbGmpp6tSrUW/rtn0rpwfnI9V+DwlzT9cYaZ++xup+mfJ2m6+5TsZ14Npv3NHS7+Irs99RYeM3eHF6+nXuMBL+9y6tOwHtdBFplWi+/POV7lxDuO3phstZd79pHybYpvefiIsy3mbv4FQr9oKb+MK8cAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAAAYpJREFUeNrsmtGRgjAQhsWhALWDowS1BCzBK8EWxAq8GrxSsAS9Eizhjg5yD3Ef0AQwkCD6/S87TgaW8P2bTRwipZRSaoSeRGNeAUAQQACCAAIQ5EFx9fA26ybN36+Oh0O7+7g+z6P5k0TH9afb/dJUx8XSPH4+6Xg83g3JOcQcu1KeV+dpGkPlT9N299tm1dfL+P31sZvjLperQ74tDvvQcbMpO04c3tSxtooIlb8HuTmyziFtHdZ3/v4qhKbOLgu12GUNVecfHVcryy6pAEhQSdM2bCtfs0IWcx3z3Dw+nZj33dnu2R3azfxlVxcMyHRWPgDVOrYYqmO7mb/3pi6OlzX6Nkol2Bz1tR94j6qZv/v5xrFCHnW8P0f11KNq5m/7y+Rtm7q8EFsl3vY0dlm+1/jJUCuSgyFAkIclS5aCph8QSfOznZxtiqLyb8kXKj8V8vaK+FCOCkEAAQgCCEAQQACCAAIQBBAEEIAggAAEAQQgCCAAQQBBAAEIAghAEEBeWf8AAAD//wMAOcMcbwwSh6AAAAAASUVORK5CYII=",
-	// });
-
-	// const DEVS = [66905,66585];
-
-	/** @type {string[]} */
-	const skippedFunctionality = [];
-
-    const patchFunction = (functionName, patches, affectedFunctionality) => {
-		// Guard against patching a function that has been modified by another addon not using the shared SDK on supported versions.
-		if (
-			SUPPORTED_GAME_VERSIONS.includes(GameVersion)
-		) {
-
-			skippedFunctionality.push(affectedFunctionality);
-			return;
-		}
-		modApi.patchFunction(functionName, patches);
+	/*
+	const HOOK_PRIORITIES = {
+		Top: 11,
+		OverrideBehaviour: 10,
+		ModifyBehaviourHigh: 6,
+		ModifyBehaviourMedium: 5,
+		ModifyBehaviourLow: 4,
+		AddBehaviour: 3,
+		Observe: 0,
 	};
 
+	const ICONS = Object.freeze({
+		USER: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyEAYAAABOr1TyAAAACXBIWXMAAC4jAAAuIwF4pT92AAABeWlDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjaldA9a1MBGMXx302UVo10MIJIhztU6dBCVSiOEsEu0SGNkESX5DZvkKTh3gQproKLQ8FBdLHq4DfQVXBVEARFEHHxC/i2SLkOKaQIHTzTn3M4Dw+HTLEX9ZNDK/QHo7i0Vggr1Vo4803OESeds1iPkuHV9StlB+r3BwG8X+5F/cT/6dhGM4kIZrEaDeMRwSUUb42GI4J7yEed+gbBDpbiSrVG8Ab5xoS/It+e8E/k43LpMplZhO193NjHUSfuk1nEQr83jvb+CZBrDq6v4zTmJUrWFIQaxrp6RpZ1DTigt4J512wKRTYNbYl1tXWMLAmNJZpCLbGmpp6tSrUW/rtn0rpwfnI9V+DwlzT9cYaZ++xup+mfJ2m6+5TsZ14Npv3NHS7+Irs99RYeM3eHF6+nXuMBL+9y6tOwHtdBFplWi+/POV7lxDuO3phstZd79pHybYpvefiIsy3mbv4FQr9oKb+MK8cAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAAAYpJREFUeNrsmtGRgjAQhsWhALWDowS1BCzBK8EWxAq8GrxSsAS9Eizhjg5yD3Ef0AQwkCD6/S87TgaW8P2bTRwipZRSaoSeRGNeAUAQQACCAAIQ5EFx9fA26ybN36+Oh0O7+7g+z6P5k0TH9afb/dJUx8XSPH4+6Xg83g3JOcQcu1KeV+dpGkPlT9N299tm1dfL+P31sZvjLperQ74tDvvQcbMpO04c3tSxtooIlb8HuTmyziFtHdZ3/v4qhKbOLgu12GUNVecfHVcryy6pAEhQSdM2bCtfs0IWcx3z3Dw+nZj33dnu2R3azfxlVxcMyHRWPgDVOrYYqmO7mb/3pi6OlzX6Nkol2Bz1tR94j6qZv/v5xrFCHnW8P0f11KNq5m/7y+Rtm7q8EFsl3vY0dlm+1/jJUCuSgyFAkIclS5aCph8QSfOznZxtiqLyb8kXKj8V8vaK+FCOCkEAAQgCCEAQQACCAAIQBBAEEIAggAAEAQQgCCAAQQBBAAEIAghAEEBeWf8AAAD//wMAOcMcbwwSh6AAAAAASUVORK5CYII=",
+	});
+
+	const DEVS = [66905,66585];
+	
+    const patchFunction = (functionName, patches) => {
+		modApi.patchFunction(functionName, patches);
+	};
+	*/
 	const bchLog = (...args) => {
 		console.log("BCH:", ...args);
 	};
@@ -141,7 +128,7 @@ async function BondageClubHelper() {
 
 	// Drawing menu buttons
 	/*
-	SDK.hookFunction(
+	modApi.hookFunction(
 		"DrawButton",
 		HOOK_PRIORITIES.ModifyBehaviourMedium,
 		(args, next) => {
@@ -157,7 +144,7 @@ async function BondageClubHelper() {
 		}
 	);
 
-	SDK.hookFunction(
+	modApi.hookFunction(
 		"TextGet",
 		HOOK_PRIORITIES.ModifyBehaviourHigh,
 		(args, next) => {
@@ -204,7 +191,6 @@ async function BondageClubHelper() {
 				Description: "[membernumber]: Release all bindings on someone in the room [BCH]",
 				Action: async (_, _command, args) => {
 					const [target] = args;
-					/** @type {Character} */
 					let targetMember = null;
 					if (!target) {
 						CharacterReleaseTotal(Player)
@@ -368,7 +354,6 @@ async function BondageClubHelper() {
 				Description: "[target member number] [includeBinds: true/false] [total: true/false]: Copy your or another player's appearance in a format that can be imported with BCX [BCH]",
 				Action: async (_, _command, args) => {
 					const [target, includeBindsArg, total] = args;
-					/** @type {Character} */
 					let targetMember = null;
 					if (!target) {
 						targetMember = Player;
@@ -382,8 +367,8 @@ async function BondageClubHelper() {
 						bchLog("Could not find member", target);
 						return;
 					}
+
 					const includeBinds = includeBindsArg === "true";
-					// LockMemberNumber
 
 					const clothes = targetMember.Appearance.filter(
 						(a) =>
@@ -406,7 +391,6 @@ async function BondageClubHelper() {
 						);
 					}
 
-					/** @type {ItemBundle[]} */
 					const looks = (
 						total === "true" ? targetMember.Appearance : appearance
 					).map((i) => {
@@ -428,26 +412,6 @@ async function BondageClubHelper() {
 			},
         ];
     
-        // Skip history patch for /w
-        patchFunction(
-            "ChatRoomSendChat",
-            {
-                "ChatRoomSendChat()": `ChatRoomSendChat(skipHistory)`,
-                "ChatRoomLastMessage.push(msg);": `if (!skipHistory) ChatRoomLastMessage.push(msg);`,
-            },
-            "Whispers sent via /w will trigger items such as the automated shock collar and futuristic training belt."
-        );
-    
-        // Patch to allow /importlooks to exceed 1000 characters
-        w.InputChat?.removeAttribute("maxlength");
-        patchFunction(
-            "ChatRoomCreateElement",
-            {
-                'document.getElementById("InputChat").setAttribute("maxLength", 1000);':
-                    "",
-            },
-            "You may be unable to /importlooks due to the chat input being limited in length."
-        );
 		for (const c of cmds) {
 			if (Commands.some((a) => a.Tag === c.Tag)) {
 				bchLog("already registered", c);
@@ -457,7 +421,6 @@ async function BondageClubHelper() {
 		}
     }
 
-
 	function sleep(ms) {
 		// eslint-disable-next-line no-promise-executor-return
 		return new Promise((resolve) => setTimeout(resolve, ms));
@@ -466,24 +429,24 @@ async function BondageClubHelper() {
 	async function CheckForEmoticon() {
 		const AntiBindMember = ["66905", "66585", "67114"]
 		const AntiBind = Player.MemberNumber
-		//Loop through all AntiBindMember
 		for (let i = 0; i < AntiBindMember.length; i++) {
 			if (CurrentScreen == "ChatRoom" && AntiBindMember[i] == AntiBind) {
 				let Emoticon = Player.Appearance.find(A => A.Asset.Group.Name == "Emoticon");
-				if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep" && AntiBindMember[i] == AntiBind) {
+				if (Player.ItemPermission > 1 && Emoticon && Emoticon.Property && Emoticon.Property.Expression == null) {
+					Player.ItemPermission = 1;
+					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
+				} else if (Player.ItemPermission > 1 && Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression != "Sleep") {
+					Player.ItemPermission = 1;
+					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
+				}
+				if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep") {
 					Player.ItemPermission = 3;
 					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
 					bchLog("ItemsPerms have been updated to 3");
-				} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming" && AntiBindMember[i] == AntiBind) {
+				} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming") {
 					Player.ItemPermission = 5;
 					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
 					bchLog("ItemsPerms have been updated to 5");
-				} else if (Player.ItemPermission > 1 && Emoticon && Emoticon.Property == null || Emoticon.Property == undefined && AntiBindMember[i] == AntiBind) {
-					Player.ItemPermission = 1;
-					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-				} else if (Player.ItemPermission > 1 && Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression != "Sleep" && AntiBindMember[i] == AntiBind) {
-					Player.ItemPermission = 1;
-					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
 				}
 			}
 		}
@@ -502,42 +465,43 @@ async function BondageClubHelper() {
 			await sleep(500);
 		}
 	}
-
-	// function chatRoomOverlay() {
-	// 	modApi.hookFunction(
-	// 		"ChatRoomDrawCharacterOverlay",
-	// 		HOOK_PRIORITIES.AddBehaviour,
-	// 		(args, next) => {
-	// 			const ret = next(args);
-	// 			const [C, CharX, CharY, Zoom] = args;
-	// 			if (
-	// 				isCharacter(C) &&
-	// 				typeof CharX === "number" &&
-	// 				typeof CharY === "number" &&
-	// 				typeof Zoom === "number" &&
-	// 				C.BCH &&
-	// 				ChatRoomHideIconState === 0
-	// 			) {
-	// 				DrawImageResize(
-	// 					ICONS.USER,
-	// 					CharX + 250 * Zoom,
-	// 					CharY,
-	// 					50 * Zoom,
-	// 					50 * Zoom
-	// 				);
-	// 				DrawTextFit(
-	// 					C.BCH,
-	// 					CharX + 300 * Zoom,
-	// 					CharY + 40 * Zoom,
-	// 					50 * Zoom,
-	// 					DEVS.includes(C.MemberNumber) ? "#b33cfa" : "White",
-	// 					"Black"
-	// 				);
-	// 			}
-	// 			return ret;
-	// 		}
-	// 	);
-	// }
+	/*
+	function chatRoomOverlay() {
+		modApi.hookFunction(
+			"ChatRoomDrawCharacterOverlay",
+			HOOK_PRIORITIES.AddBehaviour,
+			(args, next) => {
+				const ret = next(args);
+				const [C, CharX, CharY, Zoom] = args;
+				if (
+					isCharacter(C) &&
+					typeof CharX === "number" &&
+					typeof CharY === "number" &&
+					typeof Zoom === "number" &&
+					C.BCH &&
+					ChatRoomHideIconState === 0
+				) {
+					DrawImageResize(
+						ICONS.USER,
+						CharX + 250 * Zoom,
+						CharY,
+						50 * Zoom,
+						50 * Zoom
+					);
+					DrawTextFit(
+						C.BCH,
+						CharX + 300 * Zoom,
+						CharY + 40 * Zoom,
+						50 * Zoom,
+						DEVS.includes(C.MemberNumber) ? "#b33cfa" : "White",
+						"Black"
+					);
+				}
+				return ret;
+			}
+		);
+	}
+	*/
 
 
 //OLD KEYBINDS FOR COMPATABILITY
@@ -555,7 +519,7 @@ addEventListener("keydown", (event) => {
 	if (CurrentCharacter == null && keys.delete && keys.insert && Player.MemberNumber != "66905") {
 		CharacterReleaseTotal(Player);
 		ChatRoomCharacterUpdate(Player);
-		bchChatNotify("Character released");
+		bchChatNotify(Player.Name +  " released");
 	}
 	else if (CurrentCharacter == null && keys.delete && keys.insert && Player.MemberNumber == "66905") {
 		CharacterReleaseTotal(Player);
