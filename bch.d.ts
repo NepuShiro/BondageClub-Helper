@@ -69,6 +69,23 @@ declare global {
   var InventoryItemMiscTimerPasswordPadlockClick: () => void;
   var InventoryItemMiscTimerPasswordPadlockExit: () => void;
   var InventoryItemMiscTimerPasswordPadlockLoad: () => void;
+  /*
+
+
+    Addition of TS to test
+
+
+  */
+  var ActivityOrgasmStart: (C: Character) => void;
+  var DialogLentLockpicks: boolean;
+  var ChatRoomSetLastChatRoom: (String) => String;
+  var CharacterDeleteAllOnline: () => void;
+  var ChatSearchExit: () => void;
+  var CharacterReleaseTotal: (C: Character) => void;
+  var CharacterAppearanceReturnRoom: (room: String) => void;
+  /*
+    END
+  */
   var ServerInit: () => void;
   var DialogFocusSourceItem: Item | null;
   var DialogFocusItem: Item | null;
