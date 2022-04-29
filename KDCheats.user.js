@@ -17,13 +17,14 @@
     });
 
     setTimeout(function () {
-        let Cheat = {
+        let Cheat = [{
             "Immortal": {
                 "category": "Combat",
                 "id": 999,
                 "cost": -10000
             }
-        }
+        }]
+        // push cheat to the array KinkyDungeonStatsPresets
         KinkyDungeonStatsPresets.push(Cheat);
     }, 5000);
 
