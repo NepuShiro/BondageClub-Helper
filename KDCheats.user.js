@@ -66,9 +66,9 @@
                 KinkyDungeonRemoveRestraint(KinkyDungeonRestraints[i].Group)
             }
         } else if (event.key === "b") {
-            KinkyDungeonBrightness = 20;
+            KinkyDungeonMapBrightness = 20;
         } else if (event.key === "B") {
-            KinkyDungeonBrightness = 7;
+            KinkyDungeonMapBrightness = 8;
         };
     })
 })();
