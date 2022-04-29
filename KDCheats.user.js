@@ -17,9 +17,14 @@
     });
 
     setTimeout(function () {
-        for (let prop in KinkyDungeonStatsPresets) {
-            KinkyDungeonStatsPresets[prop].cost = 0
+        let Cheat = {
+            "Immortal": {
+                "category": "Combat",
+                "id": 999,
+                "cost": -10000
+            }
         }
+        KinkyDungeonStatsPresets.push(Cheat);
     }, 5000);
 
     addEventListener("keydown", (event) => {
