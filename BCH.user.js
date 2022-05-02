@@ -62,11 +62,11 @@ async function BondageClubHelper() {
 	});
 
 	const DEVS = [66905,66585];
-	
+	*/
     const patchFunction = (functionName, patches) => {
 		modApi.patchFunction(functionName, patches);
 	};
-	*/
+
 	const bchLog = (...args) => {
 		console.log("BCH:", ...args);
 	};
@@ -120,6 +120,7 @@ async function BondageClubHelper() {
 
 	startTimeout(15000);
 	commands();
+	allowleave();
 	//chatRoomOverlay();
 
 	// Player.BCH = BCH_VERSION;
@@ -507,26 +508,35 @@ async function BondageClubHelper() {
 		);
 	}
 	*/
-
+	async function allowleave() {
+		await waitFor(() => !!Player?.AccountName);
+		if (Player.MemberNumber == "66905" || Player.MemberNumber == "67114") {
+			await bchNotify("You are now allowed to leave the chatroom -->");
+			bchLog("You are now allowed to leave the chatroom");
+			patchFunction("ChatRoomCanLeave",{"return false;": "return true;",});
+			patchFunction("ChatRoomMenuClick",{'if ((ChatRoomSlowtimer == 0) && (ChatRoomSlowStop == false)) {': 'if ((ChatRoomCanLeave()) && (PlayerIsSlow)) {','ServerSend("ChatRoomChat", { Content: "SlowLeaveAttempt", Type: "Action", Dictionary: [{ Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber }] });': "\n                       DialogLentLockpicks = false;\n                       DialogLentLockpicks = false;ChatRoomClearAllElements();",'ChatRoomStatusUpdate("Crawl");': 'ServerSend("ChatRoomLeave", "");','ChatRoomSlowtimer = CurrentTime + (10 * (1000 - (50 * SkillGetLevelReal(Player, "Evasion"))));': 'ChatRoomSetLastChatRoom("");\n                       ChatRoomLeashPlayer = null;\n                       CommonSetScreen("Online", "ChatSearch");\n                       CharacterDeleteAllOnline();','else if ((ChatRoomSlowtimer != 0) && (ChatRoomSlowStop == false)) {': 'if ((ChatRoomSlowtimer != 0) && (ChatRoomSlowStop == false)) {','ServerSend("ChatRoomChat", { Content: "SlowLeaveCancel", Type: "Action", Dictionary: [{ Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber }] });': 'return false;','ChatRoomSlowtimer = 0;': "",});
+			patchFunction("ChatRoomRun",{"Player.IsSlow()": "false",});
+		}
+	}
 
 //OLD KEYBINDS FOR COMPATABILITY
-let keys = {
+let keysold = {
 	insert: false,
 	delete: false,
 };
 addEventListener("keydown", (event) => {
 	if (event.key === "Insert") {
-		keys.insert = true;
+		keysold.insert = true;
 	}
 	if (event.key === "Delete") {
-		keys.delete = true;
+		keysold.delete = true;
 	}
-	if (CurrentCharacter == null && keys.delete && keys.insert && Player.MemberNumber != "66905") {
+	if (CurrentCharacter == null && keysold.delete && keysold.insert && Player.MemberNumber != "66905") {
 		CharacterReleaseTotal(Player);
 		ChatRoomCharacterUpdate(Player);
 		bchChatNotify(Player.Name +  " released");
 	}
-	else if (CurrentCharacter == null && keys.delete && keys.insert && Player.MemberNumber == "66905") {
+	else if (CurrentCharacter == null && keysold.delete && keysold.insert && Player.MemberNumber == "66905") {
 		CharacterReleaseTotal(Player);
 		setTimeout(function () {
 			WardrobeFastLoad(Player, 2, true)
@@ -537,25 +547,15 @@ addEventListener("keydown", (event) => {
 });
 addEventListener("keyup", (event) => {
 	if (event.key === "Insert") {
-		keys.insert = false;
+		keysold.insert = false;
 	}
 	if (event.key === "Delete") {
-		keys.delete = false;
+		keysold.delete = false;
 	}
 });
 addEventListener("keydown", (event) => {
 	if (event.keyCode == 109) {
-		if (CurrentScreen == "ChatRoom") {
-			DialogLentLockpicks = false;
-			ChatRoomClearAllElements();
-			ServerSend("ChatRoomLeave", "");
-			ChatRoomSetLastChatRoom("");
-			ChatRoomLeashPlayer = null;
-			CommonSetScreen("Online", "ChatSearch");
-			CharacterDeleteAllOnline();
-			ChatSearchExit();
-		} else 
-			MainHallWalk("MainHall");
+	MainHallWalk("MainHall");
 	} else if (event.key === "]") {
 		StruggleProgress = 125;
 	}
