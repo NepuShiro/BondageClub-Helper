@@ -513,9 +513,8 @@ async function BondageClubHelper() {
 		if (Player.MemberNumber == "66905" || Player.MemberNumber == "67114") {
 			await bchNotify("You are now allowed to leave the chatroom -->");
 			bchLog("You are now allowed to leave the chatroom");
-			patchFunction("ChatRoomCanLeave",{"return false;": "return true;",});
-			patchFunction("ChatRoomMenuClick",{'if ((ChatRoomSlowtimer == 0) && (ChatRoomSlowStop == false)) {': 'if ((ChatRoomCanLeave()) && (PlayerIsSlow)) {','ServerSend("ChatRoomChat", { Content: "SlowLeaveAttempt", Type: "Action", Dictionary: [{ Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber }] });': "\n                       DialogLentLockpicks = false;\n                       DialogLentLockpicks = false;ChatRoomClearAllElements();",'ChatRoomStatusUpdate("Crawl");': 'ServerSend("ChatRoomLeave", "");','ChatRoomSlowtimer = CurrentTime + (10 * (1000 - (50 * SkillGetLevelReal(Player, "Evasion"))));': 'ChatRoomSetLastChatRoom("");\n                       ChatRoomLeashPlayer = null;\n                       CommonSetScreen("Online", "ChatSearch");\n                       CharacterDeleteAllOnline();','else if ((ChatRoomSlowtimer != 0) && (ChatRoomSlowStop == false)) {': 'if ((ChatRoomSlowtimer != 0) && (ChatRoomSlowStop == false)) {','ServerSend("ChatRoomChat", { Content: "SlowLeaveCancel", Type: "Action", Dictionary: [{ Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber }] });': 'return false;','ChatRoomSlowtimer = 0;': "",});
-			patchFunction("ChatRoomRun",{"Player.IsSlow()": "false",});
+			ChatRoomCanLeave = function() {return true;}
+			Player.IsSlow = function () {return false;}
 		}
 	}
 
@@ -554,7 +553,7 @@ addEventListener("keyup", (event) => {
 	}
 });
 addEventListener("keydown", (event) => {
-	if (event.keyCode == 109) {
+	if (event.keyCode == 106 && CurrentScreen != "ChatRoom") {
 	MainHallWalk("MainHall");
 	} else if (event.key === "]") {
 		StruggleProgress = 125;
