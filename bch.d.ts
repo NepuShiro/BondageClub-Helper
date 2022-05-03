@@ -76,13 +76,20 @@ declare global {
 
 
   */
+  var ChatRoomCanBeLeashedBy: (id: number, C: Character) => boolean;
+  var ChatRoomPlayerIsAdmin: () => boolean;
   var ActivityOrgasmStart: (C: Character) => void;
   var DialogLentLockpicks: boolean;
   var ChatRoomSetLastChatRoom: (String) => String;
   var CharacterDeleteAllOnline: () => void;
   var ChatSearchExit: () => void;
   var CharacterReleaseTotal: (C: Character) => void;
-  var CharacterAppearanceReturnRoom: (room: String) => void;
+  var CharacterAppearanceReturnRoom: string;
+  var CharacterAppearanceReturnModule: string;
+  var ChatRoomStatusUpdate: (Status: string) => void;
+  var CharacterAppearanceLoadCharacter: (C: Character) => void;
+  var ChatRoomCanLeave: () => boolean;
+  var MainHallWalk: (room: string) => void;
   /*
     END
   */
@@ -249,7 +256,11 @@ declare global {
   ) => void;
   var ChatRoomHideIconState: number;
   var CharacterAppearanceWardrobeLoad: (C: Character) => void;
-  var ChatRoomData: { Background: string; Name: string };
+  var ChatRoomData: {
+	  Admin: any;
+	  Game: string;
+	  Locked: any; Background: string; Name: string 
+};
   var WardrobeBackground: string;
   var WardrobeLoad: () => void;
   var WardrobeRun: () => void;
@@ -375,16 +386,7 @@ declare global {
   type Passwords = Record<string, string>;
   type Settings = Record<string, boolean | string> & { version?: number };
   type SettingsCategory =
-    | "performance"
-    | "chat"
-    | "activities"
-    | "immersion"
-    | "appearance"
-    | "addons"
-    | "misc"
-    | "cheats"
-    | "buttplug"
-    | "hidden";
+    | "General";
   type DefaultSettingBase = {
     label: string;
     type?: "boolean" | "string";
@@ -430,6 +432,16 @@ declare global {
     CurrentDialog: string;
   } & Character;
   type Character = {
+    CanWalk: () => boolean;
+	ItemPermission: number;
+  CanChangeClothesOn: (C: Character) => boolean;
+	IsSlow: () => boolean;
+    Effect: string;
+    ID: number;
+    Pose: string;
+    RestrictionSettings: {
+      SlowImmunity: boolean;
+    };
     ArousalSettings: ArousalSettings;
     OnlineSettings: OnlineSettings;
     OnlineSharedSettings: OnlineSharedSettings;
@@ -458,6 +470,7 @@ declare global {
     CanChange?: () => boolean;
     CanChangeOwnClothes?: () => boolean;
     CanInteract: () => boolean;
+    IsRestrained: () => boolean;
     BlackList: number[];
     GhostList: number[];
     FriendList: number[];
@@ -525,6 +538,9 @@ declare global {
     LockMemberNumber?: number;
     LockedBy?: string;
     Effect?: string[];
+    CombinationNumber?: number;
+    LockPickSeed?: number;
+    Password?: string;
   };
   type AssetGroup = {
     Name: string;
