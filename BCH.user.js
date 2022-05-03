@@ -91,6 +91,8 @@ async function BondageClubHelper() {
 					Player.CanChangeOwnClothes = function() {return this.CanChangeClothesOn(this);}
 					clearTimeout(LeaveButtonTimer);
 					clearTimeout(DressButtonTimer);
+					modApi.removePatches("ChatRoomRun");
+					modApi.removePatches("ChatRoomMenuDraw");
 				}
 				bchLog("allowLeave", newValue);
 			},
