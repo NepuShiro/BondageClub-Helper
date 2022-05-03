@@ -3,7 +3,7 @@
 THIS IS A WIP
 DON'T USE UNLESS YOU WANT TO
 
-# important!!!
+# Important!!!
 
 This script uses code from [Bondage Club Enhancements](https://gitlab.com/Sidiousious/bce) it is not my code. BCE is liscensed under GPLv3
 
