@@ -102,7 +102,7 @@ async function BondageClubHelper() {
 			category: "General",
 		},
 		EmoticonBlock: {
-			label: "Block actions emoticons",
+			label: "Block actions based on emoticon",
 			value: false,
 			sideEffects: (newValue) => {
 					if (newValue) {
