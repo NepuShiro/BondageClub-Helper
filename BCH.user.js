@@ -711,9 +711,9 @@ async function BondageClubHelper() {
 				}
 			}
 		);
-
-		PreferenceSubscreenList.push("BCHSettings");
-
+		setTimeout(function () {
+			PreferenceSubscreenList.push("BCHSettings");
+		}, 500);
 		/** @type {(e: KeyboardEvent) => void} */
 		function keyHandler(e) {
 			if (e.key === "Escape" && currentCategory !== null) {
