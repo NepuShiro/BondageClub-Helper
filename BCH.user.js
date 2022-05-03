@@ -532,174 +532,174 @@ async function BondageClubHelper() {
 		}
     }
 
-		// Create settings page
-		async function settingsPage() {
-			await waitFor(() => !!PreferenceSubscreenList);
-	
-			bchLog("initializing");
-	
-			const settingsPerPage = 9,
-				settingsYIncrement = 70,
-				settingsYStart = 225;
-	
-			const settingsPageCount = (category) =>
-				Math.ceil(
-					Object.values(defaultSettings).filter((v) => v.category === category)
-						.length / settingsPerPage
-				);
-	
-			let currentPageNumber = 0;
-	
-			let currentCategory = null;
+	// Create settings page
+	async function settingsPage() {
+		await waitFor(() => !!PreferenceSubscreenList);
 
-			const settingsCategories = [
-				"General",
-			];
-			const settingCategoryLabels = {
-				general: "General Settings",
-			};
-	
-			const currentDefaultSettings = (category) =>
-				Object.entries(defaultSettings).filter(
-					([, v]) => v.category === category && v.value === !!v.value
-				);
-	
-			w.PreferenceSubscreenBCHSettingsLoad = function () {
-				currentPageNumber = 0;
-			};
-			w.PreferenceSubscreenBCHSettingsExit = function () {
-				bchSaveSettings();
-				PreferenceSubscreen = "";
-				PreferenceMessage = "";
-			};
-			w.PreferenceSubscreenBCHSettingsRun = function () {
-				w.MainCanvas.getContext("2d").textAlign = "left";
-				DrawText(
-					"Bondage Club Helper Settings",
-					300,
-					125,
-					"Black",
-					"Gray"
-				);
-				DrawButton(1815, 75, 90, 90, "", "White", "Icons/Exit.png");
-	
-				if (currentCategory) {
-					let y = settingsYStart;
-					for (const [settingName, defaultSetting] of currentDefaultSettings(
+		bchLog("initializing");
+
+		const settingsPerPage = 9,
+			settingsYIncrement = 70,
+			settingsYStart = 225;
+
+		const settingsPageCount = (category) =>
+			Math.ceil(
+				Object.values(defaultSettings).filter((v) => v.category === category)
+				.length / settingsPerPage
+			);
+
+		let currentPageNumber = 0;
+
+		let currentCategory = null;
+
+		const settingsCategories = [
+			"General",
+		];
+		const settingCategoryLabels = {
+			General: "General Settings",
+		};
+
+		const currentDefaultSettings = (category) =>
+			Object.entries(defaultSettings).filter(
+				([, v]) => v.category === category && v.value === !!v.value
+			);
+
+		w.PreferenceSubscreenBCHSettingsLoad = function () {
+			currentPageNumber = 0;
+		};
+		w.PreferenceSubscreenBCHSettingsExit = function () {
+			bchSaveSettings();
+			PreferenceSubscreen = "";
+			PreferenceMessage = "";
+		};
+		w.PreferenceSubscreenBCHSettingsRun = function () {
+			w.MainCanvas.getContext("2d").textAlign = "left";
+			DrawText(
+				"Bondage Club Helper Settings",
+				300,
+				125,
+				"Black",
+				"Gray"
+			);
+			DrawButton(1815, 75, 90, 90, "", "White", "Icons/Exit.png");
+
+			if (currentCategory) {
+				let y = settingsYStart;
+				for (const [settingName, defaultSetting] of currentDefaultSettings(
 						currentCategory
 					).slice(
 						currentPageNumber * settingsPerPage,
 						currentPageNumber * settingsPerPage + settingsPerPage
 					)) {
-						DrawCheckbox(
-							300,
-							y,
-							64,
-							64,
-							defaultSetting.label,
-							!!bchSettings[settingName]
-						);
-						y += settingsYIncrement;
-					}
-					DrawText(
-						`${currentPageNumber + 1} / ${settingsPageCount(currentCategory)}`,
-						1700,
-						230,
-						"Black",
-						"Gray"
+					DrawCheckbox(
+						300,
+						y,
+						64,
+						64,
+						defaultSetting.label,
+						!!bchSettings[settingName]
 					);
-					DrawButton(1815, 180, 90, 90, "", "White", "Icons/Next.png");
-				} else {
-					let y = settingsYStart;
-					for (const category of settingsCategories) {
-						DrawButton(300, y, 400, 64, "", "White");
-						DrawTextFit(
-							settingCategoryLabels[category],
-							310,
-							y + 32,
-							380,
-							"Black"
-						);
-						y += settingsYIncrement;
-					}
+					y += settingsYIncrement;
 				}
-				w.MainCanvas.getContext("2d").textAlign = "center";
-			};
-			// eslint-disable-next-line complexity
-			w.PreferenceSubscreenBCHSettingsClick = function () {
+				DrawText(
+					`${currentPageNumber + 1} / ${settingsPageCount(currentCategory)}`,
+					1700,
+					230,
+					"Black",
+					"Gray"
+				);
+				DrawButton(1815, 180, 90, 90, "", "White", "Icons/Next.png");
+			} else {
 				let y = settingsYStart;
-				if (MouseIn(1815, 75, 90, 90)) {
-					if (currentCategory === null) {
-						PreferenceSubscreenBCHSettingsExit();
-					} else {
-						currentCategory = null;
-					}
-				} else if (currentCategory !== null) {
-						for (const [settingName, defaultSetting] of currentDefaultSettings(
-							currentCategory
-						).slice(
-							currentPageNumber * settingsPerPage,
-							currentPageNumber * settingsPerPage + settingsPerPage
-						)) {
-							if (MouseIn(300, y, 64, 64)) {
-								bchSettings[settingName] = !bchSettings[settingName];
-								defaultSetting.sideEffects(bchSettings[settingName]);
-							}
-							y += settingsYIncrement;
-						}
-					}
-					for (const category of settingsCategories) {
-						if (MouseIn(300, y, 400, 64)) {
-							currentCategory = category;
-							currentPageNumber = 0;
-							break;
-						}
-						y += settingsYIncrement;
-				}
-			};
-	
-			modApi.hookFunction(
-				"DrawButton",
-				HOOK_PRIORITIES.ModifyBehaviourMedium,
-				(args, next) => {
-					// 7th argument is image URL
-					switch (args[8]) {
-						case "Icons/BCHSettings.png":
-							args[8] = ICONS.LOGO;
-							break;
-						default:
-							break;
-					}
-					return next(args);
-				}
-			);
-	
-			modApi.hookFunction(
-				"TextGet",
-				HOOK_PRIORITIES.ModifyBehaviourHigh,
-				(args, next) => {
-					switch (args[0]) {
-						case "HomepageBCHSettings":
-							return "BCH Settings";
-						default:
-							return next(args);
-					}
-				}
-			);
-			PreferenceSubscreenList.push("BCHSettings");
-	
-			/** @type {(e: KeyboardEvent) => void} */
-			function keyHandler(e) {
-				if (e.key === "Escape" && currentCategory !== null) {
-					currentCategory = null;
-					e.stopPropagation();
-					e.preventDefault();
+				for (const category of settingsCategories) {
+					DrawButton(300, y, 400, 64, "", "White");
+					DrawTextFit(
+						settingCategoryLabels[category],
+						310,
+						y + 32,
+						380,
+						"Black"
+					);
+					y += settingsYIncrement;
 				}
 			}
-	
-			document.addEventListener("keydown", keyHandler, true);
-			document.addEventListener("keypress", keyHandler, true);
+			w.MainCanvas.getContext("2d").textAlign = "center";
+		};
+		// eslint-disable-next-line complexity
+		w.PreferenceSubscreenBCHSettingsClick = function () {
+			let y = settingsYStart;
+			if (MouseIn(1815, 75, 90, 90)) {
+				if (currentCategory === null) {
+					PreferenceSubscreenBCHSettingsExit();
+				} else {
+					currentCategory = null;
+				}
+			} else if (currentCategory !== null) {
+				for (const [settingName, defaultSetting] of currentDefaultSettings(
+						currentCategory
+					).slice(
+						currentPageNumber * settingsPerPage,
+						currentPageNumber * settingsPerPage + settingsPerPage
+					)) {
+					if (MouseIn(300, y, 64, 64)) {
+						bchSettings[settingName] = !bchSettings[settingName];
+						defaultSetting.sideEffects(bchSettings[settingName]);
+					}
+					y += settingsYIncrement;
+				}
+			}
+			for (const category of settingsCategories) {
+				if (MouseIn(300, y, 400, 64)) {
+					currentCategory = category;
+					currentPageNumber = 0;
+					break;
+				}
+				y += settingsYIncrement;
+			}
+		};
+
+		modApi.hookFunction(
+			"DrawButton",
+			HOOK_PRIORITIES.ModifyBehaviourMedium,
+			(args, next) => {
+				// 7th argument is image URL
+				switch (args[6]) {
+					case "Icons/BCHSettings.png":
+						args[6] = ICONS.LOGO;
+						break;
+					default:
+						break;
+				}
+				return next(args);
+			}
+		);
+
+		modApi.hookFunction(
+			"TextGet",
+			HOOK_PRIORITIES.ModifyBehaviourHigh,
+			(args, next) => {
+				switch (args[0]) {
+					case "HomepageBCHSettings":
+						return "BCH Settings";
+					default:
+						return next(args);
+				}
+			}
+		);
+		PreferenceSubscreenList.push("BCHSettings");
+
+		/** @type {(e: KeyboardEvent) => void} */
+		function keyHandler(e) {
+			if (e.key === "Escape" && currentCategory !== null) {
+				currentCategory = null;
+				e.stopPropagation();
+				e.preventDefault();
+			}
 		}
+
+		document.addEventListener("keydown", keyHandler, true);
+		document.addEventListener("keypress", keyHandler, true);
+	}
 	
 	function sleep(ms) {
 		return new Promise((resolve) => setTimeout(resolve, ms));
