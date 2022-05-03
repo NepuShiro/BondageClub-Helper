@@ -11,25 +11,25 @@ GO SUPPORT THE ORIGINAL CREATOR
 
 # Current Commands
 
-/cum : cum
+**/cum** : ***cum***
 
-/leave : Leave the room, and go back to the MainHall
+**/leave** : ***Leave the room, and go back to the MainHall***
 
-/unrestrain [membernumber/name] : Release all bindings on someone in the room
+**/unrestrain** ***[membernumber/name] : Release all bindings on someone in the room
 
-/wardrobe : Opens the wardrobe
+**/wardrobe** : Opens the wardrobe***
 
-/showlocks [membernumber/name] [Whisper: T/F] : Show locks on character including the pass/combo
+**/showlocks** ***[membernumber/name] [Whisper: T/F] : Show locks on character including the pass/combo***
 
-/exportlook [membernumber/name] [Binds: T/F] [Total: T/F] : Copy your or another player's appearance in a format that can be imported with BCX
+**/exportlook** ***[membernumber/name] [Binds: T/F] [Total: T/F] : Copy your or another player's appearance in a format that can be imported with BCX***
 
-###### Keybinds
+## Keybinds
 
-Insert+Delete keys = Release without the chat action. To be used outside a chatroom.
+**Insert+Delete keys** = ***Release without the chat action. To be used outside a chatroom.***
 
-Endbracket (]) = Finish the struggle minigame instantly
+**Endbracket (])** = ***Finish the struggle minigame instantly***
 
-Keypad Subtract (-) = Go back to the MainHall
+**Keypad Subtract (-)** = ***Go back to the MainHall***
 
 # How to install
 
