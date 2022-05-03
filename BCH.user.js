@@ -261,8 +261,6 @@ async function BondageClubHelper() {
 	bchLog(`Bondage Club Helper v1.0 Loaded`);
 	await bchNotify(`Bondage Club Helper v1.0 Loaded`);
 
-	PreferenceSubscreenList.push("BCHSettings");
-
     async function commands() {
 		await WaitForChatRoom();
 		bchLog("registering additional commands");
@@ -663,9 +661,9 @@ async function BondageClubHelper() {
 			HOOK_PRIORITIES.ModifyBehaviourMedium,
 			(args, next) => {
 				// 7th argument is image URL
-				switch (args[6]) {
+				switch (args[7]) {
 					case "Icons/BCHSettings.png":
-						args[6] = ICONS.LOGO;
+						args[7] = ICONS.LOGO;
 						break;
 					default:
 						break;
