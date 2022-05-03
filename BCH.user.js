@@ -251,7 +251,7 @@ async function BondageClubHelper() {
 	console.log(`BCH Ready!`);
 	await waitFor(() => !!Player?.AccountName);
 	commands();
-	allowleave();
+	settingsPage();
 	chatRoomOverlay();
 
 	Player.BCH = BCH_VERSION;
