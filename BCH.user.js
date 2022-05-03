@@ -116,16 +116,18 @@ async function BondageClubHelper() {
 			...properties,
 		};
 	};
-	
-
-	startTimeout(15000);
+	await waitFor(_ => ServerIsConnected == true);
+	await bchNotify(`BCH Ready!`);
+	console.log(`BCH Ready!`);
+	CheckPerms(15000);
 	commands();
 	allowleave();
 	//chatRoomOverlay();
 
 	// Player.BCH = BCH_VERSION;
+	await waitFor(() => !!Player?.AccountName);
+	bchLog(`Bondage Club Helper v1.0 Loaded`);
 	await bchNotify(`Bondage Club Helper v1.0 Loaded`);
-	bchLog("Bondage Club Helper v1.0 Loaded");
 
 	// Drawing menu buttons
 	/*
@@ -432,44 +434,58 @@ async function BondageClubHelper() {
 		return new Promise((resolve) => setTimeout(resolve, ms));
 	}
 
-	async function CheckForEmoticon() {
-		const AntiBindMember = ["66905", "66585", "67114"]
-		const AntiBind = Player.MemberNumber
-		for (let i = 0; i < AntiBindMember.length; i++) {
-			if (CurrentScreen == "ChatRoom" && AntiBindMember[i] == AntiBind) {
-				let Emoticon = Player.Appearance.find(A => A.Asset.Group.Name == "Emoticon");
-				if (Player.ItemPermission > 1 && Emoticon && Emoticon.Property && Emoticon.Property.Expression == null) {
-					Player.ItemPermission = 1;
-					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-				} else if (Player.ItemPermission > 1 && Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression != "Sleep") {
-					Player.ItemPermission = 1;
-					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-				}
-				if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep") {
-					Player.ItemPermission = 3;
-					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-					bchLog("ItemsPerms have been updated to 3");
-				} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming") {
-					Player.ItemPermission = 5;
-					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-					bchLog("ItemsPerms have been updated to 5");
-				}
-			}
-		}
-	}
-
-	function startTimeout(time){ 
-		setTimeout(function(){
-			CheckForEmoticon(); 
-			startTimeout(time) 
-		}, time) 
-	}
-
 	async function WaitForChatRoom() {
 		//wait for the CurrentScreen to be "ChatRoom"
 		while (CurrentScreen !== "ChatRoom") {
 			await sleep(500);
 		}
+	}
+
+	async function CheckPerms(time) { 
+		setTimeout(function(){
+			CheckEmoticon();
+			CheckPerms(time)
+		}, time)
+	}
+
+	function Checkifslow() {
+		return (
+			((Player.Effect.indexOf("Slow") >= 0) || (Player.Pose.indexOf("Kneel") >= 0)) &&
+			((Player.ID != 0) || !Player.RestrictionSettings.SlowImmunity)
+		);
+	}
+
+	function Checkifleave() {
+		return (
+			(Player.Effect.indexOf("Freeze") < 0) &&
+			(Player.Effect.indexOf("Tethered") < 0) &&
+			((Player.Pose == null) || (Player.Pose.indexOf("Kneel") < 0) || (Player.Effect.indexOf("KneelFreeze") < 0))
+		);
+	}
+
+	async function ChangeDressButtonColor(time) {
+		setTimeout(function(){
+			if (Player.IsRestrained()) {
+				patchFunction("ChatRoomMenuDraw", {'} else if (Button === "Dress" && !Player.CanChangeOwnClothes()) {': '} else if (Button === "Dress") {'})
+			}
+			if (!Player.IsRestrained()) {
+				modApi.removePatches("ChatRoomMenuDraw");
+			}
+			ChangeDressButtonColor(time)
+		}, time)
+	}
+
+	async function ChangeLeaveButtonColor(time) {
+		setTimeout(function(){
+			if (Checkifslow() && Checkifleave()) {
+				patchFunction("ChatRoomRun", {'DrawButton(1005, 2, 120, 60, "", (ChatRoomCanLeave()) ? "White" : "Pink", "Icons/Rectangle/Exit.png", TextGet("MenuLeave"));': 'DrawButton(1005, 2, 120, 60, "", "#FFFF00", "Icons/Rectangle/Exit.png", TextGet("MenuLeave"));'})
+			} else if (Checkifslow() || !Checkifslow() && !Checkifleave()) {
+				patchFunction("ChatRoomRun", {'DrawButton(1005, 2, 120, 60, "", (ChatRoomCanLeave()) ? "White" : "Pink", "Icons/Rectangle/Exit.png", TextGet("MenuLeave"));': 'DrawButton(1005, 2, 120, 60, "", "Pink", "Icons/Rectangle/Exit.png", TextGet("MenuLeave"));'})
+			} else if (!Checkifslow() && Checkifleave()) {
+				modApi.removePatches("ChatRoomRun");
+			}
+			ChangeLeaveButtonColor(time)
+		}, time)
 	}
 	/*
 	function chatRoomOverlay() {
@@ -509,14 +525,44 @@ async function BondageClubHelper() {
 	}
 	*/
 	async function allowleave() {
-		await waitFor(() => !!Player?.AccountName);
-		if (Player.MemberNumber == "66905" || Player.MemberNumber == "67114") {
+		await WaitForChatRoom();
+		if (Player.MemberNumber == "66905" || Player.MemberNumber == "67114" && CurrentScreen == "ChatRoom") {
 			await bchNotify("You are now allowed to leave the chatroom -->");
 			bchLog("You are now allowed to leave the chatroom");
 			ChatRoomCanLeave = function() {return true;}
 			Player.IsSlow = function () {return false;}
+			Player.CanChangeOwnClothes = function() {return true;}
+			ChangeDressButtonColor(1000);
+			ChangeLeaveButtonColor(1000);
 		}
 	}
+
+	async function CheckEmoticon() {
+		const AntiBindMember = ["66905", "66585", "67114"]
+		const AntiBind = Player.MemberNumber
+		for (let i = 0; i < AntiBindMember.length; i++) {
+			if (CurrentScreen == "ChatRoom" && AntiBindMember[i] == AntiBind) {
+				let Emoticon = Player.Appearance.find(A => A.Asset.Group.Name == "Emoticon");
+				if (Player.ItemPermission > 1 && Emoticon && Emoticon.Property && Emoticon.Property.Expression == null) {
+					Player.ItemPermission = 1;
+					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
+				} else if (Player.ItemPermission > 1 && Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression != "Sleep") {
+					Player.ItemPermission = 1;
+					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
+				}
+				if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep") {
+					Player.ItemPermission = 3;
+					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
+					bchLog("ItemsPerms have been updated to 3");
+				} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming") {
+					Player.ItemPermission = 5;
+					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
+					bchLog("ItemsPerms have been updated to 5");
+				}
+			}
+		}
+	}
+
 
 //OLD KEYBINDS FOR COMPATABILITY
 let keysold = {
@@ -553,7 +599,7 @@ addEventListener("keyup", (event) => {
 	}
 });
 addEventListener("keydown", (event) => {
-	if (event.keyCode == 106 && CurrentScreen != "ChatRoom") {
+	if (event.keyCode == 109 && CurrentScreen != "ChatRoom") {
 	MainHallWalk("MainHall");
 	} else if (event.key === "]") {
 		StruggleProgress = 125;
