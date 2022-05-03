@@ -249,10 +249,10 @@ async function BondageClubHelper() {
 			...properties,
 		};
 	};
-	await waitFor(_ => ServerIsConnected == true);
-	await bchNotify(`BCH Ready!`);
-	console.log(`BCH Ready!`);
-	await waitFor(() => !!Player?.AccountName);
+	if (ServerIsConnected == true){
+		await bchNotify(`BCH Ready!`);
+		console.log(`BCH Ready!`);
+	}
 	await bchLoadSettings();
 	postSettings();
 	bchLog(bchSettings);
@@ -274,6 +274,9 @@ async function BondageClubHelper() {
 		if (w.BCX_Loaded) {
 			bcxType = "external";
 			bchLog("BCX already loaded, skipping loadBCX()");
+			return;
+		} else {
+			bcxType = "none";
 			return;
 		}
 	}
@@ -788,30 +791,8 @@ async function BondageClubHelper() {
 			if (w.BCX_Loaded && bcxType === "none") {
 				bcxType = "external";
 			}
-			modApi.callOriginal("ServerSend", [
-				"AccountBeep",
-				{
-					BeepType: "Leash",
-					// BCH statbot, which only collects anonymous aggregate version and usage data to justify supporting or dropping support for features
-					MemberNumber: 61197,
-					Message: JSON.stringify({
-						Version: BCH_VERSION,
-						GameVersion,
-						BCX: bcxType,
-						// !! to avoid passing room name to statbot, only presence inside a room or not
-						InRoom: !!Player.LastChatRoom,
-						InPrivate: !!Player.LastChatRoomPrivate,
-						// @ts-ignore
-						// eslint-disable-next-line camelcase
-						InTampermonkey: typeof GM_info !== "undefined",
-					}),
-					// IsSecret: true to avoid passing room name to statbot
-					IsSecret: true,
-				},
-			]);
 		};
 		sendHeartbeat();
-		// 5 minutes
 		createTimer(sendHeartbeat, 1000 * 60 * 5);
 	})();
 
