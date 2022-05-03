@@ -250,6 +250,9 @@ async function BondageClubHelper() {
 	await bchNotify(`BCH Ready!`);
 	console.log(`BCH Ready!`);
 	await waitFor(() => !!Player?.AccountName);
+	await bchLoadSettings();
+	postSettings();
+	bchLog(bchSettings);
 	commands();
 	settingsPage();
 	chatRoomOverlay();
