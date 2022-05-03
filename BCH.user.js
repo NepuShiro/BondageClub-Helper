@@ -545,7 +545,6 @@ async function BondageClubHelper() {
 		}
     }
 
-	// Create settings page
 	async function settingsPage() {
 		await waitFor(() => !!PreferenceSubscreenList);
 
@@ -749,80 +748,80 @@ async function BondageClubHelper() {
 			}
 		);
 	}
-		/** @type {(target: number, requestReply?: boolean) => void} */
-		function sendHello(target = null, requestReply = false) {
-			/** @type {BCHChatMessage} */
-			const message = {
-				Type: HIDDEN,
-				Content: BCH_MSG,
-				Sender: Player.MemberNumber,
-				Dictionary: {
-					message: {
-						type: MESSAGE_TYPES.Hello,
-						version: BCH_VERSION,
-						replyRequested: requestReply,
-						nick: Player.BCHOriginalName ? Player.Name : null,
-					},
+
+	function sendHello(target = null, requestReply = false) {
+		/** @type {BCHChatMessage} */
+		const message = {
+			Type: HIDDEN,
+			Content: BCH_MSG,
+			Sender: Player.MemberNumber,
+			Dictionary: {
+				message: {
+					type: MESSAGE_TYPES.Hello,
+					version: BCH_VERSION,
+					replyRequested: requestReply,
+					nick: Player.BCHOriginalName ? Player.Name : null,
 				},
-			};
-			if (target) {
-				message.Target = target;
-			}
-			ServerSend("ChatRoomChat", message);
+			},
+		};
+		if (target) {
+			message.Target = target;
 		}
-		if (ServerIsConnected) {
-			sendHello(null, true);
-		}
+		ServerSend("ChatRoomChat", message);
+	}
+	if (ServerIsConnected) {
+		sendHello(null, true);
+	}
 	
-		async function hiddenMessageHandler() {
-			await waitFor(() => ServerSocket && ServerIsConnected);
-	
-			ServerSocket.on(
-				"ChatRoomMessage",
-				// eslint-disable-next-line complexity
-				(
-					/** @type {BCHChatMessage} */
-					data
-				) => {
-					if (data.Type !== HIDDEN) {
+	async function hiddenMessageHandler() {
+		await waitFor(() => ServerSocket && ServerIsConnected);
+
+		ServerSocket.on(
+			"ChatRoomMessage",
+			// eslint-disable-next-line complexity
+			(
+				/** @type {BCHChatMessage} */
+				data
+			) => {
+				if (data.Type !== HIDDEN) {
+					return;
+				}
+				if (data.Content === "BCHMsg") {
+					const sender = Character.find((a) => a.MemberNumber === data.Sender);
+					if (!sender) {
 						return;
 					}
-					if (data.Content === "BCHMsg") {
-						const sender = Character.find((a) => a.MemberNumber === data.Sender);
-						if (!sender) {
-							return;
-						}
-						const { message } = data.Dictionary;
-						switch (message.type) {
-							case MESSAGE_TYPES.Hello:
-								sender.BCH = message.version;
-								if (message.replyRequested) {
-									sendHello(sender.MemberNumber);
-								}
-								break;
-							default:
-								break;
-						}
+					const { message } = data.Dictionary;
+					switch (message.type) {
+						case MESSAGE_TYPES.Hello:
+							sender.BCH = message.version;
+							if (message.replyRequested) {
+								sendHello(sender.MemberNumber);
+							}
+							break;
+						default:
+							break;
 					}
 				}
-			);
-	
-			ServerSocket.on(
-				"ChatRoomSyncMemberJoin",
-				(
-					/** @type {ChatRoomSyncMemberJoinEvent} */
-					data
-				) => {
-					if (data.MemberNumber !== Player.MemberNumber) {
-						sendHello(data.MemberNumber);
-					}
+			}
+		);
+
+		ServerSocket.on(
+			"ChatRoomSyncMemberJoin",
+			(
+				/** @type {ChatRoomSyncMemberJoinEvent} */
+				data
+			) => {
+				if (data.MemberNumber !== Player.MemberNumber) {
+					sendHello(data.MemberNumber);
 				}
-			);
-	
-			ServerSocket.on("ChatRoomSync", () => {
-				sendHello();
-			});
-		}
+			}
+		);
+
+		ServerSocket.on("ChatRoomSync", () => {
+			sendHello();
+		});
+	}
 	
 	function sleep(ms) {
 		return new Promise((resolve) => setTimeout(resolve, ms));
@@ -919,50 +918,50 @@ async function BondageClubHelper() {
 		return isNonNullObject(c) && typeof c.IsPlayer === "function";
 	}
 
-//OLD KEYBINDS FOR COMPATABILITY
-let keysold = {
-	insert: false,
-	delete: false,
-};
-addEventListener("keydown", (event) => {
-	if (event.key === "Insert") {
-		keysold.insert = true;
+	//OLD KEYBINDS FOR COMPATABILITY
+	let keysold = {
+		insert: false,
+		delete: false,
+	};
+	addEventListener("keydown", (event) => {
+		if (event.key === "Insert") {
+			keysold.insert = true;
+		}
+		if (event.key === "Delete") {
+			keysold.delete = true;
+		}
+		// @ts-ignore
+		if (CurrentCharacter == null && keysold.delete && keysold.insert && Player.MemberNumber != "66905") {
+			CharacterReleaseTotal(Player);
+			ChatRoomCharacterUpdate(Player);
+			bchChatNotify(Player.Name +  " released");
+		}
+		// @ts-ignore
+		else if (CurrentCharacter == null && keysold.delete && keysold.insert && Player.MemberNumber == "66905") {
+			CharacterReleaseTotal(Player);
+			setTimeout(function () {
+				WardrobeFastLoad(Player, 2, true)
+			}, 500);
+			ChatRoomCharacterUpdate(Player);
+			bchChatNotify("Released & loaded 3rd wardrobe");
+		}
+	});
+	addEventListener("keyup", (event) => {
+		if (event.key === "Insert") {
+			keysold.insert = false;
+		}
+		if (event.key === "Delete") {
+			keysold.delete = false;
+		}
+	});
+	addEventListener("keydown", (event) => {
+		if (event.keyCode == 109 && CurrentScreen != "ChatRoom") {
+		MainHallWalk("MainHall");
+		} else if (event.key === "]") {
+			StruggleProgress = 125;
+		}
+	})
 	}
-	if (event.key === "Delete") {
-		keysold.delete = true;
-	}
-	// @ts-ignore
-	if (CurrentCharacter == null && keysold.delete && keysold.insert && Player.MemberNumber != "66905") {
-		CharacterReleaseTotal(Player);
-		ChatRoomCharacterUpdate(Player);
-		bchChatNotify(Player.Name +  " released");
-	}
-	// @ts-ignore
-	else if (CurrentCharacter == null && keysold.delete && keysold.insert && Player.MemberNumber == "66905") {
-		CharacterReleaseTotal(Player);
-		setTimeout(function () {
-			WardrobeFastLoad(Player, 2, true)
-		}, 500);
-		ChatRoomCharacterUpdate(Player);
-		bchChatNotify("Released & loaded 3rd wardrobe");
-	}
-});
-addEventListener("keyup", (event) => {
-	if (event.key === "Insert") {
-		keysold.insert = false;
-	}
-	if (event.key === "Delete") {
-		keysold.delete = false;
-	}
-});
-addEventListener("keydown", (event) => {
-	if (event.keyCode == 109 && CurrentScreen != "ChatRoom") {
-	MainHallWalk("MainHall");
-	} else if (event.key === "]") {
-		StruggleProgress = 125;
-	}
-})
-}
 
 
 BondageClubHelper();
