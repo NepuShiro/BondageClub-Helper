@@ -46,23 +46,31 @@ var bcModSdk=function(){"use strict";const o="1.0.2";function e(o){alert("Mod ER
 
 const BCH_VERSION = "1.0";
 
-const w = window;
-var DressButtonTimer; 
-var LeaveButtonTimer;
-var EmoticonBlockTimer;
-
 async function BondageClubHelper() {
     "use strict";
 
-    const modApi = bcModSdk.registerMod('BondageClubHelper', BCH_VERSION);
+	const w = window;
 
     if (typeof ChatRoomCharacter === "undefined") {
 		console.warn("Bondage Club not detected. Skipping BCH initialization.");
 		return;
 	}
 
-	/** @type {"none" | "external" | "stable" | "devel"} */
+	const modApi = bcModSdk.registerMod('BondageClubHelper', BCH_VERSION);
+
+	w.BCH_VERSION = BCH_VERSION;
+
+	var DressButtonTimer; 
+	var LeaveButtonTimer;
+	var EmoticonBlockTimer;
+
 	let bcxType = "none";
+
+	const BCH_MSG = "BCHMsg",
+	HIDDEN = "Hidden",
+	MESSAGE_TYPES = Object.freeze({
+		Hello: "Hello",
+	});
 
 	const HOOK_PRIORITIES = {
 		Top: 11,
@@ -239,6 +247,7 @@ async function BondageClubHelper() {
 		await bchNotify(`BCH Ready!`);
 		console.log(`BCH Ready!`);
 	}
+	hiddenMessageHandler();
 	await bchLoadSettings();
 	postSettings();
 	bchLog(bchSettings);
@@ -740,6 +749,80 @@ async function BondageClubHelper() {
 			}
 		);
 	}
+		/** @type {(target: number, requestReply?: boolean) => void} */
+		function sendHello(target = null, requestReply = false) {
+			/** @type {BCHChatMessage} */
+			const message = {
+				Type: HIDDEN,
+				Content: BCH_MSG,
+				Sender: Player.MemberNumber,
+				Dictionary: {
+					message: {
+						type: MESSAGE_TYPES.Hello,
+						version: BCH_VERSION,
+						replyRequested: requestReply,
+						nick: Player.BCHOriginalName ? Player.Name : null,
+					},
+				},
+			};
+			if (target) {
+				message.Target = target;
+			}
+			ServerSend("ChatRoomChat", message);
+		}
+		if (ServerIsConnected) {
+			sendHello(null, true);
+		}
+	
+		async function hiddenMessageHandler() {
+			await waitFor(() => ServerSocket && ServerIsConnected);
+	
+			ServerSocket.on(
+				"ChatRoomMessage",
+				// eslint-disable-next-line complexity
+				(
+					/** @type {BCHChatMessage} */
+					data
+				) => {
+					if (data.Type !== HIDDEN) {
+						return;
+					}
+					if (data.Content === "BCHMsg") {
+						const sender = Character.find((a) => a.MemberNumber === data.Sender);
+						if (!sender) {
+							return;
+						}
+						const { message } = data.Dictionary;
+						switch (message.type) {
+							case MESSAGE_TYPES.Hello:
+								sender.BCH = message.version;
+								if (message.replyRequested) {
+									sendHello(sender.MemberNumber);
+								}
+								break;
+							default:
+								break;
+						}
+					}
+				}
+			);
+	
+			ServerSocket.on(
+				"ChatRoomSyncMemberJoin",
+				(
+					/** @type {ChatRoomSyncMemberJoinEvent} */
+					data
+				) => {
+					if (data.MemberNumber !== Player.MemberNumber) {
+						sendHello(data.MemberNumber);
+					}
+				}
+			);
+	
+			ServerSocket.on("ChatRoomSync", () => {
+				sendHello();
+			});
+		}
 	
 	function sleep(ms) {
 		return new Promise((resolve) => setTimeout(resolve, ms));
