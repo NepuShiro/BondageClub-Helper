@@ -61,6 +61,9 @@ async function BondageClubHelper() {
 		return;
 	}
 
+	/** @type {"none" | "external" | "stable" | "devel"} */
+	let bcxType = "none";
+
 	const HOOK_PRIORITIES = {
 		Top: 11,
 		OverrideBehaviour: 10,
@@ -114,10 +117,8 @@ async function BondageClubHelper() {
 							}
 							if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep") {
 								Player.ItemPermission = 3;ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-								bchLog("ItemsPerms have been updated to 3");
 							} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming") {
 								Player.ItemPermission = 5;ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-								bchLog("ItemsPerms have been updated to 5");
 							}
 						}
 					} else {
@@ -255,13 +256,27 @@ async function BondageClubHelper() {
 	await bchLoadSettings();
 	postSettings();
 	bchLog(bchSettings);
+	const bcxLoad = loadBCX();
 	commands();
 	settingsPage();
 	chatRoomOverlay();
 
-	Player.BCH = BCH_VERSION;
-	bchLog(`Bondage Club Helper v1.0 Loaded`);
+	await bcxLoad;
+
 	await bchNotify(`Bondage Club Helper v1.0 Loaded`);
+	bchLog(`Bondage Club Helper v1.0 Loaded`);
+
+	Player.BCH = BCH_VERSION;
+
+	async function loadBCX() {
+		await waitFor(settingsLoaded);
+
+		if (w.BCX_Loaded) {
+			bcxType = "external";
+			bchLog("BCX already loaded, skipping loadBCX()");
+			return;
+		}
+	}
 
     async function commands() {
 		await WaitForChatRoom();
@@ -713,7 +728,7 @@ async function BondageClubHelper() {
 	}
 
 	async function EmoticonBlockTimerCheck() { 
-		EmoticonBlockTimer = setTimeout(EmoticonBlockTimerCheck, 1000);
+		EmoticonBlockTimer = setTimeout(EmoticonBlockTimerCheck, 5000);
 	}
 
 	function Checkifslow() {
@@ -768,51 +783,53 @@ async function BondageClubHelper() {
 		);
 	}
 
-	async function allowleave() {
-		await WaitForChatRoom();
-		// @ts-ignore
-		if (Player.MemberNumber == "66905" || Player.MemberNumber == "67114" && CurrentScreen == "ChatRoom") {
-			await bchNotify("You are now allowed to leave the chatroom -->");
-			bchLog("You are now allowed to leave the chatroom");
-			ChatRoomCanLeave = function() {return true;}
-			Player.IsSlow = function () {return false;}
-			Player.CanChangeOwnClothes = function() {return true;}
-		}
-	}
-
-	async function CheckEmoticon() {
-		const AntiBindMember = ["66905", "66585", "67114"]
-		const AntiBind = Player.MemberNumber
-		for (let i = 0; i < AntiBindMember.length; i++) {
-			// @ts-ignore
-			if (CurrentScreen == "ChatRoom" && AntiBindMember[i] == AntiBind) {
-				let Emoticon = Player.Appearance.find(A => A.Asset.Group.Name == "Emoticon");
-				if (Player.ItemPermission > 1 && Emoticon && Emoticon.Property && Emoticon.Property.Expression == null) {
-					Player.ItemPermission = 1;
-					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-				} else if (Player.ItemPermission > 1 && Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression != "Sleep") {
-					Player.ItemPermission = 1;
-					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-				}
-				if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep") {
-					Player.ItemPermission = 3;
-					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-					bchLog("ItemsPerms have been updated to 3");
-				} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming") {
-					Player.ItemPermission = 5;
-					ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-					bchLog("ItemsPerms have been updated to 5");
-				}
+	(function () {
+		const sendHeartbeat = () => {
+			if (w.BCX_Loaded && bcxType === "none") {
+				bcxType = "external";
 			}
-		}
+			modApi.callOriginal("ServerSend", [
+				"AccountBeep",
+				{
+					BeepType: "Leash",
+					// BCH statbot, which only collects anonymous aggregate version and usage data to justify supporting or dropping support for features
+					MemberNumber: 61197,
+					Message: JSON.stringify({
+						Version: BCH_VERSION,
+						GameVersion,
+						BCX: bcxType,
+						// !! to avoid passing room name to statbot, only presence inside a room or not
+						InRoom: !!Player.LastChatRoom,
+						InPrivate: !!Player.LastChatRoomPrivate,
+						// @ts-ignore
+						// eslint-disable-next-line camelcase
+						InTampermonkey: typeof GM_info !== "undefined",
+					}),
+					// IsSecret: true to avoid passing room name to statbot
+					IsSecret: true,
+				},
+			]);
+		};
+		sendHeartbeat();
+		// 5 minutes
+		createTimer(sendHeartbeat, 1000 * 60 * 5);
+	})();
+
+	function createTimer(cb, intval) {
+		let lastTime = Date.now();
+		modApi.hookFunction("MainRun", HOOK_PRIORITIES.Top, (args, next) => {
+			if (Date.now() - lastTime > intval) {
+				lastTime = Date.now();
+				cb();
+			}
+			return next(args);
+		});
 	}
 
-	/** @type {(o: unknown) => o is Object} */
 	function isNonNullObject(o) {
 		return o && typeof o === "object" && !Array.isArray(o);
 	}
 
-	/** @type {(c: unknown) => c is Character} */
 	function isCharacter(c) {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 		return isNonNullObject(c) && typeof c.IsPlayer === "function";
