@@ -712,7 +712,6 @@ async function BondageClubHelper() {
 			}
 		);
 
-		await WaitForBCELoad();
 		PreferenceSubscreenList.push("BCHSettings");
 
 		/** @type {(e: KeyboardEvent) => void} */
@@ -846,14 +845,6 @@ async function BondageClubHelper() {
 		//wait for the CurrentScreen to be "ChatRoom"
 		while (CurrentScreen !== "ChatRoom") {
 			await sleep(500);
-		}
-	}
-
-	async function WaitForBCELoad() {
-		for (let i = 0; i < PreferenceSubscreenList.length; i++) {
-			while (PreferenceSubscreenList[i] !== "BCESettings") {
-				await sleep(500);
-			}
 		}
 	}
 
