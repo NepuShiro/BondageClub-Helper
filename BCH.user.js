@@ -661,9 +661,9 @@ async function BondageClubHelper() {
 			HOOK_PRIORITIES.ModifyBehaviourMedium,
 			(args, next) => {
 				// 7th argument is image URL
-				switch (args[7]) {
+				switch (args[6]) {
 					case "Icons/BCHSettings.png":
-						args[7] = ICONS.LOGO;
+						args[6] = ICONS.LOGO;
 						break;
 					default:
 						break;
