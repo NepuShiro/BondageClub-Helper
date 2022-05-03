@@ -718,6 +718,22 @@ async function BondageClubHelper() {
 		document.addEventListener("keydown", keyHandler, true);
 		document.addEventListener("keypress", keyHandler, true);
 	}
+
+	function chatRoomOverlay() {
+		modApi.hookFunction(
+			"ChatRoomDrawCharacterOverlay",
+			HOOK_PRIORITIES.AddBehaviour,
+			(args, next) => {
+				const ret = next(args);
+				const [C, CharX, CharY, Zoom] = args;
+				if (isCharacter(C) && typeof CharX === "number" && typeof CharY === "number" && typeof Zoom === "number" && C.BCH && ChatRoomHideIconState === 0) {
+					DrawImageResize(ICONS.USER, CharX + 220 * Zoom, CharY, 55 * Zoom, 50 * Zoom);
+					DrawTextFit(C.BCH, CharX + 245 * Zoom, CharY + 40 * Zoom, 50 * Zoom, DEVS.includes(C.MemberNumber) ? "#d600ff" : "White", "Black" );
+				}
+				return ret;
+			}
+		);
+	}
 	
 	function sleep(ms) {
 		return new Promise((resolve) => setTimeout(resolve, ms));
@@ -728,10 +744,6 @@ async function BondageClubHelper() {
 		while (CurrentScreen !== "ChatRoom") {
 			await sleep(500);
 		}
-	}
-
-	async function EmoticonBlockTimerCheck() { 
-		EmoticonBlockTimer = setTimeout(EmoticonBlockTimerCheck, 5000);
 	}
 
 	function Checkifslow() {
@@ -747,6 +759,10 @@ async function BondageClubHelper() {
 			(Player.Effect.indexOf("Tethered") < 0) &&
 			((Player.Pose == null) || (Player.Pose.indexOf("Kneel") < 0) || (Player.Effect.indexOf("KneelFreeze") < 0))
 		);
+	}
+	
+	async function EmoticonBlockTimerCheck() { 
+		EmoticonBlockTimer = setTimeout(EmoticonBlockTimerCheck, 5000);
 	}
 
 	async function ChangeDressButtonColor() {
@@ -768,22 +784,6 @@ async function BondageClubHelper() {
 			modApi.removePatches("ChatRoomRun");
 		}
 		LeaveButtonTimer = setTimeout(ChangeLeaveButtonColor, 1000);
-	}
-
-	function chatRoomOverlay() {
-		modApi.hookFunction(
-			"ChatRoomDrawCharacterOverlay",
-			HOOK_PRIORITIES.AddBehaviour,
-			(args, next) => {
-				const ret = next(args);
-				const [C, CharX, CharY, Zoom] = args;
-				if (isCharacter(C) && typeof CharX === "number" && typeof CharY === "number" && typeof Zoom === "number" && C.BCH && ChatRoomHideIconState === 0) {
-					DrawImageResize(ICONS.USER, CharX + 220 * Zoom, CharY, 55 * Zoom, 50 * Zoom);
-					DrawTextFit(C.BCH, CharX + 245 * Zoom, CharY + 40 * Zoom, 50 * Zoom, DEVS.includes(C.MemberNumber) ? "#d600ff" : "White", "Black" );
-				}
-				return ret;
-			}
-		);
 	}
 
 	(function () {
