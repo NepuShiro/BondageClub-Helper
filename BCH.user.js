@@ -119,13 +119,13 @@ async function BondageClubHelper() {
 	await waitFor(_ => ServerIsConnected == true);
 	await bchNotify(`BCH Ready!`);
 	console.log(`BCH Ready!`);
+	await waitFor(() => !!Player?.AccountName);
 	CheckPerms(15000);
 	commands();
 	allowleave();
 	//chatRoomOverlay();
 
 	// Player.BCH = BCH_VERSION;
-	await waitFor(() => !!Player?.AccountName);
 	bchLog(`Bondage Club Helper v1.0 Loaded`);
 	await bchNotify(`Bondage Club Helper v1.0 Loaded`);
 
