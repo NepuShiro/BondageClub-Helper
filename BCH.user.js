@@ -107,20 +107,6 @@ async function BondageClubHelper() {
 			sideEffects: (newValue) => {
 					if (newValue) {
 						EmoticonBlockTimerCheck();
-						if (CurrentScreen == "ChatRoom") {
-							let Emoticon = Player.Appearance.find(A => A.Asset.Group.Name == "Emoticon");
-							if (Player.ItemPermission > 1 && Emoticon && Emoticon.Property && Emoticon.Property.Expression == null) {
-								Player.ItemPermission = 1;
-								ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-							} else if (Player.ItemPermission > 1 && Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression != "Sleep") {
-								Player.ItemPermission = 1;ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-							}
-							if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep") {
-								Player.ItemPermission = 3;ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-							} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming") {
-								Player.ItemPermission = 5;ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
-							}
-						}
 					} else {
 						clearTimeout(EmoticonBlockTimer);
 					}
@@ -761,7 +747,21 @@ async function BondageClubHelper() {
 		);
 	}
 	
-	async function EmoticonBlockTimerCheck() { 
+	async function EmoticonBlockTimerCheck() {
+		if (CurrentScreen == "ChatRoom") {
+			let Emoticon = Player.Appearance.find(A => A.Asset.Group.Name == "Emoticon");
+			if (Player.ItemPermission > 1 && Emoticon && Emoticon.Property && Emoticon.Property.Expression == null) {
+				Player.ItemPermission = 1;
+				ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
+			} else if (Player.ItemPermission > 1 && Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression != "Sleep") {
+				Player.ItemPermission = 1;ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
+			}
+			if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep") {
+				Player.ItemPermission = 3;ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
+			} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming") {
+				Player.ItemPermission = 5;ServerAccountUpdate.QueueData({ItemPermission: Player.ItemPermission}, true);
+			}
+		}
 		EmoticonBlockTimer = setTimeout(EmoticonBlockTimerCheck, 5000);
 	}
 
