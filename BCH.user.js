@@ -760,8 +760,8 @@ async function BondageClubHelper() {
 				const ret = next(args);
 				const [C, CharX, CharY, Zoom] = args;
 				if (isCharacter(C) && typeof CharX === "number" && typeof CharY === "number" && typeof Zoom === "number" && C.BCH && ChatRoomHideIconState === 0) {
-					DrawImageResize(ICONS.USER, CharX + 220 * Zoom, CharY, 50 * Zoom, 50 * Zoom);
-					DrawTextFit(C.BCH, CharX + 245 * Zoom, CharY + 40 * Zoom, 50 * Zoom, DEVS.includes(C.MemberNumber) ? "#b33cfa" : "White", "Black" );
+					DrawImageResize(ICONS.USER, CharX + 225 * Zoom, CharY, 50 * Zoom, 50 * Zoom);
+					DrawTextFit(C.BCH, CharX + 250 * Zoom, CharY + 40 * Zoom, 50 * Zoom, DEVS.includes(C.MemberNumber) ? "#b33cfa" : "White", "Black" );
 				}
 				return ret;
 			}
