@@ -589,7 +589,7 @@ async function BondageClubHelper() {
 		};
 		w.PreferenceSubscreenBCHSettingsRun = function () {
 			w.MainCanvas.getContext("2d").textAlign = "left";
-			DrawButton(...githubPosition, "", "White", "Icons/Github.png");
+			DrawButton(...githubPosition, "", "White", ICONS.GITHUB);
 			DrawText(
 				"Github",
 				githubPosition[0] + 20,
