@@ -135,7 +135,7 @@ async function BondageClubHelper() {
 
 	function settingsLoaded() {
 		return Object.keys(bchSettings).length > 0;
-	}
+	};
 
 	const bchSettingKey = () => `bch.settings.${Player?.AccountName}`;
 
@@ -191,7 +191,7 @@ async function BondageClubHelper() {
 			}
 		}
 		bchSaveSettings();
-	}
+	};
 
 	const ICONS = Object.freeze({
 		USER: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyEAYAAABOr1TyAAAACXBIWXMAAC4jAAAuIwF4pT92AAABeWlDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjaldA9a1MBGMXx302UVo10MIJIhztU6dBCVSiOEsEu0SGNkESX5DZvkKTh3gQproKLQ8FBdLHq4DfQVXBVEARFEHHxC/i2SLkOKaQIHTzTn3M4Dw+HTLEX9ZNDK/QHo7i0Vggr1Vo4803OESeds1iPkuHV9StlB+r3BwG8X+5F/cT/6dhGM4kIZrEaDeMRwSUUb42GI4J7yEed+gbBDpbiSrVG8Ab5xoS/It+e8E/k43LpMplZhO193NjHUSfuk1nEQr83jvb+CZBrDq6v4zTmJUrWFIQaxrp6RpZ1DTigt4J512wKRTYNbYl1tXWMLAmNJZpCLbGmpp6tSrUW/rtn0rpwfnI9V+DwlzT9cYaZ++xup+mfJ2m6+5TsZ14Npv3NHS7+Irs99RYeM3eHF6+nXuMBL+9y6tOwHtdBFplWi+/POV7lxDuO3phstZd79pHybYpvefiIsy3mbv4FQr9oKb+MK8cAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAAAYpJREFUeNrsmtGRgjAQhsWhALWDowS1BCzBK8EWxAq8GrxSsAS9Eizhjg5yD3Ef0AQwkCD6/S87TgaW8P2bTRwipZRSaoSeRGNeAUAQQACCAAIQ5EFx9fA26ybN36+Oh0O7+7g+z6P5k0TH9afb/dJUx8XSPH4+6Xg83g3JOcQcu1KeV+dpGkPlT9N299tm1dfL+P31sZvjLperQ74tDvvQcbMpO04c3tSxtooIlb8HuTmyziFtHdZ3/v4qhKbOLgu12GUNVecfHVcryy6pAEhQSdM2bCtfs0IWcx3z3Dw+nZj33dnu2R3azfxlVxcMyHRWPgDVOrYYqmO7mb/3pi6OlzX6Nkol2Bz1tR94j6qZv/v5xrFCHnW8P0f11KNq5m/7y+Rtm7q8EFsl3vY0dlm+1/jJUCuSgyFAkIclS5aCph8QSfOznZxtiqLyb8kXKj8V8vaK+FCOCkEAAQgCCEAQQACCAAIQBBAEEIAggAAEAQQgCCAAQQBBAAEIAghAEEBeWf8AAAD//wMAOcMcbwwSh6AAAAAASUVORK5CYII=",
@@ -218,7 +218,7 @@ async function BondageClubHelper() {
 			await sleep(10);
 		}
 		return true;
-	}
+	};
 
 	const bchChatNotify = (node) => {
 		const div = document.createElement("div");
@@ -254,10 +254,10 @@ async function BondageClubHelper() {
 			...properties,
 		};
 	};
-	if (ServerIsConnected == true){
-		await bchNotify(`BCH Ready!`);
+	if (ServerIsConnected){
+		bchNotify(`BCH Ready!`);
 		console.log(`BCH Ready!`);
-	}
+	};
 	hiddenMessageHandler();
 	await bchLoadSettings();
 	postSettings();
@@ -285,7 +285,7 @@ async function BondageClubHelper() {
 			bcxType = "none";
 			return;
 		}
-	}
+	};
 
     async function commands() {
 		await WaitForChatRoom();
@@ -565,7 +565,7 @@ async function BondageClubHelper() {
 			}
 			Commands.push(c);
 		}
-    }
+    };
 
 	async function settingsPage() {
 		await waitFor(() => !!PreferenceSubscreenList);
@@ -745,7 +745,7 @@ async function BondageClubHelper() {
 
 		document.addEventListener("keydown", keyHandler, true);
 		document.addEventListener("keypress", keyHandler, true);
-	}
+	};
 
 	function chatRoomOverlay() {
 		modApi.hookFunction(
@@ -781,7 +781,7 @@ async function BondageClubHelper() {
 				return ret;
 			}
 		);
-	}
+	};
 
 	function sendHello(target = null, requestReply = false) {
 		/** @type {BCHChatMessage} */
@@ -802,10 +802,10 @@ async function BondageClubHelper() {
 			message.Target = target;
 		}
 		ServerSend("ChatRoomChat", message);
-	}
+	};
 	if (ServerIsConnected) {
 		sendHello(null, true);
-	}
+	};
 	
 	async function hiddenMessageHandler() {
 		await waitFor(() => ServerSocket && ServerIsConnected);
@@ -855,25 +855,25 @@ async function BondageClubHelper() {
 		ServerSocket.on("ChatRoomSync", () => {
 			sendHello();
 		});
-	}
+	};
 	
 	function sleep(ms) {
 		return new Promise((resolve) => setTimeout(resolve, ms));
-	}
+	};
 
 	async function WaitForChatRoom() {
 		//wait for the CurrentScreen to be "ChatRoom"
 		while (CurrentScreen !== "ChatRoom") {
 			await sleep(500);
 		}
-	}
+	};
 
 	function Checkifslow() {
 		return (
 			((Player.Effect.indexOf("Slow") >= 0) || (Player.Pose.indexOf("Kneel") >= 0)) &&
 			((Player.ID != 0) || !Player.RestrictionSettings.SlowImmunity)
 		);
-	}
+	};
 
 	function Checkifleave() {
 		return (
@@ -881,7 +881,7 @@ async function BondageClubHelper() {
 			(Player.Effect.indexOf("Tethered") < 0) &&
 			((Player.Pose == null) || (Player.Pose.indexOf("Kneel") < 0) || (Player.Effect.indexOf("KneelFreeze") < 0))
 		);
-	}
+	};
 	
 	async function EmoticonBlockTimerCheck() {
 		if (CurrentScreen == "ChatRoom") {
@@ -899,7 +899,7 @@ async function BondageClubHelper() {
 			}
 		}
 		EmoticonBlockTimer = setTimeout(EmoticonBlockTimerCheck, 5000);
-	}
+	};
 
 	async function ChangeDressButtonColor() {
 		if (Player.IsRestrained()) {
@@ -909,7 +909,7 @@ async function BondageClubHelper() {
 			modApi.removePatches("ChatRoomMenuDraw");
 		}
 		DressButtonTimer = setTimeout(ChangeDressButtonColor, 1000);
-	}
+	};
 
 	async function ChangeLeaveButtonColor() {
 		if (Checkifslow() && Checkifleave()) {
@@ -920,7 +920,7 @@ async function BondageClubHelper() {
 			modApi.removePatches("ChatRoomRun");
 		}
 		LeaveButtonTimer = setTimeout(ChangeLeaveButtonColor, 1000);
-	}
+	};
 
 	(function () {
 		const sendHeartbeat = () => {
@@ -941,16 +941,16 @@ async function BondageClubHelper() {
 			}
 			return next(args);
 		});
-	}
+	};
 
 	function isNonNullObject(o) {
 		return o && typeof o === "object" && !Array.isArray(o);
-	}
+	};
 
 	function isCharacter(c) {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 		return isNonNullObject(c) && typeof c.IsPlayer === "function";
-	}
+	};
 
 	//OLD KEYBINDS FOR COMPATABILITY
 	let keysold = {
@@ -994,8 +994,8 @@ async function BondageClubHelper() {
 		} else if (event.key === "]") {
 			StruggleProgress = 125;
 		}
-	})
-	}
+	});
+	};
 
 
 BondageClubHelper();
