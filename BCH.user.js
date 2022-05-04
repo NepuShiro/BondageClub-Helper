@@ -495,7 +495,7 @@ async function BondageClubHelper() {
 						return;
 					}
 
-					const includeBinds = includeBindsArg === "false";
+					const includeBinds = includeBindsArg === "true";
 
 					const clothes = targetMember.Appearance.filter(
 						(a) =>
