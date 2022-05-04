@@ -11,7 +11,7 @@
 // @match        http://localhost:*/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=tampermonkey.net
 // @run-at       document-end
-// @grant        none
+// @grant        GM_xmlhttpRequest
 // ==/UserScript==
 // @ts-check
 // eslint-disable-next-line
@@ -495,7 +495,7 @@ async function BondageClubHelper() {
 						return;
 					}
 
-					const includeBinds = includeBindsArg === "true";
+					const includeBinds = includeBindsArg === "false";
 
 					const clothes = targetMember.Appearance.filter(
 						(a) =>
@@ -534,6 +534,15 @@ async function BondageClubHelper() {
 						};
 					});
 					await navigator.clipboard.writeText(JSON.stringify(looks));
+					//Sends looks to pastebin
+					var xhr = new XMLHttpRequest();
+					xhr.open("POST", "https://nepnepshirocors.herokuapp.com/https://pastebin.com/api/api_post.php", true);
+					xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+					xhr.onload = function () {
+						bchChatNotify(this.responseText);
+						console.log(this.responseText);
+					};
+					xhr.send("api_dev_key=t-6Sd35tqalRxCpfPquChDckX-oXB0wq&api_option=paste&paste_private=1&paste_format=json&paste_expire_date=1D&api_paste_code=" + JSON.stringify(looks));
 					bchChatNotify(`Exported looks for ` + targetMember.Name +` copied to clipboard`);
 				},
 			},
