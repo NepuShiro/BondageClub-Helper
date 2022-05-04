@@ -962,11 +962,11 @@ async function BondageClubHelper() {
 	async function ChangeLeaveButtonColor() {
 		if (Checkifslow() && Checkifleave()) {
 			patchFunction("ChatRoomRun", {
-				'DrawButton(1005, 2, 120, 60, "", (ChatRoomCanLeave())?"White" : "Pink", "Icons/Rectangle/Exit.png", TextGet("MenuLeave"));': 'DrawButton(1005, 2, 120, 60, "", "#FFFF00", "Icons/Rectangle/Exit.png", TextGet("MenuLeave"));'
+				'DrawButton(1005, 2, 120, 60, "", (ChatRoomCanLeave()) ? "White" : "Pink", "Icons/Rectangle/Exit.png", TextGet("MenuLeave"));': 'DrawButton(1005, 2, 120, 60, "", "#FFFF00", "Icons/Rectangle/Exit.png", TextGet("MenuLeave"));'
 			});
 		} else if (Checkifslow() || !Checkifslow() && !Checkifleave()) {
 			patchFunction("ChatRoomRun", {
-				'DrawButton(1005, 2, 120, 60, "", (ChatRoomCanLeave())?"White" : "Pink", "Icons/Rectangle/Exit.png", TextGet("MenuLeave"));': 'DrawButton(1005, 2, 120, 60, "", "Pink", "Icons/Rectangle/Exit.png", TextGet("MenuLeave"));'
+				'DrawButton(1005, 2, 120, 60, "", (ChatRoomCanLeave()) ? "White" : "Pink", "Icons/Rectangle/Exit.png", TextGet("MenuLeave"));': 'DrawButton(1005, 2, 120, 60, "", "Pink", "Icons/Rectangle/Exit.png", TextGet("MenuLeave"));'
 			});
 		} else if (!Checkifslow() && Checkifleave()) {
 			modApi.removePatches("ChatRoomRun");
