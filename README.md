@@ -13,13 +13,13 @@ GO SUPPORT THE ORIGINAL CREATOR
 
 **AllowLeave** - *Allows you to leave the room no matter if your bound or slow*
 
-**BlockItems** - *Block items based on what Emoticon you have* **Can be toggled**  
+**BlockItems** - *Block items based on what Emoticon you have*       (**Can be toggled**)  
 *Zzz = Owner, Lover, Whitelist Only*  
-*Controller = Owner only*
+*Controller = Owner only*  
 
 **Exportlook pastebin option** - *Exports your look to a pastebin*
 
-**Remove Validation** - *Removes validation from yourself* (**Experimental**)
+**Remove Validation** - *Removes validation from yourself*      (**Experimental**)
 # Commands
 
 **/cum** : *cum*
