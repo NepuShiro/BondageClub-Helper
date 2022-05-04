@@ -246,7 +246,7 @@ async function BondageClubHelper() {
 	};
 
 	const bchLog = (...args) => {
-		console.log("BCH:", ...args);
+		console.debug("BCH:", ...args);
 	};
 
 	async function waitFor(func, cancelFunc = () => false) {
