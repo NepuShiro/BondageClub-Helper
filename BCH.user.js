@@ -381,7 +381,7 @@ async function BondageClubHelper() {
 						CharacterRefresh(Player);
 						bchChatNotify("Completely unbound yourself");
 						// @ts-ignore
-					} else if (!target == IsNaN) {
+					} else if (!target == isNaN) {
 						targetMember = Character.find((c) => c.MemberNumber === parseInt(target));
 					} else {
 						target.toLowerCase();
@@ -428,7 +428,7 @@ async function BondageClubHelper() {
 					if (!target) {
 						targetMember = Player;
 						// @ts-ignore
-					} else if (!target == IsNaN) {
+					} else if (!target == isNaN) {
 						targetMember = Character.find((c) => c.MemberNumber === parseInt(target));
 					} else {
 						target.toLowerCase();
@@ -539,7 +539,7 @@ async function BondageClubHelper() {
 					if (!target) {
 						targetMember = Player;
 						//@ts-ignore
-					} else if (!target == IsNaN) {
+					} else if (!target == isNaN) {
 						targetMember = Character.find((c) => c.MemberNumber === parseInt(target));
 					} else {
 						target.toLowerCase();
