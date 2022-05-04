@@ -10,10 +10,11 @@ This script uses code from [Bondage Club Enhancements](https://gitlab.com/Sidiou
 GO SUPPORT THE ORIGINAL CREATOR
 
 # Features
+### All features can be toggled
 
 **AllowLeave** - *Allows you to leave the room no matter if your bound or slow*
 
-**BlockItems** - *Block items based on what Emoticon you have*       (**Can be toggled**)  
+**BlockItems** - *Block items based on what Emoticon you have*  
 *Zzz = Owner, Lover, Whitelist Only*  
 *Controller = Owner only*  
 
@@ -44,13 +45,13 @@ GO SUPPORT THE ORIGINAL CREATOR
 
 # How to install
 
-Use Tampermonkey or any alternative and install this user script:
+### Use Tampermonkey or any alternative and install this user script:
 
 https://narikonep.github.io/BondageClub-Helper/BCHLoader.user.js - Auto Update
 
 https://narikonep.github.io/BondageClub-Helper/BCH.user.js - No Auto Update
 
-For KinkyDungeonStandalone:
+### For KinkyDungeonStandalone:
 
 https://narikonep.github.io/BondageClub-Helper/KDCheatsLoader.user.js - Auto Update
 
