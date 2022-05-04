@@ -21,6 +21,7 @@
 /* eslint-disable no-implicit-globals */
 /* jshint esversion: 11 */
 /*jshint -W018 */
+
 /**
  *  THIS SCRIPT USES CODE FROM https://gitlab.com/Sidiousious/bch/ IT IS NOT MY CODE. IT IS LICENSED UDNER GPLv3
  * 	GO SUPPORT THE ORIGINAL AUTHOR	
@@ -40,6 +41,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+
 // eslint-disable-next-line capitalized-comments, multiline-comment-style
 // prettier-ignore
 // @ts-ignore
