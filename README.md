@@ -9,7 +9,18 @@ This script uses code from [Bondage Club Enhancements](https://gitlab.com/Sidiou
 
 GO SUPPORT THE ORIGINAL CREATOR
 
-# Current Commands
+# Features
+
+**AllowLeave** - *Allows you to leave the room no matter if your bound or slow*
+
+**BlockItems** - *Block items based on what Emoticon you have* **Can be toggled**
+*Zzz = Owner, Lover, Whitelist Only*
+*Controller = Owner only*
+
+**Exportlook pastebin option** - *Exports your look to a pastebin*
+
+**Remove Validation** - *Removes validation from yourself* (**Experimental**)
+# Commands
 
 **/cum** : *cum*
 
@@ -21,7 +32,7 @@ GO SUPPORT THE ORIGINAL CREATOR
 
 **/showlocks** [membernumber/name] [Whisper: T/F] : *Show locks on character including the pass/combo*
 
-**/exportlook** [membernumber/name] [Binds: T/F] [Total: T/F] : *Copy your or another player's appearance in a format that can be imported with BCX*
+**/exportlook** [membernumber/name] [Binds: T/F] [Total: T/F] : *Copy your or another player's appearance in a format that can be imported with BCX [Setting to upload to Pastebin]*
 
 ## Keybinds
 
