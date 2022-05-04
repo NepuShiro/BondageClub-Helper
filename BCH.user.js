@@ -23,7 +23,7 @@
 /*jshint -W018 */
 
 /**
- *  THIS SCRIPT USES CODE FROM https://gitlab.com/Sidiousious/bch/ IT IS NOT MY CODE. IT IS LICENSED UDNER GPLv3
+ *  THIS SCRIPT USES CODE FROM https://gitlab.com/Sidiousious/bch/ IT IS NOT MY CODE. IT IS LICENSED UNDER GPLv3
  * 	GO SUPPORT THE ORIGINAL AUTHOR	
  * 
  *  Copyright (C) 2022  Sid
@@ -78,11 +78,11 @@ async function BondageClubHelper() {
 
 	const HOOK_PRIORITIES = {
 		Top: 11,
-		OverrideBehaviour: 10,
-		ModifyBehaviourHigh: 6,
-		ModifyBehaviourMedium: 5,
-		ModifyBehaviourLow: 4,
-		AddBehaviour: 3,
+		OverrideBehavior: 10,
+		ModifyBehaviorHigh: 6,
+		ModifyBehaviorMedium: 5,
+		ModifyBehaviorLow: 4,
+		AddBehavior: 3,
 		Observe: 0,
 	};
 
@@ -364,7 +364,7 @@ async function BondageClubHelper() {
 						});
 						ChatRoomCharacterUpdate(Player);
 						CharacterRefresh(Player);
-						bchChatNotify("Completely unbinded yourself");
+						bchChatNotify("Completely unbound yourself");
 						// @ts-ignore
 					} else if (!target == IsNaN) {
 						targetMember = Character.find((c) => c.MemberNumber === parseInt(target));
@@ -387,7 +387,7 @@ async function BondageClubHelper() {
 						}]
 					});
 					ChatRoomCharacterUpdate(targetMember);
-					bchChatNotify("Completely unbinded " + targetMember.Name);
+					bchChatNotify("Completely unbound " + targetMember.Name);
 				},
 			},
 			{
@@ -739,7 +739,7 @@ async function BondageClubHelper() {
 
 		modApi.hookFunction(
 			"DrawButton",
-			HOOK_PRIORITIES.ModifyBehaviourMedium,
+			HOOK_PRIORITIES.ModifyBehaviorMedium,
 			(args, next) => {
 				// 7th argument is image URL
 				switch (args[6]) {
@@ -755,7 +755,7 @@ async function BondageClubHelper() {
 
 		modApi.hookFunction(
 			"TextGet",
-			HOOK_PRIORITIES.ModifyBehaviourHigh,
+			HOOK_PRIORITIES.ModifyBehaviorHigh,
 			(args, next) => {
 				switch (args[0]) {
 					case "HomepageBCHSettings":
@@ -784,7 +784,7 @@ async function BondageClubHelper() {
 	function chatRoomOverlay() {
 		modApi.hookFunction(
 			"ChatRoomDrawCharacterOverlay",
-			HOOK_PRIORITIES.AddBehaviour,
+			HOOK_PRIORITIES.AddBehavior,
 			(args, next) => {
 				const ret = next(args);
 				const [C, CharX, CharY, Zoom] = args;
