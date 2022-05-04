@@ -13,7 +13,8 @@
 // @run-at       document-end
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
-
+/* jshint esversion: 11 */
+/*jshint -W018 */
 setTimeout(
 	function () {
 			let n = document.createElement("script");

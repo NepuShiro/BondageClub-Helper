@@ -9,7 +9,8 @@
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
-
+/* jshint esversion: 11 */
+/*jshint -W018 */
 setTimeout(
 	function () {
 			let n = document.createElement("script");

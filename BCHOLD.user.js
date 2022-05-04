@@ -13,13 +13,14 @@
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
-
+/* jshint esversion: 11 */
+/*jshint -W018 */
 (function () {
   'use strict';
 
   window.addEventListener('load', function () {
     console.log("Loaded BCH.");
-  })
+  });
   let keys = {
     backslash: false,
     delete: false,
@@ -37,7 +38,7 @@
     if (keys.backslash && keys.insert) {
       CharacterReleaseTotal(Player);
       setTimeout(function () {
-        WardrobeFastLoad(Player, 2, true)
+        WardrobeFastLoad(Player, 2, true);
       }, 500);
       if (CurrentScreen == "ChatRoom") {
         ChatRoomCharacterUpdate(Player);
@@ -67,7 +68,7 @@
   addEventListener("keydown", (event) => {
     if (event.keyCode == 220 && keys.delete == false && keys.insert == false) {
       if (CurrentCharacter == null) {
-        CharacterReleaseTotal(Player)
+        CharacterReleaseTotal(Player);
         ServerSend("ChatRoomChat", {
           Content: "Beep",
           Type: "Action",
@@ -106,7 +107,7 @@
               }]
             });
           }
-      };
+      }
       if (CurrentScreen == "ChatRoom") {
         ChatRoomCharacterUpdate(Player);
         CharacterRefresh(Player);
@@ -134,5 +135,5 @@
       ChatRoomStatusUpdate("Wardrobe");
       CharacterAppearanceLoadCharacter(Player);
     }
-  })
+  });
 })();
