@@ -156,6 +156,21 @@ async function BondageClubHelper() {
 			},
 			category: "General",
 		},
+		RemoveValidation: {
+			label: "Remove Validation, EXPERIMENTAL",
+			value: false,
+			sideEffects: (newValue) => {
+				if (newValue) {
+					ValidationCanRemoveItem=function(previousItem,params,isSwap){if(!previousItem.Asset.Group.AllowNone&&!isSwap)return!0;const{fromSelf:fromSelf,fromOwner:fromOwner,fromLover:fromLover}=params;if(fromSelf)return!0;const lock=InventoryGetLock(previousItem);if(previousItem.Asset.AllowRemoveExclusive){if(!(!InventoryOwnerOnlyItem(previousItem)||lock&&lock.Asset.OwnerOnly))return!0;if(InventoryLoverOnlyItem(previousItem)&&(!lock||!lock.Asset.LoverOnly))return!0;}return!!(lock&&lock.Asset.LoverOnly&&fromOwner)||(!(!lock||!lock.Asset.LoverOnly||fromLover||fromOwner)||(!(!lock||!lock.Asset.OwnerOnly||fromOwner)||ValidationCanAddOrRemoveItem(previousItem,params)));};
+					ValidationCanAddOrRemoveItem=function(item,{C:C,fromOwner:fromOwner,fromLover:fromLover}){const asset=item.Asset,blockFullWardrobeAccess=!(C.OnlineSharedSettings&&C.OnlineSharedSettings.AllowFullWardrobeAccess);if(blockFullWardrobeAccess&&"Appearance"===asset.Group.Category&&!asset.Group.Clothing)return!0;const blockBodyCosplay=C.OnlineSharedSettings&&C.OnlineSharedSettings.BlockBodyCosplay;return(!blockBodyCosplay||!InventoryGetItemProperty(item,"BodyCosplay",!0))&&(asset.OwnerOnly?fromOwner:asset.LoverOnly?fromLover:(asset.Enable,!0));};
+				} else {
+					ValidationCanRemoveItem=function(previousItem,params,isSwap){if(!previousItem.Asset.Group.AllowNone&&!isSwap)return!1;const{fromSelf:fromSelf,fromOwner:fromOwner,fromLover:fromLover}=params;if(fromSelf)return!0;const lock=InventoryGetLock(previousItem);if(previousItem.Asset.AllowRemoveExclusive){if(!(!InventoryOwnerOnlyItem(previousItem)||lock&&lock.Asset.OwnerOnly))return!0;if(InventoryLoverOnlyItem(previousItem)&&(!lock||!lock.Asset.LoverOnly))return!0;}return!!(lock&&lock.Asset.LoverOnly&&fromOwner)||!(lock&&lock.Asset.LoverOnly&&!fromLover&&!fromOwner)&&(!(lock&&lock.Asset.OwnerOnly&&!fromOwner)&&ValidationCanAddOrRemoveItem(previousItem,params));};
+					ValidationCanAddOrRemoveItem=function(item,{C:C,fromOwner:fromOwner,fromLover:fromLover}){const asset=item.Asset,blockFullWardrobeAccess=!(C.OnlineSharedSettings&&C.OnlineSharedSettings.AllowFullWardrobeAccess);if(blockFullWardrobeAccess&&"Appearance"===asset.Group.Category&&!asset.Group.Clothing)return!1;const blockBodyCosplay=C.OnlineSharedSettings&&C.OnlineSharedSettings.BlockBodyCosplay;return(!blockBodyCosplay||!InventoryGetItemProperty(item,"BodyCosplay",!0))&&(asset.OwnerOnly?fromOwner:asset.LoverOnly?fromLover:!!asset.Enable);};
+				}
+				bchLog("RemoveValidation", newValue);
+			},
+			category: "Experimental",
+		},
 	});
 
 	function settingsLoaded() {
@@ -623,9 +638,11 @@ async function BondageClubHelper() {
 
 		const settingsCategories = [
 			"General",
+			"Experimental",
 		];
 		const settingCategoryLabels = {
 			General: "General Settings",
+			Experimental: "Experimental Settings",
 		};
 
 		const currentDefaultSettings = (category) =>

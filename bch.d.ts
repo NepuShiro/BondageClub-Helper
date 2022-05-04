@@ -110,15 +110,21 @@ declare global {
   var CommonSetScreen: (category: string, screen: string) => void;
   var ChatRoomLeashPlayer: number;
   var ChatRoomClearAllElements: () => void;
+  var ValidationCanRemoveItem: () => boolean;
+  var InventoryGetItemProperty: (item: Array, assettype: string, a: boolean) => boolean;
+  var ValidationCanAddOrRemoveItem: (previousItem: Array, params: Array) => boolean;
+  var InventoryOwnerOnlyItem: (previousItem: string) => boolean;
+  var InventoryLoverOnlyItem: (previousItem: string) => boolean;
+  var InventoryGetLock: (previousitem: Array) => Array;
 }
 declare global {
   interface Window {
     InputChat?: HTMLTextAreaElement;
     MainCanvas: HTMLCanvasElement;
   }
-  type SettingsCategory =
-    "General";
-
+  type SettingsCategory = 
+    "General"
+    "Experimental";
   type Character = {
     CanWalk: () => boolean;
     ItemPermission: number;
