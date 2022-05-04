@@ -257,10 +257,12 @@ declare global {
   var ChatRoomHideIconState: number;
   var CharacterAppearanceWardrobeLoad: (C: Character) => void;
   var ChatRoomData: {
-	  Admin: any;
-	  Game: string;
-	  Locked: any; Background: string; Name: string 
-};
+    Admin: any;
+    Game: string;
+    Locked: any;
+    Background: string;
+    Name: string;
+  };
   var WardrobeBackground: string;
   var WardrobeLoad: () => void;
   var WardrobeRun: () => void;
@@ -385,8 +387,7 @@ declare global {
   }
   type Passwords = Record<string, string>;
   type Settings = Record<string, boolean | string> & { version?: number };
-  type SettingsCategory =
-    | "General";
+  type SettingsCategory = "General";
   type DefaultSettingBase = {
     label: string;
     type?: "boolean" | "string";
@@ -433,9 +434,9 @@ declare global {
   } & Character;
   type Character = {
     CanWalk: () => boolean;
-	ItemPermission: number;
-  CanChangeClothesOn: (C: Character) => boolean;
-	IsSlow: () => boolean;
+    ItemPermission: number;
+    CanChangeClothesOn: (C: Character) => boolean;
+    IsSlow: () => boolean;
     Effect: string;
     ID: number;
     Pose: string;
