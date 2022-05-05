@@ -42,6 +42,7 @@ declare global {
   var MouseIn: (x: number, y: number, w: number, h: number) => boolean;
   var CharacterRefresh: (C: Character, push?: boolean, refreshDialog?: boolean ) => void;
   var WardrobeFastLoad: (C: Character, position: number, update?: boolean) => void;
+  var ServerPlayerSync: () => void;
 
   // variables
   var Character: Character[];
@@ -68,7 +69,7 @@ declare global {
   var ChatRoomHideIconState: number;
   var ChatRoomData: {Admin: any; Game: string; Locked: any; Background: string; Name: string};
   var BCX_Loaded: boolean;
-
+  
 }
 declare global {
   interface Window {
@@ -81,6 +82,9 @@ declare global {
     "Experimental";
   type DefaultSetting = DefaultSettingBoolean | DefaultSettingString;
   type DefaultSettings = Readonly<Record<string, DefaultSetting>>;
+  type ArousalSettings = {
+    Progress: number,
+  }
   type Character = {
     CanWalk: () => boolean;
     CanChangeOwnClothes?: () => boolean;
@@ -93,6 +97,7 @@ declare global {
     Pose: string;
     RestrictionSettings: {SlowImmunity: boolean;};
     OnlineSettings: OnlineSettings;
+    ArousalSettings: ArousalSettings;
     MemberNumber: number;
     Name: string;
     AccountName: string;

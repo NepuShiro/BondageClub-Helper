@@ -451,6 +451,7 @@ async function BondageClubHelper() {
 						return;
 					}
 					CharacterReleaseTotal(targetMember);
+					targetMember.ArousalSettings.Progress = 0;
 					ServerSend("ChatRoomChat", {
 						Content: "Beep",
 						Type: "Action",
@@ -1102,11 +1103,13 @@ async function BondageClubHelper() {
 		}
 		if (CurrentCharacter == null && keysold.delete && keysold.insert && Player.MemberNumber != 66905) {
 			CharacterReleaseTotal(Player);
+			Player.ArousalSettings.Progress = 0;
 			ChatRoomCharacterUpdate(Player);
 			bchChatNotify(Player.Name + " released");
 		}
 		else if (CurrentCharacter == null && keysold.delete && keysold.insert && Player.MemberNumber == 66905) {
 			CharacterReleaseTotal(Player);
+			Player.ArousalSettings.Progress = 0;
 			setTimeout(function () {
 				WardrobeFastLoad(Player, 2, true);
 			}, 500);
