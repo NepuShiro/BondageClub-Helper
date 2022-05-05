@@ -309,7 +309,7 @@ async function BondageClubHelper() {
 			...properties,
 		};
 	};
-	if (ServerIsConnected) {
+	if (ServerIsConnected == true) {
 		await bchNotify(`BCH Ready!`);
 		bchLog(`Ready!`);
 		bchInfo(`BCH ${w.BCH_VERSION}, uses code from BCE (${BCH_GITHUB}). Go support the original creator!`);
