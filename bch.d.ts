@@ -75,9 +75,12 @@ declare global {
     InputChat?: HTMLTextAreaElement;
     MainCanvas: HTMLCanvasElement;
   }
+  type Settings = Record<string, boolean | string> & { version?: number };
   type SettingsCategory = 
     "General"
     "Experimental";
+  type DefaultSetting = DefaultSettingBoolean | DefaultSettingString;
+  type DefaultSettings = Readonly<Record<string, DefaultSetting>>;
   type Character = {
     CanWalk: () => boolean;
     CanChangeOwnClothes?: () => boolean;
