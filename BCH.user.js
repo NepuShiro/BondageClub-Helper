@@ -310,6 +310,12 @@ async function BondageClubHelper() {
 		};
 	};
 
+	if (w.ServerIsConnected) {
+		await bchNotify("BCH Ready!");
+		bchLog(`Ready!`);
+		bchInfo(`BCH ${w.BCH_VERSION}, uses code from BCE (${BCH_GITHUB}). Go support the original creator!`);
+	}
+
 	hiddenMessageHandler();
 	await bchLoadSettings();
 	postSettings();
@@ -318,11 +324,6 @@ async function BondageClubHelper() {
 	commands();
 	settingsPage();
 	chatRoomOverlay();
-	
-	if (ServerIsConnected == true) {
-		bchLog(`Ready!`);
-		bchInfo(`BCH ${w.BCH_VERSION}, uses code from BCE (${BCH_GITHUB}). Go support the original creator!`);
-	}
 
 	await bcxLoad;
 
