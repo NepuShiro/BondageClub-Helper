@@ -33,7 +33,7 @@ GO SUPPORT THE ORIGINAL CREATOR
 
 **/showlocks** [membernumber/name] [Whisper: T/F] : *Show locks on character including the pass/combo*
 
-**/exportlook** [membernumber/name] [Binds: T/F] [Total: T/F] : *Copy your or another player's appearance in a format that can be imported with BCX [Setting to upload to Pastebin]*
+**/exportlook** [membernumber/name] [Binds: T/F] [Locks: T/F] : *Copy your or another player's appearance in a format that can be imported with BCX [Setting to upload to Pastebin]*
 
 ## Keybinds
 
@@ -57,6 +57,6 @@ https://narikonep.github.io/BondageClub-Helper/KDCheatsLoader.user.js - Auto Upd
 
 https://narikonep.github.io/BondageClub-Helper/KDCheats.user.js - No Auto Update
 
-# other
+# Other
 
 Please make an issue or pull request to make suggestions for commands or anything of the sort.
