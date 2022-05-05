@@ -310,15 +310,10 @@ async function BondageClubHelper() {
 		};
 	};
 
-	const WaitForConnected = async () => {
-		if (w.ServerIsConnected) {
-			await bchNotify("BCH Ready!");
-			bchLog(`Ready!`);
-			bchInfo(`BCH ${w.BCH_VERSION}, uses code from BCE (${BCH_GITHUB}). Go support the original creator!`);
-		}
-	};
+	await bchNotify("BCH Ready!");
+	bchLog(`Ready!`);
+	bchInfo(`BCH ${w.BCH_VERSION}, uses code from BCE (${BCH_GITHUB}). Go support the original creator!`);
 
-	waitFor(WaitForConnected);
 	hiddenMessageHandler();
 	await bchLoadSettings();
 	postSettings();
