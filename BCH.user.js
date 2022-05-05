@@ -312,7 +312,7 @@ async function BondageClubHelper() {
 
 	await bchNotify("BCH Ready!");
 	bchLog(`Ready!`);
-	bchInfo(`BCH ${w.BCH_VERSION}, uses code from BCE (${BCH_GITHUB}). Go support the original creator!`);
+	bchInfo(`BCH ${w.BCH_VERSION}, uses code from BCE (https://gitlab.com/Sidiousious/bce). Go support the original creator!`);
 
 	hiddenMessageHandler();
 	await bchLoadSettings();
