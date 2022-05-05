@@ -318,7 +318,7 @@ async function BondageClubHelper() {
 		}
 	};
 
-	await WaitForConnected();
+	waitFor(WaitForConnected);
 	hiddenMessageHandler();
 	await bchLoadSettings();
 	postSettings();
