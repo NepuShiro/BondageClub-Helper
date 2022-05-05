@@ -309,11 +309,12 @@ async function BondageClubHelper() {
 			...properties,
 		};
 	};
-	if (ServerIsConnected == true) {
-		await bchNotify(`BCH Ready!`);
-		bchLog(`Ready!`);
-		bchInfo(`BCH ${w.BCH_VERSION}, uses code from BCE (${BCH_GITHUB}). Go support the original creator!`);
-	}
+	setTimeout(function () {
+		if (ServerIsConnected == true) {
+			bchLog(`Ready!`);
+			bchInfo(`BCH ${w.BCH_VERSION}, uses code from BCE (${BCH_GITHUB}). Go support the original creator!`);
+		}
+	}, 500);
 	hiddenMessageHandler();
 	await bchLoadSettings();
 	postSettings();
