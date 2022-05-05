@@ -55,7 +55,7 @@ async function BondageClubHelper() {
 	const w = window;
 
 	if (typeof ChatRoomCharacter === "undefined") {
-		console.warn("Bondage Club not detected. Skipping BCH initialization.");
+		console.error("Bondage Club not detected. Skipping BCH initialization.");
 		return;
 	}
 
@@ -90,7 +90,7 @@ async function BondageClubHelper() {
 
 	const defaultSettings = Object.freeze({
 		allowLeave: {
-			label: "Allows you to leave the room, and unlocks wardrobe",
+			label: "Allow yourself to leave the room while bound",
 			value: false,
 			sideEffects: (newValue) => {
 				if (newValue) {
@@ -131,7 +131,7 @@ async function BondageClubHelper() {
 					modApi.removePatches("ChatRoomRun");
 					modApi.removePatches("ChatRoomMenuDraw");
 				}
-				bchLog("allowLeave", newValue);
+				bchDebug("allowLeave", newValue);
 			},
 			category: "General",
 		},
@@ -144,7 +144,7 @@ async function BondageClubHelper() {
 				} else {
 					clearTimeout(EmoticonBlockTimer);
 				}
-				bchLog("EmoticonBlock", newValue);
+				bchDebug("EmoticonBlock", newValue);
 			},
 			category: "General",
 		},
@@ -152,7 +152,7 @@ async function BondageClubHelper() {
 			label: "Enable Pastebin for exportlook",
 			value: false,
 			sideEffects: (newValue) => {
-				bchLog("Pastebin", newValue);
+				bchDebug("Pastebin", newValue);
 			},
 			category: "General",
 		},
@@ -161,13 +161,13 @@ async function BondageClubHelper() {
 			value: false,
 			sideEffects: (newValue) => {
 				if (newValue) {
-					ValidationCanRemoveItem=function(previousItem,params,isSwap){if(!previousItem.Asset.Group.AllowNone&&!isSwap)return!0;const{fromSelf:fromSelf,fromOwner:fromOwner,fromLover:fromLover}=params;if(fromSelf)return!0;const lock=InventoryGetLock(previousItem);if(previousItem.Asset.AllowRemoveExclusive){if(!(!InventoryOwnerOnlyItem(previousItem)||lock&&lock.Asset.OwnerOnly))return!0;if(InventoryLoverOnlyItem(previousItem)&&(!lock||!lock.Asset.LoverOnly))return!0;}return!!(lock&&lock.Asset.LoverOnly&&fromOwner)||(!(!lock||!lock.Asset.LoverOnly||fromLover||fromOwner)||(!(!lock||!lock.Asset.OwnerOnly||fromOwner)||ValidationCanAddOrRemoveItem(previousItem,params)));};
-					ValidationCanAddOrRemoveItem=function(item,{C:C,fromOwner:fromOwner,fromLover:fromLover}){const asset=item.Asset,blockFullWardrobeAccess=!(C.OnlineSharedSettings&&C.OnlineSharedSettings.AllowFullWardrobeAccess);if(blockFullWardrobeAccess&&"Appearance"===asset.Group.Category&&!asset.Group.Clothing)return!0;const blockBodyCosplay=C.OnlineSharedSettings&&C.OnlineSharedSettings.BlockBodyCosplay;return(!blockBodyCosplay||!InventoryGetItemProperty(item,"BodyCosplay",!0))&&(asset.OwnerOnly?fromOwner:asset.LoverOnly?fromLover:(asset.Enable,!0));};
+					patchFunction("ValidationCanRemoveItem",{"return false;":"return true;"});
+					patchFunction("ValidationCanAddOrRemoveItem",{"return false;":"return false;"});
 				} else {
-					ValidationCanRemoveItem=function(previousItem,params,isSwap){if(!previousItem.Asset.Group.AllowNone&&!isSwap)return!1;const{fromSelf:fromSelf,fromOwner:fromOwner,fromLover:fromLover}=params;if(fromSelf)return!0;const lock=InventoryGetLock(previousItem);if(previousItem.Asset.AllowRemoveExclusive){if(!(!InventoryOwnerOnlyItem(previousItem)||lock&&lock.Asset.OwnerOnly))return!0;if(InventoryLoverOnlyItem(previousItem)&&(!lock||!lock.Asset.LoverOnly))return!0;}return!!(lock&&lock.Asset.LoverOnly&&fromOwner)||!(lock&&lock.Asset.LoverOnly&&!fromLover&&!fromOwner)&&(!(lock&&lock.Asset.OwnerOnly&&!fromOwner)&&ValidationCanAddOrRemoveItem(previousItem,params));};
-					ValidationCanAddOrRemoveItem=function(item,{C:C,fromOwner:fromOwner,fromLover:fromLover}){const asset=item.Asset,blockFullWardrobeAccess=!(C.OnlineSharedSettings&&C.OnlineSharedSettings.AllowFullWardrobeAccess);if(blockFullWardrobeAccess&&"Appearance"===asset.Group.Category&&!asset.Group.Clothing)return!1;const blockBodyCosplay=C.OnlineSharedSettings&&C.OnlineSharedSettings.BlockBodyCosplay;return(!blockBodyCosplay||!InventoryGetItemProperty(item,"BodyCosplay",!0))&&(asset.OwnerOnly?fromOwner:asset.LoverOnly?fromLover:!!asset.Enable);};
+					modApi.removePatches("ValidationCanRemoveItem");
+					modApi.removePatches("ValidationCanAddOrRemoveItem");
 				}
-				bchLog("RemoveValidation", newValue);
+				bchDebug("RemoveValidation", newValue);
 			},
 			category: "Experimental",
 		},
@@ -184,7 +184,7 @@ async function BondageClubHelper() {
 
 		const key = bchSettingKey();
 
-		bchLog("loading settings", key);
+		bchDebug("loading settings", key);
 		if (!settingsLoaded()) {
 
 			let settings = JSON.parse(localStorage.getItem(key));
@@ -195,7 +195,7 @@ async function BondageClubHelper() {
 				settings = onlineSettings;
 			}
 			if (!settings) {
-				bchLog("no settings", key);
+				bchDebug("no settings", key);
 				settings = {};
 			}
 
@@ -224,7 +224,7 @@ async function BondageClubHelper() {
 	};
 
 	function postSettings() {
-		bchLog("handling settings side effects");
+		bchDebug("handling settings side effects");
 		for (const [k, v] of Object.entries(bchSettings)) {
 			if (k in defaultSettings) {
 				defaultSettings[k].sideEffects(v);
@@ -246,7 +246,23 @@ async function BondageClubHelper() {
 	};
 
 	const bchLog = (...args) => {
-		console.debug("BCH:", ...args);
+		console.log("BCH", `${w.BCH_VERSION}:`, ...args);
+	};
+
+	const bchDebug = (...args) => {
+		console.debug("BCH", `${w.BCH_VERSION}:`, ...args);
+	};
+
+	const bchInfo = (...args) => {
+		console.info("BCH", `${w.BCH_VERSION}:`, ...args);
+	};
+
+	const bchWarn = (...args) => {
+		console.warn("BCH", `${w.BCH_VERSION}:`, ...args);
+	};
+
+	const bchError = (...args) => {
+		console.error("BCH", `${w.BCH_VERSION}:`, ...args);
 	};
 
 	async function waitFor(func, cancelFunc = () => false) {
@@ -294,13 +310,14 @@ async function BondageClubHelper() {
 		};
 	};
 	if (ServerIsConnected) {
-		bchNotify(`BCH Ready!`);
-		console.log(`BCH Ready!`);
+		await bchNotify(`BCH Ready!`);
+		bchLog(`Ready!`);
+		bchInfo(`BCH ${w.BCH_VERSION}, uses code from BCE (${BCH_GITHUB}). Go support the original creator!`);
 	}
 	hiddenMessageHandler();
 	await bchLoadSettings();
 	postSettings();
-	bchLog(bchSettings);
+	bchDebug(bchSettings);
 	const bcxLoad = loadBCX();
 	commands();
 	settingsPage();
@@ -318,7 +335,7 @@ async function BondageClubHelper() {
 
 		if (w.BCX_Loaded) {
 			bcxType = "external";
-			bchLog("BCX already loaded, skipping loadBCX()");
+			bchDebug("BCX already loaded, skipping loadBCX()");
 			return;
 		} else {
 			bcxType = "none";
@@ -328,7 +345,7 @@ async function BondageClubHelper() {
 
 	async function commands() {
 		await WaitForChatRoom();
-		bchLog("registering additional commands");
+		bchDebug("registering additional commands");
 
 		const cmds = [{
 				Tag: "cum",
@@ -388,7 +405,7 @@ async function BondageClubHelper() {
 						targetMember = Character.find((c) => c.Name.toLowerCase() == target);
 					}
 					if (!targetMember) {
-						bchLog("Could not find member", target);
+						bchWarn("Could not find member", target);
 						return;
 					}
 					CharacterReleaseTotal(targetMember);
@@ -435,7 +452,7 @@ async function BondageClubHelper() {
 						targetMember = Character.find((c) => c.Name.toLowerCase() === target);
 					}
 					if (!targetMember) {
-						bchLog("Could not find member", target);
+						bchWarn("Could not find member", target);
 						return;
 					}
 					const whisper = whisperarg === "true";
@@ -546,7 +563,7 @@ async function BondageClubHelper() {
 						targetMember = Character.find((c) => c.Name.toLowerCase() === target);
 					}
 					if (!targetMember) {
-						bchLog("Could not find member", target);
+						bchWarn("Could not find member", target);
 						return;
 					}
 
@@ -609,7 +626,7 @@ async function BondageClubHelper() {
 
 		for (const c of cmds) {
 			if (Commands.some((a) => a.Tag === c.Tag)) {
-				bchLog("already registered", c);
+				bchDebug("already registered", c);
 				continue;
 			}
 			Commands.push(c);
@@ -619,7 +636,7 @@ async function BondageClubHelper() {
 	async function settingsPage() {
 		await waitFor(() => !!PreferenceSubscreenList);
 
-		bchLog("initializing");
+		bchDebug("initializing");
 
 		const settingsPerPage = 9,
 			settingsYIncrement = 70,
