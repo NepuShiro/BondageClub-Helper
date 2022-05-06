@@ -20,6 +20,8 @@ GO SUPPORT THE ORIGINAL CREATOR
 
 **Exportlook pastebin option** - *Exports your look to a pastebin*
 
+**Unrestrain button** - *Unrestrain yourself*
+
 **Remove Validation** - *Removes validation from yourself*      (**Experimental**)
 # Commands
 
