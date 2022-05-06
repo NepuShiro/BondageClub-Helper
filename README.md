@@ -20,9 +20,10 @@ GO SUPPORT THE ORIGINAL CREATOR
 
 **Exportlook pastebin option** - *Exports your look to a pastebin*
 
-**Unrestrain button** - *Unrestrain yourself*
+**Unrestrain button** - *Unrestrain yourself or someone else (If you have them selected)*
 
 **Remove Validation** - *Removes validation from yourself*      (**Experimental**)
+
 # Commands
 
 **/cum** : *cum*
