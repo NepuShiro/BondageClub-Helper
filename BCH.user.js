@@ -188,6 +188,14 @@ async function BondageClubHelper() {
 				bchDebug("UnrestrainButton", newValue);
 			},
 			category: "General",
+		},
+		LockPickHelpBCH: {
+			label: "Show lockpick seed entirely",
+			value: false,
+			sideEffects: (newValue) => {
+				bchDebug("LockPickHelpBCH", newValue);
+			},
+			category: "General",
 		}
 	});
 
@@ -362,6 +370,7 @@ async function BondageClubHelper() {
 	settingsPage();
 	chatRoomOverlay();
 	Unrestrainbutton();
+	lockpickHelpBCH();
 
 	await bcxLoad;
 
@@ -978,6 +987,44 @@ async function BondageClubHelper() {
 					return;
 				}
 				next(args);
+			}
+		);
+	}
+
+	async function lockpickHelpBCH() {
+		await waitFor(() => !!StruggleDrawLockpickProgress);
+		const checkbcelockpick = JSON.parse(localStorage.getItem(`bce.settings.${Player?.AccountName}`));
+
+		const pinSpacing = 100,
+			pinWidth = 200,
+			x = 1575,
+			y = 300;
+
+		modApi.hookFunction(
+			"StruggleDrawLockpickProgress",
+			HOOK_PRIORITIES.AddBehavior,
+			(args, next) => {
+				// @ts-ignore
+				if (bchSettings.LockPickHelpBCH && checkbcelockpick.lockpick === false) {
+					const seed = StruggleLockPickOrder.join("");
+					const hints = StruggleLockPickOrder.map(() => {
+						const r = seed;
+						return r;
+					});
+					for (let p = 0; p < hints.length; p++) {
+						const xx =
+							x - pinWidth / 2 + (0.5 - hints.length / 2 + p) * pinSpacing;
+						if (hints[p]) {
+							DrawText(
+								`${StruggleLockPickOrder.indexOf(p) + 1}`,
+								xx,
+								y,
+								"blue"
+							);
+						}
+					}
+				}
+				return next(args);
 			}
 		);
 	}
