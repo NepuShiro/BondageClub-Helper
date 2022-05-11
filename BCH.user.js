@@ -943,36 +943,43 @@ async function BondageClubHelper() {
 			HOOK_PRIORITIES.OverrideBehavior,
 			(args, next) => {
 				if (bchSettings.Unrestrainbutton && MouseIn(5, 60, 40, 40)) {
-					let targetName = CurrentCharacter.Name;
 					if (CurrentCharacter != null) {
 					// For others
 						if (Player.IsRestrained) {
 							CharacterReleaseTotal(CurrentCharacter);
 							CurrentCharacter.ArousalSettings.Progress = 0;
-							ServerSend("ChatRoomChat",{Content:"Beep",Type:"Action",Target:null,Dictionary:[{Tag:"Beep",Text:Player.Name+" concentrates and all restraints on "+targetName+' disappear with a "pop!"'}]});
+							if (CurrentScreen == "ChatRoom") {
+							ServerSend("ChatRoomChat",{Content:"Beep",Type:"Action",Target:null,Dictionary:[{Tag:"Beep",Text:Player.Name+" concentrates and all restraints on "+CurrentCharacter.Name+' disappear with a "pop!"'}]});
 							ChatRoomCharacterUpdate(CurrentCharacter);
-							bchChatNotify("Completely unbound " + targetName);
+							bchChatNotify("Completely unbound " + CurrentCharacter.Name);
+							}
 						} else {
 							CharacterReleaseTotal(CurrentCharacter);
 							CurrentCharacter.ArousalSettings.Progress = 0;
-							ServerSend("ChatRoomChat",{Content:"Beep",Type:"Action",Target:null,Dictionary:[{Tag:"Beep",Text:Player.Name+" snaps her fingers and all restraints on "+targetName+' disappear with a "pop!"'}]});
+							if (CurrentScreen == "ChatRoom") {
+							ServerSend("ChatRoomChat",{Content:"Beep",Type:"Action",Target:null,Dictionary:[{Tag:"Beep",Text:Player.Name+" snaps her fingers and all restraints on "+CurrentCharacter.Name+' disappear with a "pop!"'}]});
 							ChatRoomCharacterUpdate(CurrentCharacter);
-							bchChatNotify("Completely unbound " + targetName);
+							bchChatNotify("Completely unbound " + CurrentCharacter.Name);
+							}
 						}
 					// For Yourself
 					} else if (CurrentCharacter == null && Player.MemberNumber != 66905) {
 						if (Player.IsRestrained) {
 							CharacterReleaseTotal(Player);
 							Player.ArousalSettings.Progress = 0;
-							ServerSend("ChatRoomChat",{Content:"Beep",Type:"Action",Target:null,Dictionary:[{Tag:"Beep",Text:Player.Name+" snaps her fingers and all restraints on "+targetName+' disappear with a "pop!"'}]});
+							if (CurrentScreen == "ChatRoom") {
+							ServerSend("ChatRoomChat",{Content:"Beep",Type:"Action",Target:null,Dictionary:[{Tag:"Beep",Text:Player.Name+" snaps her fingers and all restraints on "+CurrentCharacter.Name+' disappear with a "pop!"'}]});
 							ChatRoomCharacterUpdate(Player);
 							bchChatNotify("Completely unbound yourself");
+							}
 						} else {
 							CharacterReleaseTotal(Player);
 							Player.ArousalSettings.Progress = 0;
-							ServerSend("ChatRoomChat",{Content:"Beep",Type:"Action",Target:null,Dictionary:[{Tag:"Beep",Text:Player.Name+" snaps her fingers and all restraints on "+targetName+' disappear with a "pop!"'}]});
+							if (CurrentScreen == "ChatRoom") {
+							ServerSend("ChatRoomChat",{Content:"Beep",Type:"Action",Target:null,Dictionary:[{Tag:"Beep",Text:Player.Name+" snaps her fingers and all restraints on "+CurrentCharacter.Name+' disappear with a "pop!"'}]});
 							ChatRoomCharacterUpdate(Player);
 							bchChatNotify("Completely unbound yourself");
+							}
 						}
 					// For Devs
 					} else if (CurrentCharacter == null && Player.MemberNumber == 66905) {
@@ -981,8 +988,10 @@ async function BondageClubHelper() {
 						setTimeout(function () {
 							WardrobeFastLoad(Player, 2, true);
 						}, 500);
+						if (CurrentScreen == "ChatRoom") {
 						ChatRoomCharacterUpdate(Player);
 						bchChatNotify("Released & loaded 3rd wardrobe");
+						}
 					}
 					return;
 				}
