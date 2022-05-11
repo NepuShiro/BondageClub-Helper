@@ -22,6 +22,8 @@ GO SUPPORT THE ORIGINAL CREATOR
 
 **Unrestrain button** - *Unrestrain yourself or someone else (If you have them selected)*
 
+**Lockpick Helper** - *Shows the order of the lockpick pins entirely* (**Must have BCE's lockpick setting off**)
+
 **Remove Validation** - *Removes validation from yourself*      (**Experimental**)
 
 # Commands
