@@ -69,7 +69,8 @@ declare global {
   var ChatRoomHideIconState: number;
   var ChatRoomData: {Admin: any; Game: string; Locked: any; Background: string; Name: string};
   var BCX_Loaded: boolean;
-  
+  var StruggleDrawLockpickProgress: number;
+  var StruggleLockPickOrder: Array;
 }
 declare global {
   interface Window {

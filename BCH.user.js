@@ -1002,7 +1002,6 @@ async function BondageClubHelper() {
 
 	async function lockpickHelpBCH() {
 		await waitFor(() => !!StruggleDrawLockpickProgress);
-		const checkbcelockpick = JSON.parse(localStorage.getItem(`bce.settings.${Player?.AccountName}`));
 
 		const pinSpacing = 100,
 			pinWidth = 200,
@@ -1013,24 +1012,16 @@ async function BondageClubHelper() {
 			"StruggleDrawLockpickProgress",
 			HOOK_PRIORITIES.AddBehavior,
 			(args, next) => {
-				// @ts-ignore
-				if (bchSettings.LockPickHelpBCH && checkbcelockpick.lockpick === false) {
-					const seed = StruggleLockPickOrder.join("");
-					const hints = StruggleLockPickOrder.map(() => {
-						const r = seed;
-						return r;
-					});
-					for (let p = 0; p < hints.length; p++) {
+				if (bchSettings.LockPickHelpBCH) {
+					for (let p = 0; p < StruggleLockPickOrder.length; p++) {
 						const xx =
-							x - pinWidth / 2 + (0.5 - hints.length / 2 + p) * pinSpacing;
-						if (hints[p]) {
+							x - pinWidth / 2 + (0.5 - StruggleLockPickOrder.length / 2 + p) * pinSpacing;
 							DrawText(
 								`${StruggleLockPickOrder.indexOf(p) + 1}`,
 								xx,
 								y,
 								"blue"
 							);
-						}
 					}
 				}
 				return next(args);
