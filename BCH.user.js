@@ -25,7 +25,7 @@
 const BCH_VERSION = "1.0";
 
 /**
- *  THIS SCRIPT USES CODE FROM https://gitlab.com/Sidiousious/bch/ IT IS NOT MY CODE. IT IS LICENSED UNDER GPLv3
+ *  THIS SCRIPT USES CODE FROM https://gitlab.com/Sidiousious/bce/ IT IS NOT MY CODE. IT IS LICENSED UNDER GPLv3
  * 	GO SUPPORT THE ORIGINAL AUTHOR	
  * 
  *  Copyright (C) 2022  Sid
