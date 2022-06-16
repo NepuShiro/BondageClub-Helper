@@ -1170,26 +1170,38 @@ async function BondageClubHelper() {
 		if (CurrentScreen == "ChatRoom") {
 			let Emoticon = Player.Appearance.find(A => A.Asset.Group.Name == "Emoticon");
 			if (Player.ItemPermission > 1 && Emoticon && Emoticon.Property && Emoticon.Property.Expression == null) {
-				Player.ItemPermission = 1;
-				ServerAccountUpdate.QueueData({
-					ItemPermission: Player.ItemPermission
-				}, true);
+				if (Player.ItemPermission != 1) {
+					Player.ItemPermission = 1;
+					ServerAccountUpdate.QueueData({
+						ItemPermission: Player.ItemPermission
+					}, true);
+				} else {
+				}
 			} else if (Player.ItemPermission > 1 && Emoticon.Property.Expression != "Gaming" || Emoticon.Property.Expression != "Sleep") {
-				Player.ItemPermission = 1;
-				ServerAccountUpdate.QueueData({
-					ItemPermission: Player.ItemPermission
-				}, true);
+				if (Player.ItemPermission != 1) {
+					Player.ItemPermission = 1;
+					ServerAccountUpdate.QueueData({
+						ItemPermission: Player.ItemPermission
+					}, true);
+				} else {
+				}
 			}
 			if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Sleep") {
-				Player.ItemPermission = 3;
-				ServerAccountUpdate.QueueData({
-					ItemPermission: Player.ItemPermission
-				}, true);
+				if (Player.ItemPermission != 3) {
+					Player.ItemPermission = 3;
+					ServerAccountUpdate.QueueData({
+						ItemPermission: Player.ItemPermission
+					}, true);
+				} else {
+				}
 			} else if (Emoticon && Emoticon.Property && Emoticon.Property.Expression == "Gaming") {
-				Player.ItemPermission = 5;
-				ServerAccountUpdate.QueueData({
-					ItemPermission: Player.ItemPermission
-				}, true);
+				if (Player.ItemPermission != 5) {
+					Player.ItemPermission = 5;
+					ServerAccountUpdate.QueueData({
+						ItemPermission: Player.ItemPermission
+					}, true);
+				} else {
+				}
 			}
 		}
 		EmoticonBlockTimer = setTimeout(EmoticonBlockTimerCheck, 5000);
