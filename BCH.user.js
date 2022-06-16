@@ -945,7 +945,7 @@ async function BondageClubHelper() {
 				if (bchSettings.Unrestrainbutton && MouseIn(5, 60, 40, 40)) {
 					if (CurrentCharacter != null) {
 					// For others
-						if (Player.IsRestrained) {
+						if (Player.IsRestrained()) {
 							CharacterReleaseTotal(CurrentCharacter);
 							CurrentCharacter.ArousalSettings.Progress = 0;
 							if (CurrentScreen == "ChatRoom") {
@@ -964,7 +964,7 @@ async function BondageClubHelper() {
 						}
 					// For Yourself
 					} else if (CurrentCharacter == null && Player.MemberNumber != 66905) {
-						if (Player.IsRestrained) {
+						if (Player.IsRestrained()) {
 							CharacterReleaseTotal(Player);
 							Player.ArousalSettings.Progress = 0;
 							if (CurrentScreen == "ChatRoom") {
