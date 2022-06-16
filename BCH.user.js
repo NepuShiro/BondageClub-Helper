@@ -121,6 +121,7 @@ async function BondageClubHelper() {
 						if (ChatRoomLeashPlayer != null) {
 							if (ChatRoomCanBeLeashedBy(0, Player)) {
 								return false;
+							// @ts-ignore
 							} else ChatRoomLeashPlayer = null;
 						}
 						if (!Player.CanWalk()) return false;
@@ -216,6 +217,7 @@ async function BondageClubHelper() {
 		bchDebug("loading settings", key);
 		if (!settingsLoaded()) {
 
+			// @ts-ignore
 			let settings = JSON.parse(localStorage.getItem(key));
 			const onlineSettings = JSON.parse(
 				LZString.decompressFromBase64(Player.OnlineSettings.BCH) || null
@@ -304,6 +306,7 @@ async function BondageClubHelper() {
 	/**
 	 * @type {(...args: unknown[]) => void}
 	 */
+	// @ts-ignore
 	const bchError = (...args) => {
 		console.error("BCH", `${w.BCH_VERSION}:`, ...args);
 	};
@@ -329,6 +332,7 @@ async function BondageClubHelper() {
 
 		const ShouldScrollDown = ElementIsScrolledToEnd("TextAreaChatLog");
 		if (document.getElementById("TextAreaChatLog") !== null) {
+			// @ts-ignore
 			document.getElementById("TextAreaChatLog").appendChild(div);
 			if (ShouldScrollDown) {
 				ElementScrollToEnd("TextAreaChatLog");
@@ -423,6 +427,7 @@ async function BondageClubHelper() {
 					ChatRoomClearAllElements();
 					ServerSend("ChatRoomLeave", "");
 					ChatRoomSetLastChatRoom("");
+					// @ts-ignore
 					ChatRoomLeashPlayer = null;
 					CommonSetScreen("Online", "ChatSearch");
 					CharacterDeleteAllOnline();
@@ -488,7 +493,9 @@ async function BondageClubHelper() {
 				Tag: "wardrobe",
 				Description: "Opens the wardrobe [BCH]",
 				Action: async () => {
+					// @ts-ignore
 					document.getElementById("InputChat").style.display = "none";
+					// @ts-ignore
 					document.getElementById("TextAreaChatLog").style.display = "none";
 					CharacterAppearanceReturnRoom = "ChatRoom";
 					CharacterAppearanceReturnModule = "Online";
@@ -739,6 +746,7 @@ async function BondageClubHelper() {
 			PreferenceMessage = "";
 		};
 		w.PreferenceSubscreenBCHSettingsRun = function () {
+			// @ts-ignore
 			w.MainCanvas.getContext("2d").textAlign = "left";
 			DrawButton(...githubPosition, "", "White", ICONS.GITHUB);
 			DrawText(
@@ -797,6 +805,7 @@ async function BondageClubHelper() {
 					y += settingsYIncrement;
 				}
 			}
+			// @ts-ignore
 			w.MainCanvas.getContext("2d").textAlign = "center";
 		};
 		// eslint-disable-next-line complexity
@@ -968,6 +977,7 @@ async function BondageClubHelper() {
 							CharacterReleaseTotal(Player);
 							Player.ArousalSettings.Progress = 0;
 							if (CurrentScreen == "ChatRoom") {
+							// @ts-ignore
 							ServerSend("ChatRoomChat",{Content:"Beep",Type:"Action",Target:null,Dictionary:[{Tag:"Beep",Text:Player.Name+" snaps her fingers and all restraints on "+CurrentCharacter.Name+' disappear with a "pop!"'}]});
 							ChatRoomCharacterUpdate(Player);
 							bchChatNotify("Completely unbound yourself");
@@ -976,6 +986,7 @@ async function BondageClubHelper() {
 							CharacterReleaseTotal(Player);
 							Player.ArousalSettings.Progress = 0;
 							if (CurrentScreen == "ChatRoom") {
+							// @ts-ignore
 							ServerSend("ChatRoomChat",{Content:"Beep",Type:"Action",Target:null,Dictionary:[{Tag:"Beep",Text:Player.Name+" snaps her fingers and all restraints on "+CurrentCharacter.Name+' disappear with a "pop!"'}]});
 							ChatRoomCharacterUpdate(Player);
 							bchChatNotify("Completely unbound yourself");
@@ -1030,6 +1041,7 @@ async function BondageClubHelper() {
 	}
 
 	/** @type {(target: number, requestReply?: boolean) => void} */
+	// @ts-ignore
 	function sendHello(target = null, requestReply = false) {
 		/** @type {BCHChatMessage} */
 		const message = {
@@ -1051,6 +1063,7 @@ async function BondageClubHelper() {
 		ServerSend("ChatRoomChat", message);
 	}
 	if (ServerIsConnected) {
+		// @ts-ignore
 		sendHello(null, true);
 	}
 
@@ -1135,6 +1148,7 @@ async function BondageClubHelper() {
 
 	/** @type {(o: unknown) => o is Object} */
 	function isNonNullObject(o) {
+		// @ts-ignore
 		return o && typeof o === "object" && !Array.isArray(o);
 	}
 
