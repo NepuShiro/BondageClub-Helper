@@ -9,6 +9,8 @@
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
+/* eslint-disable no-undef */
+/* eslint-disable no-implicit-globals */
 /* jshint esversion: 11 */
 /*jshint -W018 */
 
