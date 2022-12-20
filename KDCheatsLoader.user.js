@@ -4,8 +4,7 @@
 // @version      1.0
 // @description  KinkyDungeon-Cheats Loader
 // @author       Nariko
-// @match        https://ada18980.github.io/KinkyDungeonStandalone/*
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=tampermonkey.net
+// @match        https://ada18980.github.io/KinkiestDungeon/*
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
