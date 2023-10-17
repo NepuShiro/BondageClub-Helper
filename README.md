@@ -12,9 +12,9 @@ DON'T USE UNLESS YOU WANT TO
 
 # Important!!!
 
-This script uses code from [Bondage Club Enhancements](https://gitlab.com/Sidiousious/bce) it is not my code. BCE is liscensed under GPLv3
+This script uses some code from [Bondage Club Enhancements](https://gitlab.com/Sidiousious/bce) it is not my code. BCE is liscensed under GPLv3
 
-GO SUPPORT THE ORIGINAL CREATOR
+GO SUPPORT THIS CREATOR
 
 # Features
 ### All features can be toggled
